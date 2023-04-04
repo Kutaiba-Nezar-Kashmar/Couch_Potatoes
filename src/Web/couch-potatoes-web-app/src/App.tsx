@@ -1,10 +1,13 @@
 import React from "react";
-import SampleComponent from "./components/SampleComponent";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import routes from "./routes"
+
+const router = createBrowserRouter(routes);
 
 const App = () => {
     return (
         <>
-            <SampleComponent startCount={1}></SampleComponent>
+            <RouterProvider router={router}/>
         </>
     );
 };
