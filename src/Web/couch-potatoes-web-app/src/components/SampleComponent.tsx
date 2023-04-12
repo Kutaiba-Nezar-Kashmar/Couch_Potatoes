@@ -27,9 +27,10 @@ const SampleComponent: FC<SampleComponentProps> = ({ startCount }) => {
     // Use effect is used to perform side effect such as fetching from API, setting up subscriptions etc.
     useEffect(() => {
         let getTodo = async (): Promise<any> => {
-            let res = await fetch(`https://dummyjson.com/todos/${count}`);
+            //let res = await fetch(`https://dummyjson.com/todos/${count}`);
+            let res = await fetch(`https://localhost:44314/api/v1/movies/popular`);
             let todo = await res.json();
-            setTodo(todo.todo);
+            setTodo(JSON.stringify(todo));
         };
         getTodo().catch((err) => console.error(err));
         // Notice that we pass an array. This is a dependency array.
