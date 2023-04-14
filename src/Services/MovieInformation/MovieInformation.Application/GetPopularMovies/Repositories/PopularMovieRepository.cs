@@ -1,10 +1,8 @@
-﻿using System.Text;
-using System.Text.Json.Nodes;
-using MovieInformation.Domain.Repositories;
+﻿using System.Text.Json.Nodes;
 
-namespace MovieInformation.Infrastructure.Repositories;
+namespace MovieInformation.Application.GetPopularMovies.Repositories;
 
-public class TmdbMovieRepository: IMovieRepository
+public class PopularMovieRepository: IPopularMovieRepository
 {
     // TODO: Make this configurable at runtime
     private const string Uri = "https://api.themoviedb.org/3/movie";

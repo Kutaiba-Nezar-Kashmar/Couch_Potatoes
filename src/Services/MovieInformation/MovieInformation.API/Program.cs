@@ -1,7 +1,8 @@
 using MovieInformation.API.Installers;
 
 var builder = WebApplication.CreateBuilder(args);
-ApiServiceInstaller.Install(builder.Services);
+builder.Services.InstallControllers();
+builder.Services.InstallMiddlewareServices();
 
 var app = builder.Build();
 
