@@ -1,15 +1,15 @@
-import {RouteObject} from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import TestPage from "./pages/TestPage";
+import { RouteObject } from 'react-router-dom';
+import IndexPage from './pages/IndexPage';
+import TestPage from './pages/TestPage';
 
 const routes: RouteObject[] = [
     {
-        path: "/",
-        element: <LandingPage/>
+        path: '/',
+        element: <IndexPage />,
     },
     {
-        path: "/test",
-        element: <TestPage/>
+        path: '/test',
+        element: <TestPage />,
     },
 ];
 
