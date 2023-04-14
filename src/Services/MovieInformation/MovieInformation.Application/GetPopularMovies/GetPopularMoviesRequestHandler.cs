@@ -1,23 +1,22 @@
 ﻿using MediatR;
-using MovieInformation.Domain.Repositories;
-using MovieInformation.Infrastructure.Repositories;
+using MovieInformation.Application.GetPopularMovies.Repositories;
 
 namespace MovieInformation.Application.GetPopularMovies;
 
 public class GetPopularMoviesRequestHandler: IRequestHandler<GetPopularMoviesRequest, GetPopularMoviesDto>
 {
-    private readonly IMovieRepository _movieRepository;
+    private readonly IPopularMovieRepository _popularMovieRepository;
 
-    public GetPopularMoviesRequestHandler(IMovieRepository movieRepository)
+    public GetPopularMoviesRequestHandler(IPopularMovieRepository popularMovieRepository)
     {
-        _movieRepository = movieRepository?? new TmdbMovieRepository();
+        _popularMovieRepository = popularMovieRepository;
     }
     
     public async Task<GetPopularMoviesDto> Handle(GetPopularMoviesRequest request, CancellationToken cancellationToken)
     {
         return new GetPopularMoviesDto
         {
-            Data = await _movieRepository.GetPopularMovies()
+            Data = await _popularMovieRepository.GetPopularMovies()
         };
     }
 }
