@@ -8,7 +8,7 @@ public record GetMovieCollectionResponseDto
     [property: JsonPropertyName("page")]
     int Page,
     [property: JsonPropertyName("results")]
-    IReadOnlyCollection<MovieDetail> Result,
+    IReadOnlyCollection<MovieCollection> Result,
     [property: JsonPropertyName("total_results")]
     int TotalResults,
     [property: JsonPropertyName("total_pages")]
