@@ -1,6 +1,10 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using MovieInformation.Domain.Models;
+using MovieInformation.Infrastructure.TmbdDto.MovieDto;
+using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
+using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.Application.GetPopularMovies.Repositories;
 
@@ -21,7 +25,13 @@ public class PopularMovieRepository : IPopularMovieRepository
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
+        var dto = JsonDeserializer.Deserialize<GetMovieCollectionResponseDto>(contentString);
+        var mapper = new MovieCollectionToMovieMapper();
         
-        return JsonObject.Parse(contentString).Deserialize<IReadOnlyCollection<Movie>>();
+        var movies = dto.Result
+            .Select(movieCollection => mapper.Map(movieCollection))
+            .ToList();
+        
+        return movies;
     }
 }

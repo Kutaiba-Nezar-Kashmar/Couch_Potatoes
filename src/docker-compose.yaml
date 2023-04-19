@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  movieinformation:
+    build:
+      context: .
+      dockerfile: ./Services/MovieInformation/MovieInformation.API/Dockerfile
+
+networks:
+  default:
+    name: couch-potates

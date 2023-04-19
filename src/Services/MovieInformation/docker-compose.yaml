@@ -1,0 +1,12 @@
+# start with docker compose up --build or use rider
+services:
+  movieinformation:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+networks:
+  default:
+    # Remember to create this network prior to starting the service: docker network create couch-potates-network
+    name: couch-potatoes-network
+    external: true
