@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import User from '../models/user';
+import {navBarVPaddingInRem, pageHPaddingInRem, pageVPaddingInRem} from "./settings/page-settings";
 
 interface BasePageProps {
     children?: React.ReactNode;
@@ -22,7 +23,7 @@ const BasePage: FC<BasePageProps> = ({ children }) => {
     return (
         <>
             <Navbar title="Couch Potatoes" user={user}></Navbar>
-            <Box padding="0rem 8rem">{children}</Box>;
+            <Box padding={`${pageVPaddingInRem}rem ${pageHPaddingInRem}rem ${pageVPaddingInRem}rem ${pageHPaddingInRem}rem`}>{children}</Box>;
         </>
     );
 };
