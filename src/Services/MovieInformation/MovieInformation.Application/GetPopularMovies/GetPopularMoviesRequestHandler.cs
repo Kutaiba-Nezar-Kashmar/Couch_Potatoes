@@ -1,9 +1,17 @@
 ﻿using MediatR;
 using MovieInformation.Application.GetPopularMovies.Repositories;
+using MovieInformation.Domain.Models;
 
 namespace MovieInformation.Application.GetPopularMovies;
 
-public class GetPopularMoviesRequestHandler: IRequestHandler<GetPopularMoviesRequest, GetPopularMoviesDto>
+public record GetPopularMoviesRequest
+(
+    int Skip,
+    int NumberOfPages
+) : IRequest<IReadOnlyCollection<Movie>>;
+
+
+public class GetPopularMoviesRequestHandler : IRequestHandler<GetPopularMoviesRequest, IReadOnlyCollection<Movie>>
 {
     private readonly IPopularMovieRepository _popularMovieRepository;
 
@@ -11,12 +19,10 @@ public class GetPopularMoviesRequestHandler: IRequestHandler<GetPopularMoviesReq
     {
         _popularMovieRepository = popularMovieRepository;
     }
-    
-    public async Task<GetPopularMoviesDto> Handle(GetPopularMoviesRequest request, CancellationToken cancellationToken)
+
+    public async Task<IReadOnlyCollection<Movie>> Handle(GetPopularMoviesRequest request, CancellationToken cancellationToken)
     {
-        return new GetPopularMoviesDto
-        {
-            Data = await _popularMovieRepository.GetPopularMovies()
-        };
+        return await _popularMovieRepository.GetPopularMovies(request.Skip, request.NumberOfPages);
+
     }
 }

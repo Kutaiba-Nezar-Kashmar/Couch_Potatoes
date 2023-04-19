@@ -1,19 +1,31 @@
-﻿namespace MovieInformation.Infrastructure.TmbdDto.PersonDto;
+﻿using System.Text.Json.Serialization;
 
-public class PersonDetails
-{
-    public string Birthday { get; set; }
-    public string KnownForDepartment { get; set; }
-    public object Deathday { get; set; }
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public List<string> AlsoKnownAs { get; set; }
-    public int Gender { get; set; }
-    public string Biography { get; set; }
-    public double Popularity { get; set; }
-    public string PlaceOfBirth { get; set; }
-    public string ProfilePath { get; set; }
-    public bool Adult { get; set; }
-    public string ImdbId { get; set; }
-    public object Homepage { get; set; }
-}
+namespace MovieInformation.Infrastructure.TmbdDto.PersonDto;
+
+public record PersonDetails
+(
+    [property: JsonPropertyName("birthday")]
+    string Birthday,
+    [property: JsonPropertyName("known_for_department")]
+    string KnownForDepartment,
+    [property: JsonPropertyName("deathday")]
+    string Deathday,
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("name")] string Name,
+    [property: JsonPropertyName("also_known_as")]
+    List<string> AlsoKnownAs,
+    [property: JsonPropertyName("gender")] int Gender,
+    [property: JsonPropertyName("biography")]
+    string Biography,
+    [property: JsonPropertyName("popularity")]
+    double Popularity,
+    [property: JsonPropertyName("place_of_birth")]
+    string PlaceOfBirth,
+    [property: JsonPropertyName("profile_path")]
+    string ProfilePath,
+    [property: JsonPropertyName("adult")] bool Adult,
+    [property: JsonPropertyName("imdb_id")]
+    string ImdbId,
+    [property: JsonPropertyName("homepage")]
+    string Homepage
+);
