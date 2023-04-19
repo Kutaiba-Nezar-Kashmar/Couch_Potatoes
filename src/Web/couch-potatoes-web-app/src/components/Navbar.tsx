@@ -13,6 +13,7 @@ import {
 import React, { FC } from 'react';
 import User from '../models/user';
 import { useNavigate } from 'react-router-dom';
+import {navBarHeightInRem, navBarHPaddingInRem, navBarVPaddingInRem, pageHPaddingInRem} from "./settings/page-settings";
 
 interface NavbarProps {
     logoUri?: string;
@@ -25,13 +26,14 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
 
     return (
         <nav>
-            <Flex padding="1rem 8rem" justify="space-between">
+            <Flex padding={`${navBarVPaddingInRem}rem ${pageHPaddingInRem}rem`} justify="space-between" height={`${navBarHeightInRem}rem`}>
                 <Stack direction="row">
                     {logoUri && <Image src=""></Image>}
                     <Heading
                         fontSize="2xl"
                         cursor="pointer"
                         onClick={() => navigate('/')}
+                        color="white"
                     >
                         {title.toUpperCase()}
                     </Heading>
@@ -42,8 +44,8 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                             pointerEvents="none"
                             children={<SearchIcon color="gray.300" />}
                         />
-                        <Input type="text" placeholder="Search" />
-                        {user && (
+                        <Input type="text" placeholder="Search" backgroundColor="white"/>
+                        {user && ( // if user then render avatar && the and operator is short for if user exists.
                             <Avatar
                                 marginLeft="1rem"
                                 name={user.name}

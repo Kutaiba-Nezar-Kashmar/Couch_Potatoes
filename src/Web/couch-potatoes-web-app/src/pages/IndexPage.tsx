@@ -1,26 +1,47 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import BasePage from '../components/BasePage';
+import {Avatar, Box, Flex, Input, InputGroup, InputLeftElement, Stack, Text, VStack} from "@chakra-ui/react";
+import Movie from "../models/movie";
+import {SearchIcon} from "@chakra-ui/icons";
+import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-settings";
+import BackgroundImageFull from "../components/BackgroundImageFull";
 
 const IndexPage = () => {
     const navigate = useNavigate();
     const TEST_PAGE_URL = '/test';
+    const [movie, setMovie] = useState<Movie | null>(null);
+    const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
 
     function navigateToTestPage() {
         navigate(TEST_PAGE_URL);
     }
 
     return (
-        <BasePage>
-            <div>Landing page works</div>
-
-            <button
-                className="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 rounded px-4 py-2"
-                onClick={navigateToTestPage}
-            >
-                Go to test page
-            </button>
-        </BasePage>
+        <BackgroundImageFull imageUri={Background_Temp}>
+            <BasePage>
+                <Flex
+                    align="center" justify="center"
+                    height={`calc(100vh - ${navBarHeightInRem}rem)`}
+                    width={`calc(100vw - ${2 * pageHPaddingInRem}rem)`}
+                >
+                    <VStack width="100%">
+                        <Flex direction="row" justify="flex-end" width={{base: '300px', md: '450px', lg: '600px'}}>
+                            <Text textColor="whites">
+                                IMDB Score: {movie?.tmdbScore}
+                            </Text>
+                        </Flex>
+                        <InputGroup width={{base: '300px', md: '450px', lg: '600px'}} backgroundColor="white">
+                            <InputLeftElement
+                                pointerEvents="none"
+                                children={<SearchIcon color="gray.300"/>}
+                            />
+                            <Input type="text" placeholder="Search"/>
+                        </InputGroup>
+                    </VStack>
+                </Flex>
+            </BasePage>
+        </BackgroundImageFull>
     );
 };
 
