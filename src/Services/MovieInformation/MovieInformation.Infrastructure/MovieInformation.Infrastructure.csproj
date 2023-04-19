@@ -11,8 +11,4 @@
       <ProjectReference Include="..\MovieInformation.Domain\MovieInformation.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Repositories\" />
-    </ItemGroup>
-
 </Project>

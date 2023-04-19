@@ -1,7 +1,11 @@
-﻿namespace MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
+﻿using System.Text.Json.Serialization;
 
-public class KeywordsDetails
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}
+namespace MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
+
+public record KeywordsDetails
+(
+     [property: JsonPropertyName("id")]
+     int Id,
+     [property: JsonPropertyName("name")]
+     string Name
+);

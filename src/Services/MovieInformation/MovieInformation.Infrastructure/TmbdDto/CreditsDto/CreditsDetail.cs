@@ -1,35 +1,47 @@
-﻿namespace MovieInformation.Infrastructure.TmbdDto.CreditsDto;
+﻿using System.Text.Json.Serialization;
 
-public class Media
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string OriginalName { get; set; }
-    public string Character { get; set; }
-    public List<object> Episodes { get; set; }
-    public List<Season> Seasons { get; set; }
-}
+namespace MovieInformation.Infrastructure.TmbdDto.CreditsDto;
 
-public class Person
-{
-    public string Name { get; set; }
-    public int Id { get; set; }
-}
+public record Media<T>
+(
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("name")] string Name,
+    [property: JsonPropertyName("original_name")]
+    string OriginalName,
+    [property: JsonPropertyName("character")]
+    string Character,
+    [property: JsonPropertyName("episodes")]
+    List<T> Episodes,
+    [property: JsonPropertyName("seasons")]
+    List<Season> Seasons
+);
 
-public class Season
-{
-    public string AirDate { get; set; }
-    public string PosterPath { get; set; }
-    public int SeasonNumber { get; set; }
-}
+public record Person
+(
+    [property: JsonPropertyName("name")] string Name,
+    [property: JsonPropertyName("id")] int Id
+);
 
-public class CreditsDetail
-{
-    public string CreditType { get; set; }
-    public string Department { get; set; }
-    public string Job { get; set; }
-    public Media Media { get; set; }
-    public string MediaType { get; set; }
-    public string Id { get; set; }
-    public Person Person { get; set; }
-}
+public record Season
+(
+    [property: JsonPropertyName("air_date")]
+    string AirDate,
+    [property: JsonPropertyName("poster_path")]
+    string PosterPath,
+    [property: JsonPropertyName("season_number")]
+    int SeasonNumber
+);
+
+public record CreditsDetail<T>
+(
+    [property: JsonPropertyName("credit_type")]
+    string CreditType,
+    [property: JsonPropertyName("department")]
+    string Department,
+    [property: JsonPropertyName("job")] string Job,
+    [property: JsonPropertyName("media")] Media<T> Media,
+    [property: JsonPropertyName("media_type")]
+    string MediaType,
+    [property: JsonPropertyName("id")] string Id,
+    [property: JsonPropertyName("person")] Person Person
+);

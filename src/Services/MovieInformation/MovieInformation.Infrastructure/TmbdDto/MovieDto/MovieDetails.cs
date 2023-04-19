@@ -1,56 +1,80 @@
-﻿namespace MovieInformation.Infrastructure.TmbdDto.MovieDto;
-public class MovieDetailGenre
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-}
+﻿using System.Text.Json.Serialization;
 
-public class MovieDetailProductionCompany
-{
-    public int Id { get; set; }
-    public string LogoPath { get; set; }
-    public string Name { get; set; }
-    public string OriginCountry { get; set; }
-}
+namespace MovieInformation.Infrastructure.TmbdDto.MovieDto;
 
-public class MovieDetailProductionCountry
-{
-    public string Iso31661 { get; set; }
-    public string Name { get; set; }
-}
+public record MovieDetailGenre
+(
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("name")] string Name
+);
 
-public class MovieDetail
-{
-    public bool Adult { get; set; }
-    public string BackdropPath { get; set; }
-    public object BelongsToCollection { get; set; }
-    public int Budget { get; set; }
-    public List<MovieDetailGenre> Genres { get; set; }
-    public string Homepage { get; set; }
-    public int Id { get; set; }
-    public string ImdbId { get; set; }
-    public string OriginalLanguage { get; set; }
-    public string OriginalTitle { get; set; }
-    public string Overview { get; set; }
-    public double Popularity { get; set; }
-    public object PosterPath { get; set; }
-    public List<MovieDetailProductionCompany> ProductionCompanies { get; set; }
-    public List<MovieDetailProductionCountry> ProductionCountries { get; set; }
-    public string ReleaseDate { get; set; }
-    public int Revenue { get; set; }
-    public int Runtime { get; set; }
-    public List<MovieDetailSpokenLanguage> SpokenLanguages { get; set; }
-    public string Status { get; set; }
-    public string Tagline { get; set; }
-    public string Title { get; set; }
-    public bool Video { get; set; }
-    public double VoteAverage { get; set; }
-    public int VoteCount { get; set; }
-}
+public record MovieDetailProductionCompany
+(
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("logo_path")]
+    string LogoPath,
+    [property: JsonPropertyName("name")] string Name,
+    [property: JsonPropertyName("origin_country")]
+    string OriginCountry
+);
 
-public class MovieDetailSpokenLanguage
-{
-    public string Iso6391 { get; set; }
-    public string Name { get; set; }
-}
+public record MovieDetailProductionCountry
+(
+    [property: JsonPropertyName("iso_3166_1")]
+    string Iso31661,
+    [property: JsonPropertyName("name")] string Name
+);
 
+public record MovieDetail
+(
+    [property: JsonPropertyName("adult")] bool Adult,
+    [property: JsonPropertyName("backdrop_path")]
+    string BackdropPath,
+    [property: JsonPropertyName("belongs_to_collection")]
+    object BelongsToCollection,
+    [property: JsonPropertyName("budget")] int Budget,
+    [property: JsonPropertyName("genres")] List<MovieDetailGenre> Genres,
+    [property: JsonPropertyName("homepage")]
+    string Homepage,
+    [property: JsonPropertyName("id")] int Id,
+    [property: JsonPropertyName("imdb_id")]
+    string ImdbId,
+    [property: JsonPropertyName("original_language")]
+    string OriginalLanguage,
+    [property: JsonPropertyName("original_title")]
+    string OriginalTitle,
+    [property: JsonPropertyName("overview")]
+    string Overview,
+    [property: JsonPropertyName("popularity")]
+    double Popularity,
+    [property: JsonPropertyName("poster_path")]
+    string PosterPath,
+    [property: JsonPropertyName("production_companies")]
+    List<MovieDetailProductionCompany> ProductionCompanies,
+    [property: JsonPropertyName("production_countries")]
+    List<MovieDetailProductionCountry> ProductionCountries,
+    [property: JsonPropertyName("release_date")]
+    string ReleaseDate,
+    [property: JsonPropertyName("revenue")]
+    int Revenue,
+    [property: JsonPropertyName("runtime")]
+    int Runtime,
+    [property: JsonPropertyName("spoken_languages")]
+    List<MovieDetailSpokenLanguage> SpokenLanguages,
+    [property: JsonPropertyName("status")] string Status,
+    [property: JsonPropertyName("tagline")]
+    string Tagline,
+    [property: JsonPropertyName("title")] string Title,
+    [property: JsonPropertyName("video")] bool Video,
+    [property: JsonPropertyName("vote_average")]
+    double VoteAverage,
+    [property: JsonPropertyName("vote_count")]
+    int VoteCount
+);
+
+public record MovieDetailSpokenLanguage
+(
+    [property: JsonPropertyName("iso_639_1")]
+    string Iso6391,
+    [property: JsonPropertyName("name")] string Name
+);
