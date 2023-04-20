@@ -22,7 +22,7 @@ def main():
                    network_driver='bridge')
 
     print("\n")
-    for path in map(lambda x: str(x.absolute), docker_compose_paths):
+    for path in map(lambda x: str(x.absolute()), docker_compose_paths):
         compose_up(file=path, build=True, detached=True)
 
 

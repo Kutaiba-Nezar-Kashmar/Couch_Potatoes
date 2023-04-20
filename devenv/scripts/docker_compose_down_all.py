@@ -17,7 +17,7 @@ def main():
         print(str(path.absolute()))
 
     print('\n')
-    for path in map(lambda x: str(x.absolute), docker_compose_paths):
+    for path in map(lambda x: str(x.absolute()), docker_compose_paths):
         compose_down(file=path)
 
 
