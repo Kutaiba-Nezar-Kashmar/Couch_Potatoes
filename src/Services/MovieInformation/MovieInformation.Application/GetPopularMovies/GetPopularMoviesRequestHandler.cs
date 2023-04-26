@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Runtime.CompilerServices;
+using MediatR;
 using MovieInformation.Application.GetPopularMovies.Repositories;
 using MovieInformation.Domain.Models;
 
@@ -8,10 +9,9 @@ public record GetPopularMoviesRequest
 (
     int Skip,
     int NumberOfPages
-) : IRequest<IReadOnlyCollection<Movie>>;
+) : IRequest<MovieCollection>;
 
-
-public class GetPopularMoviesRequestHandler : IRequestHandler<GetPopularMoviesRequest, IReadOnlyCollection<Movie>>
+public class GetPopularMoviesRequestHandler : IRequestHandler<GetPopularMoviesRequest, MovieCollection>
 {
     private readonly IPopularMovieRepository _popularMovieRepository;
 
@@ -20,9 +20,19 @@ public class GetPopularMoviesRequestHandler : IRequestHandler<GetPopularMoviesRe
         _popularMovieRepository = popularMovieRepository;
     }
 
-    public async Task<IReadOnlyCollection<Movie>> Handle(GetPopularMoviesRequest request, CancellationToken cancellationToken)
+    public async Task<MovieCollection> Handle(GetPopularMoviesRequest request,
+        CancellationToken cancellationToken)
     {
-        return await _popularMovieRepository.GetPopularMovies(request.Skip, request.NumberOfPages);
+        List<Task<MovieCollectionPage>> getMoviesRequests = new();
+        for (int i = 0; i < request.NumberOfPages; i++)
+        {
+            getMoviesRequests.Add(_popularMovieRepository.GetPopularMovies(ResolvePage(request.Skip, i)));
+        }
 
+        return new MovieCollection
+        {
+            pages = await Task.WhenAll(getMoviesRequests)
+        };
     }
+    private int ResolvePage(int skip, int page) => skip + page;
 }

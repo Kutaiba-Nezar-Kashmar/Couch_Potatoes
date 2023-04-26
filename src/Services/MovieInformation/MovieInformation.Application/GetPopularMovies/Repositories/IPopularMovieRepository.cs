@@ -5,5 +5,5 @@ namespace MovieInformation.Application.GetPopularMovies.Repositories;
 
 public interface IPopularMovieRepository
 {
-    Task<IReadOnlyCollection<Movie>> GetPopularMovies(int skip, int numberOfPages);
+    Task<MovieCollectionPage> GetPopularMovies(int page);
 }

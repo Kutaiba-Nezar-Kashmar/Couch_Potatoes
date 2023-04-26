@@ -9,6 +9,8 @@ public static class ApiMiddlewareInstaller
         collection.AddMediatR(config =>
             config.RegisterServicesFromAssemblies(
                 AppDomain.CurrentDomain.Load("MovieInformation.Application")));
+        collection.InstallMappings();
+
         return collection;
     }
 }

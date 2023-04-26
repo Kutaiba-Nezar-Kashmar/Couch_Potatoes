@@ -8,9 +8,9 @@ public interface IDtoToDomainMapper<TFrom, TTo>
     TTo Map(TFrom from);
 }
 
-public class MovieCollectionToMovieMapper : IDtoToDomainMapper<MovieCollection, Movie>
+public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection, Movie>
 {
-    public Movie Map(MovieCollection from)
+    public Movie Map(TmdbMovieCollection from)
     {
         return new Movie
         {
