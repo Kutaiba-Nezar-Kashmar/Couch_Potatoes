@@ -2,7 +2,7 @@
 
 namespace MovieInformation.Infrastructure.TmbdDto.MovieDto;
 
-public record MovieCollection
+public record TmdbMovieCollection
 (
     [property: JsonPropertyName("adult")] bool Adult,
     [property: JsonPropertyName("backdrop_path")]
