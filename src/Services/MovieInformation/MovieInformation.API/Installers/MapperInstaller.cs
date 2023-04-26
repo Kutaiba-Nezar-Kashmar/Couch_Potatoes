@@ -19,6 +19,7 @@ public static class MapperInstaller
               config.CreateMap<Genre, ReadGenreDto>().ReverseMap();
               config.CreateMap<Language, ReadLanguageDto>().ReverseMap();
               config.CreateMap<Keyword, ReadKeywordDto>().ReverseMap();
+              config.CreateMap<Movie, ReadDetailedMovieDto>().ReverseMap();
               config.CreateMap<Movie, ReadMovieDto>().ReverseMap();
               config.CreateMap<MovieCollectionPage, ReadMovieCollectionPageDto>().ReverseMap();
               config.CreateMap<MovieCollection, ReadMovieCollectionDto>()
