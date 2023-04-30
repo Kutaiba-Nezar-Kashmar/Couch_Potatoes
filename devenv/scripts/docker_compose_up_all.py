@@ -18,12 +18,17 @@ def main():
 
     # NOTE: (mibui 2023-04-20) This will create an error response if the network already exists, but that is fine. We just want to ensure the network actually exists.
     print('\nCreating docker network: couch-potatoes-network')
-    create_network(network_name='couch-potatoes-network',
-                   network_driver='bridge')
+    try:
+        create_network(network_name='couch-potatoes-network',
+                       network_driver='bridge').wait()
+    except:
+        pass
 
-    print("\n")
+    print("\nStarting Docker composes...")
     for path in map(lambda x: str(x.absolute()), docker_compose_paths):
-        compose_up(file=path, build=True, detached=True)
+        process = compose_up(file=path, build=True, detached=True)
+        out, err = process.communicate()
+        print(f'stdout: {out}\nstderr: {err}')
 
 
 main()

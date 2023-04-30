@@ -1,5 +1,5 @@
 services:
-  movieinformation:
+  movie-information:
     env_file:
       - ./.env
     ports:
