@@ -18,7 +18,9 @@ def main():
 
     print('\n')
     for path in map(lambda x: str(x.absolute()), docker_compose_paths):
-        compose_down(file=path)
+        process = compose_down(file=path)
+        out, err = process.communicate()
+        print(f'stdout: {out}\nstderr: {err}')
 
 
 main()
