@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Logging;
 using MovieInformation.Domain.Models;
+using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
@@ -18,20 +20,21 @@ public class PopularMovieRepository : IPopularMovieRepository
     {
         _httpClient = httpClientFactory.CreateClient("HTTP_CLIENT");
     }
-    
+
     public async Task<MovieCollectionPage> GetPopularMovies(int page)
     {
         var res = await _httpClient.GetAsync($"popular?api_key={_apiKey}");
 
         if (!res.IsSuccessStatusCode)
         {
-            throw new Exception("FAILED TO FETCH");
+            throw new HttpException(
+                $"{nameof(GetPopularMovies)}: Failed to fetch popular movies with status code: {res.StatusCode}");
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
         var dto = JsonDeserializer.Deserialize<GetMovieCollectionResponseDto>(contentString);
         var mapper = new TmdbMovieCollectionToMovie();
-        
+
         var movies = dto?.Result
             .Select(movieCollection => mapper.Map(movieCollection))
             .ToList();
