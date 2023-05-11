@@ -1,8 +1,12 @@
 import React from 'react';
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {ChakraProvider, extendTheme} from '@chakra-ui/react';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import routes from './routes';
 import Navbar from './components/Navbar';
+import {QueryClient, QueryClientProvider} from "react-query";
+
+// Create a client
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter(routes);
 const theme = extendTheme({
@@ -15,9 +19,11 @@ const theme = extendTheme({
 const App = () => {
     return (
         <>
-            <ChakraProvider resetCSS={true} theme={theme}>
-                <RouterProvider router={router} />
-            </ChakraProvider>
+            <QueryClientProvider client={queryClient}>
+                <ChakraProvider resetCSS={true} theme={theme}>
+                    <RouterProvider router={router}/>
+                </ChakraProvider>
+            </QueryClientProvider>
         </>
     );
 };
