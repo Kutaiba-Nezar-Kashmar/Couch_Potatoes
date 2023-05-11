@@ -1,6 +1,0 @@
-services:
-  movie-information:
-    env_file:
-      - ./.env
-    ports:
-      - 8080:80
