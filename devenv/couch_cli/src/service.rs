@@ -5,6 +5,9 @@ use std::{
     path::Path,
     process::{self, exit, Output},
 };
+use std::collections::BTreeMap;
+use std::io::Write;
+use serde::Serialize;
 
 pub fn service_cmd() -> Command {
     Command::new("service")
@@ -46,6 +49,12 @@ pub fn create_new_service(name: &String) {
     print_output(output);
 
     visit_service_project_folders_in_current_dir(name, post_service_project_creation);
+
+    println!("Creating docker-compose.yaml");
+    create_compose_file(name);
+
+    println!("Creating Dockerfile");
+    create_dockerfile(name);
 }
 
 fn get_project_root_dir() -> String {
@@ -219,4 +228,90 @@ fn post_service_project_creation(service_name: &String, entry_dir: fs::DirEntry,
         }
         _ => {}
     }
+}
+
+fn create_compose_file(serviceName: &str) {
+    let service = ComposeService {
+        ports: vec!["8080:80".to_string()],
+        env_file: vec!["./.env".to_string()],
+        build: ComposeBuild {
+            context: ".".to_string(),
+            dockerfile: "./Dockerfile".to_string(),
+        },
+    };
+
+    let networks = ComposeNetworks {
+        default: ComposeDefaultNetwork {
+            name: "couch-potatoes-network".to_string(),
+            external: true,
+        }
+    };
+
+    let compose = Compose::new(serviceName, service, networks);
+    let currentDir = get_current_dir();
+    let file = std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .open(format!("{}/docker-compose.yaml", currentDir.as_str()))
+        .expect("Failed to open docker-compose.yaml");
+    serde_yaml::to_writer(file, &compose).unwrap();
+}
+
+fn get_dockerfile_string_template(serviceName: &str) -> String {
+    let currentDir = get_current_dir().as_str();
+    let str = include_str!("../dockerfile-template.txt");
+    str.replace("SERVICE_NAME_REPLACE_TARGET", serviceName)
+}
+
+fn create_dockerfile(serviceName: &str) {
+    let currentDir = get_current_dir();
+    let mut file = std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .open(format!("{}/Dockerfile", currentDir.as_str()))
+        .expect("Failed to open Dockerfile");
+    file.
+        write(get_dockerfile_string_template(serviceName).as_bytes())
+        .expect("Failed to write to Dockerfile");
+}
+
+#[derive(Serialize)]
+struct Compose {
+    services: BTreeMap::<String, ComposeService>,
+    networks: ComposeNetworks,
+}
+
+impl Compose {
+    fn new(serviceName: &str, composeService: ComposeService, networks: ComposeNetworks) -> Compose {
+        let mut services = BTreeMap::<String, ComposeService>::new();
+        services.insert(serviceName.to_string(), composeService);
+        return Compose {
+            services,
+            networks,
+        };
+    }
+}
+
+#[derive(Serialize)]
+struct ComposeService {
+    build: ComposeBuild,
+    ports: Vec::<String>,
+    env_file: Vec::<String>,
+}
+
+#[derive(Serialize)]
+struct ComposeBuild {
+    context: String,
+    dockerfile: String,
+}
+
+#[derive(Serialize)]
+struct ComposeNetworks {
+    default: ComposeDefaultNetwork,
+}
+
+#[derive(Serialize)]
+struct ComposeDefaultNetwork {
+    name: String,
+    external: bool,
 }
