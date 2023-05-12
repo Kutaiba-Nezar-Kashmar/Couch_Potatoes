@@ -1,12 +1,23 @@
 ﻿services:
   firestore_emulator:
+    container_name: firestore_emulator
     image: mtlynch/firestore-emulator
     environment:
       - FIRESTORE_PROJECT_ID=couch-potatoes-sep6
       - PORT=8200
     ports:
       - 8200:8200
-
+  event_service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8081:80
+    env_file:
+      - ./.env
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore_emulator:8200
+      - FIRESTORE_PROJECT_ID=dummy-project-id
 networks:
   default:
     name: couch-potatoes-network
