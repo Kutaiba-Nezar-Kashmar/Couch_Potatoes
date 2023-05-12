@@ -1,0 +1,13 @@
+﻿services:
+  firestore_emulator:
+    image: mtlynch/firestore-emulator
+    environment:
+      - FIRESTORE_PROJECT_ID=couch-potatoes-sep6
+      - PORT=8200
+    ports:
+      - 8200:8200
+
+networks:
+  default:
+    name: couch-potatoes-network
+    external: true
