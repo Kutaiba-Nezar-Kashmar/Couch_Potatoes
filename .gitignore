@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 .idea
 */.idea
 **/.idea
+
+./serviceAccountKey.json
+*/serviceAccountKey.json
+**/serviceAccountKey.json
