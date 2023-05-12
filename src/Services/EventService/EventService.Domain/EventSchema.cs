@@ -4,4 +4,5 @@ public class EventSchema
 {
     public string Service { get; set; }
     public ContentSchema Content { get; set; }
+    public string Routingkey { get; set; }
 }

@@ -2,5 +2,5 @@
 
 public class ContentSchema
 {
-    public IReadOnlyDictionary<string, SchemaProperty> Type { get; set; }
+    public IReadOnlyCollection<SchemaProperty> Properties { get; set; }
 }

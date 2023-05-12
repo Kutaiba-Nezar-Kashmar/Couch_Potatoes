@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers" />
+    <None Include="serviceAccountKey.json" />
   </ItemGroup>
 
 </Project>
