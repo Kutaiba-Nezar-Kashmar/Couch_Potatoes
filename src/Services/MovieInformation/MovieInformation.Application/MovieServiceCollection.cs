@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MovieInformation.Application.GetMovie;
 using MovieInformation.Application.GetPopularMovies;
 
 namespace MovieInformation.Application;
@@ -6,9 +7,11 @@ namespace MovieInformation.Application;
 public static class MovieServiceCollection
 {
     public static IServiceCollection InstallMovieServices(
-        this IServiceCollection collections)
+        this IServiceCollection services)
     {
-        collections.InstallPopularMovieServices();
-        return collections;
+        services.InstallPopularMovieServices();
+        services.InstallGetMovieServices();
+        
+        return services;
     }
 }
