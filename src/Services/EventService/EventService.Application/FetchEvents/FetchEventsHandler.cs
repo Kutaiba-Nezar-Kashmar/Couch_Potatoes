@@ -17,6 +17,6 @@ public class FetchEventsHandler : IRequestHandler<FetchEventsQuery, IReadOnlyCol
 
     public async Task<IReadOnlyCollection<EventSchema>> Handle(FetchEventsQuery request, CancellationToken cancellationToken)
     {
-        return await _fetchEvents.FetchEventSchemaForServices(request.serviceName);
+        return await _fetchEvents.FetchEventSchemasForService(request.serviceName);
     }
 }
