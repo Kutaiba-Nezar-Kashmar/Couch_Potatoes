@@ -5,7 +5,8 @@ import Movie from "../models/movie";
 
 /**
  * Fetches all movie collections (popular, top rated, upcoming etc.)
- * When we destructure the data {isLoading, isError, }
+ * When we destructure the data {isLoading, isError, data, error } = useFetchCollections(...),
+ * then the we can access the different collections like in a dictionary: popular = data["popular"]
  * */
 export function useFetchCollections(options?: GetMovieCollectionOptions) {
     return useQuery({
