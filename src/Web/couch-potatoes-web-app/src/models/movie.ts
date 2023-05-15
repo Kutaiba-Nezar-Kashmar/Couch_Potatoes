@@ -10,7 +10,7 @@ export default interface Movie {
     backdropUri: string;
     tmdbScore: number;
     tmdbVoteCount: number;
-    releaseDate: Date;
+    releaseDate: string;
     runTime: number;
     isForKids: boolean;
     status: string;

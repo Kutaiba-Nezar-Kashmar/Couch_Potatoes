@@ -14,6 +14,7 @@ import {
     HStack,
     Button
 } from "@chakra-ui/react";
+import StarRatingComponent from 'react-star-rating-component';
 import Movie from "../models/movie";
 import {SearchIcon} from "@chakra-ui/icons";
 import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-settings";
@@ -36,7 +37,12 @@ const IndexPage = () => {
     useEffect(() => {
         if (!isLoading) {
             // NOTE: (mibui 2023-05-15) Take the most popular movie as featured.
-            setMovie((collections as any)!["popular"]["collection"][0]);
+            // TODO: (mibui 2023-05-15) Fetch from /movies/:movieid instead of taking from collection.
+            //                          e.g. setMovie(getMovie((collections as any)!["popular"]["collection"][0]?.id))
+            setMovie({
+                ...(collections as any)!["popular"]["collection"][0],
+                genres: [{name: "Horror", id: 1}, {name: "Thriller", id: 2}, {name: "Romance", id: 3}]
+            }); // TODO: Remove the genres, they are only there for testing purposes
         }
     }, [isLoading])
 
@@ -93,15 +99,23 @@ const IndexPage = () => {
                             </Button>}
                         </Flex>
                         {/* FEATURED MOVIE INFO */}
-                        <HStack>
+                        <VStack>
                             <Text marginTop="1rem" textColor="white" fontSize={{base: 'xl', md: '2xl', lg: '3xl'}}
                                   textTransform="uppercase">
                                 {movie?.title}
                             </Text>
-                            <VStack>
-                                <Text>{movie?.genres.map(g => <Text>g.name </Text>)} </Text>
-                            </VStack>
-                        </HStack>
+                            <Flex width="100%" justifyContent="center" alignItems="center">
+                                <HStack>
+                                    {movie?.genres?.slice(0,3).map((genre, index) => index == movie.genres?.length - 1 ?
+                                        <Text textColor="white" textTransform="uppercase" fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} </Text> :
+                                        <Text textColor="white" textTransform="uppercase" fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} | </Text>)}
+                                </HStack>
+                            </Flex>
+                            <Text textColor="white" fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}>
+                                {new Date(movie?.releaseDate as string).toLocaleDateString()}
+                            </Text>
+                            <StarRatingComponent  name="rating" value={movie?.tmdbScore || 0} starCount={10}/>
+                        </VStack>
                     </VStack>
                 </Flex>
             </BasePage>
