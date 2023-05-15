@@ -6,3 +6,4 @@ public class EventSchema
     public ContentSchema Content { get; set; }
     public string Routingkey { get; set; }
 }
+

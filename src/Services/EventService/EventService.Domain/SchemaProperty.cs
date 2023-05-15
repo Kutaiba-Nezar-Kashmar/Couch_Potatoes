@@ -1,10 +1,12 @@
-﻿namespace EventService.Domain;
+﻿using EventService.Domain.Exceptions;
+
+namespace EventService.Domain;
 
 public class SchemaProperty
 {
-    public string Title{ get; set; }
+    public string Title { get; set; }
     public SchemaPropertyType Type { get; set; }
-    public IReadOnlyCollection<SchemaProperty> Properties{ get; set; }
+    public IReadOnlyCollection<SchemaProperty> Properties { get; set; }
 }
 
 public enum SchemaPropertyType
@@ -13,7 +15,8 @@ public enum SchemaPropertyType
     Array,
     String,
     Decimal,
-    Int
+    Int,
+    Bool
 }
 
 public static class SchemaPropertyTypeExtensions
@@ -26,7 +29,21 @@ public static class SchemaPropertyTypeExtensions
             SchemaPropertyType.Array => "Array",
             SchemaPropertyType.String => "String",
             SchemaPropertyType.Decimal => "Decimal",
-            SchemaPropertyType.Int => "Int"
+            SchemaPropertyType.Int => "Int",
+            SchemaPropertyType.Bool=> "Bool"
+        };
+    }
+    public static SchemaPropertyType ToSchemaPropertyType(this string type)
+    {
+        return type switch
+        {
+            "Object" => SchemaPropertyType.Object,
+            "Array" => SchemaPropertyType.Array,
+            "String" => SchemaPropertyType.String,
+            "Decimal" => SchemaPropertyType.Decimal,
+            "Int" => SchemaPropertyType.Int,
+            "Bool" => SchemaPropertyType.Bool,
+            _ => throw new UnknownPropertyTypeException($"Failed to parse type {type} into SchemaPropertyType")
         };
     }
 }

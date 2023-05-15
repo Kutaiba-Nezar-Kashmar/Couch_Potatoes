@@ -4,11 +4,13 @@ using Google.Cloud.Firestore;
 
 namespace EventService.Infrastructure;
 
-public class FirestoreDbReference
+public class FirestoreDb
 {
-    public static FirestoreDb GetFirestoreDb()
+    public static Google.Cloud.Firestore.FirestoreDb GetFirestoreDb()
     {
-        var pathToServiceAccountKey = "serviceAccountKey.json";
+        // NOTE: (mibui 2023-05-15) allow for overwriting the key path via environment variable for production setting
+        var pathToServiceAccountKey =
+            Environment.GetEnvironmentVariable("GCP_SERVICE_ACCOUNT_KEY") ?? "serviceAccountKey.json";
 
         var credentials = GoogleCredential.FromFile(pathToServiceAccountKey);
 
