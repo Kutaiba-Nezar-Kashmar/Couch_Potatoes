@@ -4,5 +4,5 @@ namespace EventService.Application.FetchEvents.Repository;
 
 public interface IFetchEvents
 {
-    Task<IReadOnlyCollection<EventSchema>> FetchEventSchemaForServices(string serviceName);
+    Task<IReadOnlyCollection<EventSchema>> FetchEventSchemasForService(string serviceName);
 }
