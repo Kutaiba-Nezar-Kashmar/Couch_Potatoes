@@ -1,13 +1,12 @@
 ﻿namespace MovieInformation.Application.GetMovieCollection.Exceptions;
 
-public class FailedToGetMovieCollectionException: Exception
+public class FailedToGetMovieCollectionException : Exception
 {
-    public FailedToGetMovieCollectionException():base()
+    public FailedToGetMovieCollectionException() : base()
     {
-        
     }
-    
-    public FailedToGetMovieCollectionException(string msg): base(msg)
+
+    public FailedToGetMovieCollectionException(string msg) : base(msg)
     {
     }
 }
