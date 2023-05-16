@@ -1,5 +1,6 @@
 ﻿using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.Exceptions;
+using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
@@ -37,8 +38,24 @@ public class GetMovieRepository : IGetMovieRepository
         return mappedMovie;
     }
 
-    public Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(int movieId)
+    public async Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(int movieId)
     {
-        throw new NotImplementedException();
+        var res = await _httpClient.GetAsync($"{movieId}/keywords?api_key={_apiKey}");
+
+        if (!res.IsSuccessStatusCode)
+        {
+            throw new HttpException(
+                $"{nameof(GetMovieKeywords)}: Failed to fetch keywords for movie: {movieId}, with status code: {res.StatusCode}");
+        }
+
+        var contentString = await res.Content.ReadAsStringAsync();
+        var dto = JsonDeserializer.Deserialize<KeywordsDetails>(contentString);
+        var mapper = new TmdbKeywordsToKeywords();
+
+       // var keywords = dto.
+       //     .Select(movieCollection => mapper.Map(movieCollection))
+        //    .ToList();
+
+        return new List<Keyword>();
     }
 }

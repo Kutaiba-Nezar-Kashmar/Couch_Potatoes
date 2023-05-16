@@ -1,4 +1,5 @@
 ﻿using MovieInformation.Domain.Models;
+using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 
@@ -35,6 +36,17 @@ public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection
     }
 }
 
+public class TmdbKeywordsToKeywords : IDtoToDomainMapper<KeywordsDetails, Keyword>
+{
+    public Keyword Map(KeywordsDetails from)
+    {
+        return new Keyword
+        {
+            Id = from.Id,
+            Name = from.Name
+        };
+    }
+}
 public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
 {
     public Movie Map(MovieDetail from)
@@ -71,9 +83,9 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             },
             Genres = new List<Genre>
             {
-                new()
+                new ()
                 {
-                    Name = "fix"
+                    
                 }
             }
         };
