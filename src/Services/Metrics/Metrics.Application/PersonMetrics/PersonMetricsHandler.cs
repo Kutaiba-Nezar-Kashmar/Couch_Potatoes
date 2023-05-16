@@ -30,12 +30,17 @@ public class PersonMetricsHandler : IRequestHandler<PersonMetricHandlerRequest,
         _logger = logger;
     }
 
-    public Task<PersonStatistics> Handle
+    public async Task<PersonStatistics> Handle
     (
         PersonMetricHandlerRequest request,
         CancellationToken cancellationToken
     )
     {
-        throw new NotImplementedException();
+        var credits =
+            await _fetchPersonMovieCreditsRepository
+                .FetchPersonMovieCreditsByPersonId(request.PersonId);
+        var statistics =
+            _calculatePersonStatistics.CalculateStatistics(credits);
+        return statistics;
     }
 }
