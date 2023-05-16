@@ -29,6 +29,7 @@ public class GetMovieDetailsRequestHandler : IRequestHandler<GetMovieDetailsRequ
         try
         {
             Movie getMovieRequest = await _getMovieRepository.GetMovie(request.movieId);
+            //TODO keywords, languages, genres
             return getMovieRequest;
         }
         catch (Exception e)

@@ -1,5 +1,6 @@
 ﻿using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
+using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 
 namespace MovieInformation.Infrastructure.Util;
 
@@ -28,6 +29,51 @@ public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection
                 new()
                 {
                     Name = from.OriginalLanguage
+                }
+            }
+        };
+    }
+}
+
+public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
+{
+    public Movie Map(MovieDetail from)
+    {
+        return new Movie
+        {
+            Id = from.Id,
+            Title = from.Title,
+            Summary = from.Overview,
+            ImageUri = from.PosterPath,
+            Budget = from.Budget,
+            RunTime = from.Runtime,
+            BackdropUri = from.BackdropPath,
+            TmdbScore = from.VoteAverage,
+            Status = from.Status,
+            Homepage = from.Homepage,
+            Revenue = from.Revenue,
+            TmbdVoteCount = from.VoteCount,
+            ReleaseDate = DateTime.Parse(from.ReleaseDate),
+            IsForKids = from.Adult,
+            Languages = new List<Language>
+            {
+                new()
+                {
+                    Name = from.OriginalLanguage
+                }
+            },
+            Keywords = new List<Keyword>
+            {
+                new()
+                {
+                    Name = "fix"
+                }
+            },
+            Genres = new List<Genre>
+            {
+                new()
+                {
+                    Name = "fix"
                 }
             }
         };

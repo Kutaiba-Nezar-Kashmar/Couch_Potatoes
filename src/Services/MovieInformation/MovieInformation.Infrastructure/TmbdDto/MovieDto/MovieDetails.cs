@@ -67,7 +67,7 @@ public record MovieDetail
     [property: JsonPropertyName("title")] string Title,
     [property: JsonPropertyName("video")] bool Video,
     [property: JsonPropertyName("vote_average")]
-    double VoteAverage,
+    float VoteAverage,
     [property: JsonPropertyName("vote_count")]
     int VoteCount
 );

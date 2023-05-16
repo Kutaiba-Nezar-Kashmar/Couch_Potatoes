@@ -1,5 +1,6 @@
 ﻿using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.Exceptions;
+using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
 
@@ -27,16 +28,17 @@ public class GetMovieRepository : IGetMovieRepository
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<GetMovieDetailsResponseDto>(contentString);
-        var mapper = new TmdbMovieCollectionToMovie();
+        var dto = JsonDeserializer.Deserialize<MovieDetail>(contentString);
+        var mapper = new TmdbMovieToMovie();
 
-      //  var movie = dto?.Result
-      //      .Select(movie => mapper.Map(movie))
-        //    .ToList();
+        //  var movieDetail = dto?.Result;
+        //map and return 
+        var mappedMovie = mapper.Map(dto);
+        return mappedMovie;
+    }
 
-        return new Movie
-        {
-           
-        };
+    public Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(int movieId)
+    {
+        throw new NotImplementedException();
     }
 }

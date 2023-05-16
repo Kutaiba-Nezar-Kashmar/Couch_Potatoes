@@ -1,6 +1,12 @@
-﻿namespace MovieInformation.Infrastructure.TmbdDto.ResponseDto;
+﻿using System.Text.Json.Serialization;
+using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 
-public class GetMovieDetailsResponseDto
-{
-    
-}
+namespace MovieInformation.Infrastructure.TmbdDto.ResponseDto;
+
+public record GetMovieDetailsResponseDto
+(
+   //bool isForkids,
+ //  string backdrop_path,
+   
+   
+);
