@@ -5,4 +5,5 @@ public class Cast
     public IReadOnlyCollection<int> GenreIds { get; set; }
     public float VoteAverage { get; set; }
     public int VoteCount { get; set; }
+    public string CreditId { get; set; }
 }

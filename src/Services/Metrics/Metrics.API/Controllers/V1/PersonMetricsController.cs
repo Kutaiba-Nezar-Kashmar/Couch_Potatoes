@@ -28,7 +28,7 @@ public class PersonMetricsController : ControllerBase
     {
         try
         {
-            var dto = await _mediator.Send(new PersonMetricHandlerRequest());
+            var dto = await _mediator.Send(new PersonMetricHandlerRequest(personId));
             return Ok(dto);
         }
         catch (Exception e)

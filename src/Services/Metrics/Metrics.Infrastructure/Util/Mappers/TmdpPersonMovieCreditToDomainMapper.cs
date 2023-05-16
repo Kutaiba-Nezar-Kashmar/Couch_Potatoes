@@ -14,14 +14,16 @@ public class TmdpPersonMovieCreditToDomainMapper : IDtoToDomainMapper<GetPersonM
             {
                 GenreIds = c.GenreIds,
                 VoteAverage = c.VoteAverage,
-                VoteCount = c.VoteCount
+                VoteCount = c.VoteCount,
+                CreditId = c.CreditId
             }).ToList(),
             
             CreditsAsCrew = from.Crew.Select(c => new Crew
             {
                 GenreIds = c.GenreIds,
                 VoteAverage = c.VoteAverage,
-                VoteCount = c.VoteCount
+                VoteCount = c.VoteCount,
+                CreditId = c.CreditId
             }).ToList()
         };
     }
