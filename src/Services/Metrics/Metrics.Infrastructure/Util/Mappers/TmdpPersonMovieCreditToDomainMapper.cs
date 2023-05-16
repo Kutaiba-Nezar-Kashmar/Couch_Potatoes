@@ -1,11 +1,12 @@
 ﻿using Metrics.Domain.Models.Person;
+using Metrics.Infrastructure.PersonResponseDtos;
 using Metrics.Infrastructure.TmdbDtos.PersonDto;
 
 namespace Metrics.Infrastructure.Util.Mappers;
 
-public class DtoToDomainMapper : IDtoToDomainMapper<TmdbPersonMovieCreditsDto, PersonMovieCredits>
+public class TmdpPersonMovieCreditToDomainMapper : IDtoToDomainMapper<GetPersonMovieCreditsResponseDto, PersonMovieCredits>
 {
-    public PersonMovieCredits Map(TmdbPersonMovieCreditsDto from)
+    public PersonMovieCredits Map(GetPersonMovieCreditsResponseDto from)
     {
         return new PersonMovieCredits
         {

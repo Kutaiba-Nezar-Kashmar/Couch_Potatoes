@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using System.Net;
+using MediatR;
+using Metrics.API.Controllers.V1.Dto;
+using Metrics.Application.PersonMetrics;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Metrics.API.Controllers.V1;
@@ -18,5 +21,19 @@ public class PersonMetricsController : ControllerBase
     {
         _mediator = mediator;
         _logger = logger;
+    }
+    
+    [HttpGet("{personId}")]
+    public async Task<ActionResult<PersonStatisticsDto>> GetPopularMovies([FromRoute] int personId)
+    {
+        try
+        {
+            var dto = await _mediator.Send(new PersonMetricHandlerRequest());
+            return Ok(dto);
+        }
+        catch (Exception e)
+        {
+            return StatusCode((int) HttpStatusCode.InternalServerError, e);
+        }
     }
 }

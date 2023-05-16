@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Metrics.Application.PersonMetrics.Repositories;
 using Metrics.Domain.Models.Person;
 using Microsoft.Extensions.Logging;
 
