@@ -1,7 +1,8 @@
 using System.Net;
 using Microsoft.Extensions.Logging;
 using Moq;
-using MovieInformation.Application.GetPopularMovies.Repositories;
+using MovieInformation.Application.GetMovieCollection.Repositories;
+using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.Exceptions;
 
 namespace MovieInformation.Test;
@@ -12,6 +13,9 @@ public class Tests
     public void Setup()
     {
     }
+    
+    // TODO: maybe some tests updates
+    // Test cases maybe??
 
     [Test]
     public void Test1()
@@ -24,9 +28,8 @@ public class Tests
         });
 
         var loggerMock = new Mock<ILogger>();
-
         
-        IPopularMovieRepository repository = new PopularMovieRepository(mockFactory.Object);
-        Assert.ThrowsAsync<HttpException>(async () => await repository.GetPopularMovies(2));
+        IMovieCollectionRepository collectionRepository = new MovieCollectionRepository(mockFactory.Object);
+        Assert.ThrowsAsync<HttpException>(async () => await collectionRepository.GetMovieCollection(2, MovieCollection.Popular));
     }
 }
