@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.Domain", "Metrics.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.Infrastructure", "Metrics.Infrastructure\Metrics.Infrastructure.csproj", "{12AB2BF4-22A3-44C5-84FF-EA60EB52FE7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.Test", "Metrics.Test\Metrics.Test.csproj", "{FEBAC01A-F435-4D7C-B28B-532B86BD3150}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{12AB2BF4-22A3-44C5-84FF-EA60EB52FE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12AB2BF4-22A3-44C5-84FF-EA60EB52FE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12AB2BF4-22A3-44C5-84FF-EA60EB52FE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBAC01A-F435-4D7C-B28B-532B86BD3150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBAC01A-F435-4D7C-B28B-532B86BD3150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBAC01A-F435-4D7C-B28B-532B86BD3150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBAC01A-F435-4D7C-B28B-532B86BD3150}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
