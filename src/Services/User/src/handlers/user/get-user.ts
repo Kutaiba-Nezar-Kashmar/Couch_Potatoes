@@ -15,9 +15,7 @@ export async function getUser(
         }))
         .with({ type: OptionType.NOTHING }, () => ({
             type: ResultType.ERROR,
-            error: new UserDoesNotExistException(
-                `User with id ${id} does not exist`
-            )
+            error: new UserDoesNotExistException(id)
         }))
         .run();
 

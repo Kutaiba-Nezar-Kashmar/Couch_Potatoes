@@ -1,17 +1,14 @@
 import express from 'express';
-import middlewares from './middlewares/index';
-import routes from './controllers/index';
+import {applyMiddlewares} from './middlewares/index';
+import {applyControllers} from './controllers/index';
 
-const server = express();
-const PORT = Number(process.env['PORT']) || 8083;
+export const server = express();
+export const PORT = Number(process.env['PORT']) || 8083;
 
-middlewares.apply(server);
-routes.apply(server);
-
-const startServer = () => {
+applyMiddlewares(server);
+applyControllers(server);
+export const startServer = () => {
     server.listen(PORT, () => {
-        `Server started listening on port ${PORT}`;
+        console.log(`Server started listening on port ${PORT}`);
     });
 };
-
-export default startServer;

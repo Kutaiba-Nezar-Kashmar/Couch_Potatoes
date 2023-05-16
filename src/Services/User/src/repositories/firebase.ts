@@ -1,12 +1,12 @@
-import { Firestore } from '@google-cloud/firestore';
+import { firestore } from 'firebase-admin';
+import Firestore = firestore.Firestore;
 
-const serviceAccount =
-    process.env['GCP_SERVICE_ACCOUNT_KEY'] || '../servie-account-key.json';
+const { initializeApp,  cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
 
-const db = new Firestore({
-    projectId: 'couch-potatoes-sep6',
-    keyFilename: serviceAccount,
+const serviceAccount = require(process.env['GCP_SERVICE_ACCOUNT_KEY'] || './path/to/serviceAccountKey.json');
+
+initializeApp({
+    credential: cert(serviceAccount)
 });
-
-const getFirestore = () => db;
-export default getFirestore;
+export const getDb = (): Firestore => getFirestore();

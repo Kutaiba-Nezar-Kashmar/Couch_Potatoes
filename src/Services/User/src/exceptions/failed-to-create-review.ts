@@ -1,5 +1,5 @@
 export class FailedToCreateReviewException extends Error {
     constructor(public reason?: string) {
-        super(reason);
+        super(`Failed to create review: ${reason ?? ""}`);
     }
 }

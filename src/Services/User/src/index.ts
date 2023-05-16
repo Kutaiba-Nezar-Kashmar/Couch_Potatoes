@@ -1,3 +1,3 @@
-import server from './api/server';
+import { startServer } from './api/server';
 
-server();
+startServer();

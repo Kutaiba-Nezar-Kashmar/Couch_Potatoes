@@ -2,7 +2,7 @@ import { Result, ResultType, voidData } from '../common/monads';
 import { FailedToCreateReviewException } from '../exceptions/failed-to-create-review';
 import { UserDoesNotExistException } from '../exceptions/user-does-not-exists';
 import { Review } from '../models/review';
-import getFirestore from './firebase';
+import { getDb } from './firebase';
 
 export interface IReviewRepository {
     getAllForUser(userId: string): Promise<Result<Review[], UserDoesNotExistException>>;
@@ -17,13 +17,18 @@ export class FirebaseReviewRepository implements IReviewRepository {
     private COLLECTION_NAME = 'Reviews';
 
     constructor() {
-        this.db = getFirestore();
+        this.db = getDb();
     }
 
     async getAllForMovie(movieId: number): Promise<Result<Review[], Error>> {
         try {
             const reviewsRef = this.db.collection(this.COLLECTION_NAME).doc(movieId.toString());
             const reviews: Review[] = (await reviewsRef.get()).data() as Review[];
+
+            if (!reviews) {
+                return { type: ResultType.ERROR, error: new Error(`Collection is undefined`) };
+            }
+
             return { type: ResultType.OK, data: reviews };
         } catch (err) {
             return { type: ResultType.ERROR, error: new Error(err) };
@@ -31,7 +36,6 @@ export class FirebaseReviewRepository implements IReviewRepository {
     }
 
     async getAllForUser(userId: string): Promise<Result<Review[], UserDoesNotExistException>> {
-        userId;
         throw new Error('Method not implemented');
     }
 
@@ -46,13 +50,13 @@ export class FirebaseReviewRepository implements IReviewRepository {
                 await reviewsDoc.ref.set({ reviews: [] });
             }
 
-            reviewsDoc.ref.set({ reviews: [review] }, { merge: true });
+            await reviewsDoc.ref.set({ reviews: [review] }, { merge: true });
 
             return { type: ResultType.OK, data: voidData() };
         } catch (err) {
             return {
                 type: ResultType.ERROR,
-                error: new FailedToCreateReviewException(`${err}`),
+                error: new FailedToCreateReviewException(`${err}`)
             };
         }
     }

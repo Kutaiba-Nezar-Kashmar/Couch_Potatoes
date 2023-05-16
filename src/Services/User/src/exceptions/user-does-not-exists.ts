@@ -1,5 +1,5 @@
 export class UserDoesNotExistException extends Error {
-    constructor(public msg?: string) {
-        super(msg);
+    constructor(public id: string) {
+        super(`User with id ${id} does not exist`);
     }
 }

@@ -9,7 +9,7 @@ export interface Review {
 
 export enum ReviewVoteDirection {
     UPVOTE = "Upvote",
-    DOWNVOTE = "Downvote",
+    DOWN_VOTE = "Down_vote",
 }
 
 export interface ReviewVote {
