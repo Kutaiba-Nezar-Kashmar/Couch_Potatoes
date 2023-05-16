@@ -2,3 +2,4 @@ node_modules
 */service-account.json
 **/service-account.json
 ./dist
+dist

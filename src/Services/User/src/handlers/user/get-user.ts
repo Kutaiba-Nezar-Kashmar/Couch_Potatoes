@@ -1,7 +1,7 @@
 import { User } from 'src/models/user';
 import { IUserRepository } from 'src/repositories/user-repository';
 import { OptionType, Result, ResultType } from 'src/common/monads';
-import { match, P } from 'ts-pattern';
+import { match } from 'ts-pattern';
 import { UserDoesNotExistException } from 'src/exceptions/user-does-not-exists';
 
 export async function getUser(
@@ -11,13 +11,13 @@ export async function getUser(
     const existingUser = match(await repository.get(id))
         .with({ type: OptionType.SOME }, (user) => ({
             type: ResultType.OK,
-            data: user.data,
+            data: user.data
         }))
         .with({ type: OptionType.NOTHING }, () => ({
             type: ResultType.ERROR,
             error: new UserDoesNotExistException(
                 `User with id ${id} does not exist`
-            ),
+            )
         }))
         .run();
 
