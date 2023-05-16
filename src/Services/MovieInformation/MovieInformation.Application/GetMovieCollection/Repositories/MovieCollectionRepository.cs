@@ -1,34 +1,31 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using Microsoft.Extensions.Logging;
-using MovieInformation.Domain.Models;
+﻿using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.Exceptions;
-using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
 
-namespace MovieInformation.Application.GetPopularMovies.Repositories;
+namespace MovieInformation.Application.GetMovieCollection.Repositories;
 
-public class PopularMovieRepository : IPopularMovieRepository
+public class MovieCollectionRepository : IMovieCollectionRepository
 {
     // TODO: Make this configurable at runtime
     private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
     private HttpClient _httpClient;
 
-    public PopularMovieRepository(IHttpClientFactory httpClientFactory)
+    public MovieCollectionRepository(IHttpClientFactory httpClientFactory)
     {
         _httpClient = httpClientFactory.CreateClient("HTTP_CLIENT");
     }
 
-    public async Task<MovieCollectionPage> GetPopularMovies(int page)
+    public async Task<MovieCollectionPage> GetMovieCollection
+    (int page,
+        string collectionType)
     {
-        var res = await _httpClient.GetAsync($"popular?api_key={_apiKey}");
+        var res = await _httpClient.GetAsync($"{collectionType}?api_key={_apiKey}");
 
         if (!res.IsSuccessStatusCode)
         {
             throw new HttpException(
-                $"{nameof(GetPopularMovies)}: Failed to fetch popular movies with status code: {res.StatusCode}");
+                $"{nameof(GetMovieCollection)}: Failed to fetch movie collection of type: {collectionType}, with status code: {res.StatusCode}");
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
