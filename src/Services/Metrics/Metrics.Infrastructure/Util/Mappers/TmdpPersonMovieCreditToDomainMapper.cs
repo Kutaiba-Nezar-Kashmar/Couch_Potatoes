@@ -1,5 +1,5 @@
 ﻿using Metrics.Domain.Models.Person;
-using Metrics.Infrastructure.PersonResponseDtos;
+using Metrics.Infrastructure.Responses.PersonResponseDtos;
 using Metrics.Infrastructure.TmdbDtos.PersonDto;
 
 namespace Metrics.Infrastructure.Util.Mappers;

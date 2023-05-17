@@ -22,18 +22,31 @@ public class PersonMetricsController : ControllerBase
         _mediator = mediator;
         _logger = logger;
     }
-    
+
     [HttpGet("{personId}")]
-    public async Task<ActionResult<PersonStatisticsDto>> GetPopularMovies([FromRoute] int personId)
+    public async Task<ActionResult<PersonStatisticsDto>>
+        GetPersonMovieStatistics([FromRoute] int personId)
     {
         try
         {
-            var dto = await _mediator.Send(new PersonMetricHandlerRequest(personId));
+            var stats =
+                await _mediator.Send(new PersonMetricHandlerRequest(personId));
+            var dto = new PersonStatisticsDto
+            {
+                NumberOfMovies = stats.NumberOfMovies,
+                AverageMoviesRatingsAsACast = stats.AverageMoviesRatingsAsACast,
+                AverageMoviesRatingsAsACrew = stats.AverageMoviesRatingsAsACrew,
+                KnownForgenre = stats.KnownForGenre
+            };
             return Ok(dto);
         }
         catch (Exception e)
         {
-            return StatusCode((int) HttpStatusCode.InternalServerError, e);
+            _logger.LogCritical(
+                "Failed to Retrieve statistics with error: {message}",
+                e.Message);
+            return StatusCode((int) HttpStatusCode.InternalServerError,
+                "Failed to get statistics");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Metrics.Infrastructure.TmdbDtos.PersonDto;
 
-namespace Metrics.Infrastructure.PersonResponseDtos;
+namespace Metrics.Infrastructure.Responses.PersonResponseDtos;
 
 public record GetPersonMovieCreditsResponseDto
 (

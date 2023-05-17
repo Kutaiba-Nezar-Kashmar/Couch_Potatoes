@@ -1,7 +1,9 @@
 ﻿using Metrics.Application.PersonMetrics.Exceptions;
+using Metrics.Domain.Models;
 using Metrics.Domain.Models.Person;
 using Metrics.Infrastructure.Exceptions;
-using Metrics.Infrastructure.PersonResponseDtos;
+using Metrics.Infrastructure.Responses;
+using Metrics.Infrastructure.Responses.PersonResponseDtos;
 using Metrics.Infrastructure.Util;
 using Metrics.Infrastructure.Util.Mappers;
 using Microsoft.Extensions.Logging;
@@ -58,6 +60,31 @@ public class FetchPersonMovieCreditsRepository : IFetchPersonMovieCreditsReposit
                 personId);
             throw new FetchPersonMoveCreditsException(
                 $"Cannot fetch person movie credits: {e.Message}", e);
+        }
+    }
+
+    public async Task<IReadOnlyCollection<Genre>> FetchGenres()
+    {
+        try
+        {
+            _logger.LogInformation("Fetching Genres");
+            var response =
+                await _httpClient.GetAsync($"genre/movie/list?api_key={_apiApi}");
+
+            ValidateHttpResponse(response);
+
+            var contentString = await response.Content.ReadAsStringAsync();
+            var deserializedResponse =
+                JsonDeserializer.Deserialize<GetGenreResponseDto>(contentString);
+            
+            var mapper = new TmdbGenreToDomainMapper();
+            return deserializedResponse!.Genres.Select(mapper.Map).ToList();
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical("Unable to fetch Genre");
+            throw new FetchMovieGenreException(
+                $"Cannot fetch genres: {e.Message}", e);
         }
     }
 

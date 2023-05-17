@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Metrics.Application.PersonMetrics.Calculations;
 using Metrics.Application.PersonMetrics.Repositories;
+using Metrics.Domain.Models;
 using Metrics.Domain.Models.Person;
 using Microsoft.Extensions.Logging;
 
@@ -40,10 +41,10 @@ public class PersonMetricsHandler : IRequestHandler<PersonMetricHandlerRequest,
             await _fetchPersonMovieCreditsRepository
                 .FetchPersonMovieCreditsByPersonId(request.PersonId);
         var statistics = PersonStats(credits);
-        return statistics;
+        return await statistics;
     }
 
-    private PersonStatistics PersonStats(PersonMovieCredits credits)
+    private async Task<PersonStatistics> PersonStats(PersonMovieCredits credits)
     {
         var totalNumberOfMovies =
             _calculatePersonStatistics.CalculateNumberOfMovies(credits);
@@ -56,12 +57,29 @@ public class PersonMetricsHandler : IRequestHandler<PersonMetricHandlerRequest,
         var knownFor =
             _calculatePersonStatistics.CalculateKnownForGenre(credits);
 
+        var genre = await GetGenreById(knownFor);
+
         return new PersonStatistics
         {
             NumberOfMovies = totalNumberOfMovies,
             AverageMoviesRatingsAsACast = castAverage,
             AverageMoviesRatingsAsACrew = crewAverage,
-            KnownForGenreId = knownFor
+            KnownForGenre = genre.Name
         };
+    }
+
+    private async Task<Genre> GetGenreById(int id)
+    {
+        var genres = await _fetchPersonMovieCreditsRepository.FetchGenres();
+        var genre = new Genre();
+        foreach (var g in genres)
+        {
+            if (id == g.Id)
+            {
+                genre = g;
+            }
+        }
+
+        return genre;
     }
 }
