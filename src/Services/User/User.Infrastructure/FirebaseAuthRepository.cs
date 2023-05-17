@@ -1,4 +1,5 @@
-﻿using FirebaseAdmin;
+﻿using System.Text.Json;
+using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using User.Application.CreateReviewForMovie.Repository;
@@ -35,11 +36,25 @@ public class FirebaseAuthRepository : IAuthenticationRepository
                 await userRef.SetAsync(domainUser.ToFirestoreDto());
             }
 
+            domainUser.FavoriteMovies = (await GetFavoriteMovies(id)).ToList();
             return domainUser;
         }
         catch (FirebaseAuthException e)
         {
             return null;
         }
+    }
+
+    private async Task<IReadOnlyCollection<int>> GetFavoriteMovies(string userId)
+    {
+        var collection = Firestore.Get().Collection("Users");
+        var userRef = collection.Document(userId);
+        var userSnapshot = await userRef.GetSnapshotAsync();
+        var userFavoriteMovies =
+            JsonSerializer.Deserialize<List<int>>(
+                JsonSerializer.Serialize(userSnapshot.ToDictionary()["FavoriteMovies"],
+                    new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}));
+
+        return !userSnapshot.Exists ? new List<int>() : userFavoriteMovies ?? new List<int>();
     }
 }

@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using User.API.Dtos;
 using User.Application.AddMovieToFavorites;
+using User.Application.GetUser;
+using User.Application.RemoveMovieFromFavorites;
 using User.Domain;
 using User.Domain.Exceptions;
 
@@ -21,6 +23,28 @@ public class UsersController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<CouchPotatoUser>> GetUser([FromRoute] string userId)
+    {
+        try
+        {
+            var user = await _mediator.Send(new GetUserQuery(userId));
+            return Ok(user);
+        }
+        catch (Exception e) when (e is UserDoesNotExistException)
+        {
+            _logger.LogError(0, e.InnerException ?? e,
+                $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(0, e.InnerException ?? e,
+                $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
     [HttpPost("{userId}/favorites")]
     public async Task<ActionResult> AddMovieToFavorite([FromRoute] string userId, [FromBody] AddMovieToFavoriteDto dto)
     {
@@ -37,6 +61,27 @@ public class UsersController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(0, e, $"Failed to process {nameof(AddMovieToFavorite)}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
+    [HttpDelete("{userId}/favorites/{movieId}")]
+    public async Task<ActionResult> RemoveFromFavorites([FromRoute] string userId, [FromRoute] int movieId)
+    {
+        try
+        {
+            await _mediator.Send(new RemoveMovieFromFavoritesCommand(userId, movieId));
+            return Ok();
+        }
+        catch (Exception e) when (e is UserDoesNotExistException)
+        {
+            _logger.LogError(0, e.InnerException ?? e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            return NotFound(e.Message)
+                ;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(0, e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }
