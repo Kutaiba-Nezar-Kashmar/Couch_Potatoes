@@ -1,0 +1,13 @@
+services:
+  person:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+    - 8080:80
+    env_file:
+    - ./.env
+networks:
+  default:
+    name: couch-potatoes-network
+    external: true
