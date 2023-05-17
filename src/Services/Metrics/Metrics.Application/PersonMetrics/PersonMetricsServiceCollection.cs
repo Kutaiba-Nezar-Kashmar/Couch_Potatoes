@@ -1,4 +1,4 @@
-﻿using Metrics.Application.PersonMetrics.Math;
+﻿using Metrics.Application.PersonMetrics.Calculations;
 using Metrics.Application.PersonMetrics.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 

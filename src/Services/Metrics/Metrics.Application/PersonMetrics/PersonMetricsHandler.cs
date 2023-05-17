@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Metrics.Application.PersonMetrics.Math;
+using Metrics.Application.PersonMetrics.Calculations;
 using Metrics.Application.PersonMetrics.Repositories;
 using Metrics.Domain.Models.Person;
 using Microsoft.Extensions.Logging;
@@ -39,8 +39,29 @@ public class PersonMetricsHandler : IRequestHandler<PersonMetricHandlerRequest,
         var credits =
             await _fetchPersonMovieCreditsRepository
                 .FetchPersonMovieCreditsByPersonId(request.PersonId);
-        var statistics =
-            _calculatePersonStatistics.CalculateStatistics(credits);
+        var statistics = PersonStats(credits);
         return statistics;
+    }
+
+    private PersonStatistics PersonStats(PersonMovieCredits credits)
+    {
+        var totalNumberOfMovies =
+            _calculatePersonStatistics.CalculateNumberOfMovies(credits);
+        var castAverage =
+            _calculatePersonStatistics.CalculateAverageMovieRatingAsCast(
+                credits);
+        var crewAverage =
+            _calculatePersonStatistics.CalculateAverageMovieRatingAsCrew(
+                credits);
+        var knownFor =
+            _calculatePersonStatistics.CalculateKnownForGenre(credits);
+
+        return new PersonStatistics
+        {
+            NumberOfMovies = totalNumberOfMovies,
+            AverageMoviesRatingsAsACast = castAverage,
+            AverageMoviesRatingsAsACrew = crewAverage,
+            KnownForGenreId = knownFor
+        };
     }
 }
