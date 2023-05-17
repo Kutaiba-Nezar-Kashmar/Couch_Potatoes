@@ -10,7 +10,7 @@ public static class FetchPersonDetailsServiceCollection
     {
         services
             .AddScoped<IFetchPersonDetailsRepository,
-                IFetchPersonDetailsRepository>();
+                FetchPersonDetailsRepository>();
         return services;
     }
 }

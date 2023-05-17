@@ -42,9 +42,10 @@ public class
         catch (Exception e)
         {
             _logger.LogCritical(
-                "Failed to fetch person details on {Date} with error: {EMessage}",
+                "Failed to fetch person details on {Date} with error: {EMessage} {ex}",
                 DateTimeOffset.UtcNow,
-                e.Message);
+                e.Message,
+                e);
             throw new CannotFetchPersonDetailsException(
                 "Something went wrong when fetching person details", e);
         }
