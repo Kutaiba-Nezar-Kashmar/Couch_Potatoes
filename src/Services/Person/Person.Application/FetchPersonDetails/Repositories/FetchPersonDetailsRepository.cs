@@ -35,7 +35,7 @@ public class FetchPersonDetailsRepository : IFetchPersonDetailsRepository
                 "Fetching person details with id: {PersonId}", personId);
             var response =
                 await _httpClient.GetAsync(
-                    $"person/{personId}?api_key=ee89f342735e902ec9459f6edb50013a");
+                    $"person/{personId}?api_key={_apiApi}");
             
             ValidateHttpResponse(response);
             var contentString = await response.Content.ReadAsStringAsync();
