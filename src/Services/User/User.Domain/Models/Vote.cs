@@ -4,7 +4,7 @@ public class Vote
 {
     public VoteDirection Direction { get; set; }
     public Guid Id { get; set; }
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
 }
 
 public enum VoteDirection

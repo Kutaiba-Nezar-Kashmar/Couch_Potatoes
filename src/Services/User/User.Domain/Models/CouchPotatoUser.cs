@@ -1,11 +1,10 @@
 namespace User.Domain;
 
-public class User
+public class CouchPotatoUser
 {
-    public string Username { get; set; }
+    public string Id { get; set; }
+    public string DisplayName { get; set; }
     public string Email { get; set; }
-    public Gender Gender { get; set; }
-    public DateTime BirthDate { get; set; }
     public List<int> FavoriteMovies { get; set; }= new List<int>();
 }
 

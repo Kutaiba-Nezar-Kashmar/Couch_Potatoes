@@ -4,8 +4,11 @@ namespace User.API.Dtos;
 
 public class ReviewDto
 {
+    [JsonProperty("reviewId")]
+    public string ReviewId{ get; set; }
+    
     [JsonProperty("userId")]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     [JsonProperty("movieId")]
     public int MovieId { get; set; }
     [JsonProperty("rating")]

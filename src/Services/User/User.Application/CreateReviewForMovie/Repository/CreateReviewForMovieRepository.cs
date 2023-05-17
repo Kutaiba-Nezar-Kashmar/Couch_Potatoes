@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Google.Cloud.Firestore;
 using User.Domain;
 using User.Infrastructure;
@@ -23,4 +25,27 @@ public class CreateReviewForMovieRepository : ICreateReviewForMovieRepository
 
         await docRef.SetAsync(updatedReviewsState, SetOptions.MergeAll);
     }
-}
+
+    public async Task<IReadOnlyCollection<Review>> GetReviewsForMovie(int id)
+    {
+        var doc = _reference.Document(id.ToString());
+        var snapshot = await doc.GetSnapshotAsync();
+
+        if (!snapshot.Exists)
+        {
+            return new List<Review>();
+        }
+
+        var elements = snapshot.ToDictionary();
+        var reviews = elements["Reviews"];
+
+        if (reviews is null)
+        {
+            return new List<Review>();
+        }
+
+        return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
+            .Select(dto => dto.ToDomainReview()).ToList();
+    }
+};

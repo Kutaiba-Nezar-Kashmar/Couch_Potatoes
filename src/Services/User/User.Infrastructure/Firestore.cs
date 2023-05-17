@@ -1,3 +1,5 @@
+using FirebaseAdmin;
+using FirebaseAdmin.Auth;
 using Google.Api.Gax;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Firestore;
@@ -20,5 +22,15 @@ public static class Firestore
             EmulatorDetection = EmulatorDetection.EmulatorOrProduction,
             Credential = credentials
         }.Build();
+    }
+
+    public static void CreateFirestoreApp()
+    {
+        var serviceAccount = Environment.GetEnvironmentVariable("GCP_SERVICE_ACCOUNT_KEY") ??
+                             "./service-account-key.json";
+        FirebaseApp.Create(new AppOptions()
+        {
+            Credential = GoogleCredential.FromFile(serviceAccount),
+        });
     }
 }

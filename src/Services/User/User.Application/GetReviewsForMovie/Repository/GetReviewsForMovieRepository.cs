@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Google.Cloud.Firestore;
+using User.Application.CreateReviewForMovie.Repository;
 using User.Domain;
 using User.Infrastructure;
 
@@ -27,17 +28,14 @@ public class GetReviewsForMovieRepository : IGetReviewsForMovieRepository
 
         var elements = snapshot.ToDictionary();
         var reviews = elements["Reviews"];
+        
+        if (reviews is null)
+        {
+            return new List<Review>();
+        }
 
-        return JsonSerializer.Deserialize<List<Review>>(
-            JsonSerializer.Serialize(reviews, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                Converters = {new JsonStringEnumConverter()}
-            }),
-            new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                Converters = {new JsonStringEnumConverter()}
-            }) ?? new List<Review>();
+        return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
+            .Select(dto => dto.ToDomainReview()).ToList();
     }
 }

@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.Extensions.Logging;
 using User.Application.GetReviewsForMovie.Repository;
 using User.Domain;
 
@@ -9,10 +10,12 @@ public record GetReviewsForMovieQuery(int movieId) : IRequest<IReadOnlyCollectio
 public class GetReviewsForMovieHandler : IRequestHandler<GetReviewsForMovieQuery, IReadOnlyCollection<Review>>
 {
     private readonly IGetReviewsForMovieRepository _repository;
+    private readonly ILogger _logger;
 
-    public GetReviewsForMovieHandler(IGetReviewsForMovieRepository repository)
+    public GetReviewsForMovieHandler(IGetReviewsForMovieRepository repository, ILogger<GetReviewsForMovieHandler> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     public async Task<IReadOnlyCollection<Review>> Handle(GetReviewsForMovieQuery request,

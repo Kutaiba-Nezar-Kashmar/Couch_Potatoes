@@ -1,6 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using User.Application.AddMovieToFavorites;
 using User.Application.CreateReviewForMovie;
 using User.Application.GetReviewsForMovie;
+using User.Application.RemoveMovieFromFavorites;
+using User.Application.UpvoteReview;
+using User.Infrastructure;
 
 namespace User.Application;
 
@@ -10,6 +14,10 @@ public static class RootServiceInstaller
     {
         services.InstallGetReviewsForMoviesServices();
         services.InstallCreateReviewForMovieServices();
+        services.InstallAddMovieToFavoritesServices();
+        services.InstallRemoveMovieFromFavoritesServices();
+        services.InstallVoteReviewServices();
+        services.AddScoped<IAuthenticationRepository, FirebaseAuthRepository>();
         return services;
     }
 }

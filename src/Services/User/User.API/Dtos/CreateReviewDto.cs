@@ -5,10 +5,7 @@ namespace User.API.Dtos;
 public class CreateReviewDto
 {
     [JsonProperty("userId")]
-    public Guid UserId { get; set; }
-
-    [JsonProperty("movieId")]
-    public int MovieId { get; set; }
+    public string UserId { get; set; }
 
     [JsonProperty("rating")]
     public float Rating { get; set; }

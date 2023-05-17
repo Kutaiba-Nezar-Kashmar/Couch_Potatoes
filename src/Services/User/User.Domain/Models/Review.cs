@@ -2,7 +2,8 @@ namespace User.Domain;
 
 public class Review
 {
-    public Guid UserId { get; set; }
+    public Guid ReviewId { get; set; }
+    public string UserId { get; set; }
     public int MovieId { get; set; }
     public float Rating { get; set; }
     public string ReviewText { get; set; }
