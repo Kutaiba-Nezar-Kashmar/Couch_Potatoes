@@ -26,6 +26,14 @@ export function useFetchPopularMovies(options?: GetMovieCollectionOptions) {
     })
 }
 
+export function useFetchTopRatedMovies(options?: GetMovieCollectionOptions) {
+    return useQuery({
+        queryKey: [CacheKeys.TOP_RATED], queryFn: async () => {
+            return await getMovieCollection("top_rated", options);
+        }
+    })
+}
+
 export interface GetMovieCollectionOptions {
     skipPages: number;
     numberOfPages: number;
@@ -34,7 +42,7 @@ export interface GetMovieCollectionOptions {
 async function getMovieCollection(collectionName: string, options?: GetMovieCollectionOptions): Promise<Movie[]> {
     const {skipPages, numberOfPages} = options || {skipPages: 0, numberOfPages: 1};
     const config = await getConfig();
-    const response = await fetch(`${config.baseUrl}v1/movie-collection/${collectionName}?skip=${skipPages}&numberOfPages=${numberOfPages}`)
+    const response = await fetch(`${config.baseUrl}/movie-collection/${collectionName}?skip=${skipPages}&numberOfPages=${numberOfPages}`)
     if (!response.ok)
         throw new Error("Something went wrong");
     return response.json();
