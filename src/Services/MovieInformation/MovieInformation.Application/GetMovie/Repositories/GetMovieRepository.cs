@@ -11,6 +11,7 @@ public class GetMovieRepository : IGetMovieRepository
 {
     // TODO: Make this configurable at runtime
     private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
+    
     private HttpClient _httpClient;
 
     public GetMovieRepository(IHttpClientFactory httpClientFactory)
@@ -49,13 +50,12 @@ public class GetMovieRepository : IGetMovieRepository
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<KeywordsDetails>(contentString);
+        var dto = JsonDeserializer.Deserialize<KeywordsDetailsResponseDto>(contentString);
         var mapper = new TmdbKeywordsToKeywords();
 
-       // var keywords = dto.
-       //     .Select(movieCollection => mapper.Map(movieCollection))
-        //    .ToList();
+        
 
-        return new List<Keyword>();
+       return dto!.keywords.Select(mapper.Map).ToList();
+       
     }
 }

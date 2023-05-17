@@ -36,9 +36,9 @@ public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection
     }
 }
 
-public class TmdbKeywordsToKeywords : IDtoToDomainMapper<KeywordsDetails, Keyword>
+public class TmdbKeywordsToKeywords : IDtoToDomainMapper<KeywordResponseDto, Keyword>
 {
-    public Keyword Map(KeywordsDetails from)
+    public Keyword Map(KeywordResponseDto from)
     {
         return new Keyword
         {
@@ -67,13 +67,11 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             TmbdVoteCount = from.VoteCount,
             ReleaseDate = DateTime.Parse(from.ReleaseDate),
             IsForKids = from.Adult,
-            Languages = new List<Language>
+            Languages = from.SpokenLanguages.Select(l => new Language
             {
-                new()
-                {
-                    Name = from.OriginalLanguage
-                }
-            },
+                Code = l.Iso6391,
+                Name = l.Name
+            }).ToList(),
             Keywords = new List<Keyword>
             {
                 new()
@@ -81,13 +79,11 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
                     Name = "fix"
                 }
             },
-            Genres = new List<Genre>
+            Genres = from.Genres.Select(g =>new Genre
             {
-                new ()
-                {
-                    
-                }
-            }
+                Id = g.Id,
+                Name = g.Name
+            }).ToList()
         };
     }
 }

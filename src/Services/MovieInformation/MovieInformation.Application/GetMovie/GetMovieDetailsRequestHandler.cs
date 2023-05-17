@@ -30,7 +30,6 @@ public class GetMovieDetailsRequestHandler : IRequestHandler<GetMovieDetailsRequ
         {
             Movie getMovieRequest = await _getMovieRepository.GetMovie(request.movieId);
             IReadOnlyCollection<Keyword> getMovieKeywords = await _getMovieRepository.GetMovieKeywords(request.movieId);
-            //TODO keywords, languages, genres
             getMovieRequest.Keywords = getMovieKeywords;
             return getMovieRequest;
         }
