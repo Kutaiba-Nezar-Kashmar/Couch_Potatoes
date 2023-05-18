@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useFetchPersonDetails} from "../services/person-service/person-details-service";
 import PersonDetails from "../models/person/person-details";
 import {Flex, Spinner} from "@chakra-ui/react";
-import PersonImage from "../components/person/PersonImage";
 import {getPosterImageUri} from "../services/images";
+import PersonSideBar from "../components/person/PersonSideBar";
 
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
 
@@ -38,8 +38,16 @@ const PersonDetailsPage = () => {
     }
 
     return (
-        <PersonImage uri={getPosterImageUri(person?.profilePath as string) || Background_Temp}
-                     alt={person?.name || 'temp'}/>
+        <PersonSideBar
+            uri={getPosterImageUri(person?.profilePath as string) || Background_Temp}
+            alt={person?.name || 'temp'}
+            known={person?.knownForDepartment}
+            gender={person?.gender}
+            birthday={person?.birthday}
+            placeOfBirth={person?.placeOfBirth}
+            aliases={person?.aliases}
+            homePage={person?.homepage}
+        />
     )
 }
 
