@@ -20,7 +20,7 @@ export interface FetchPersonDetailsOptions {
 // TODO: remember to fetch the base uri later from configs when we setup the gateway
 async function fetchPersonDetails(options: FetchPersonDetailsOptions): Promise<PersonDetails> {
     const {personId} = options;
-    const response = await fetch(`https://localhost:8084/couch-potatoes/api/v1/person/details/${personId}`);
+    const response = await fetch(`http://localhost:8084/couch-potatoes/api/v1/person/details/${personId}`);
     if (!response.ok) throw new Error("Cannot fetch person details");
     return response.json();
 }
