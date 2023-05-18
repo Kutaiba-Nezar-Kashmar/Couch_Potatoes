@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using User.API.Dtos;
 using User.Application.CreateReviewForMovie;
 using User.Application.CreateReviewForMovie.Exceptions;
+using User.Application.DeleteReview;
 using User.Application.GetReviewsForMovie;
 using User.Application.UpdateReviewForMovie;
 using User.Application.UpvoteReview;
@@ -89,6 +90,28 @@ public class ReviewsController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(Update)} in {nameof(ReviewsController)}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
+    [HttpDelete("{movieId}/{reviewId}")]
+    public async Task<ActionResult> Delete([FromRoute] int movieId, [FromRoute] Guid reviewId,
+        [FromBody] DeleteReviewDto dto)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteReviewForMovieCommand(dto.UserId, movieId, reviewId));
+            return Ok();
+        }
+        catch (Exception e) when (e is ReviewDoesNotExistException or UserDoesNotExistException)
+        {
+            _logger.LogError(LogEvent.Api, e, $"Review or user did not exist: {e.InnerException ?? e}");
+            return StatusCode(HttpStatusCode.NotFound.Cast<int>(), e.Message);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(Delete)} in {nameof(ReviewsController)}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }
