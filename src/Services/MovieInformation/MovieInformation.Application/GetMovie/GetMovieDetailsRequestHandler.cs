@@ -30,6 +30,8 @@ public class GetMovieDetailsRequestHandler : IRequestHandler<GetMovieDetailsRequ
         {
             Movie getMovieRequest = await _getMovieRepository.GetMovie(request.movieId);
             IReadOnlyCollection<Keyword> getMovieKeywords = await _getMovieRepository.GetMovieKeywords(request.movieId);
+            IReadOnlyCollection<Image> getMovieImages = await _getMovieRepository.GetMovieImages(request.movieId);
+            getMovieRequest.Backdrops = getMovieImages;
             getMovieRequest.Keywords = getMovieKeywords;
             return getMovieRequest;
         }

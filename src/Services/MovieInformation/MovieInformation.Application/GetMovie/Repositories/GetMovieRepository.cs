@@ -58,4 +58,24 @@ public class GetMovieRepository : IGetMovieRepository
        return dto!.keywords.Select(mapper.Map).ToList();
        
     }
+    
+    public async Task<IReadOnlyCollection<Image>> GetMovieImages(int movieId)
+    {
+        var res = await _httpClient.GetAsync($"{movieId}/images?api_key={_apiKey}");
+
+        if (!res.IsSuccessStatusCode)
+        {
+            throw new HttpException(
+                $"{nameof(GetMovieKeywords)}: Failed to fetch images for movie: {movieId}, with status code: {res.StatusCode}");
+        }
+
+        var contentString = await res.Content.ReadAsStringAsync();
+        var dto = JsonDeserializer.Deserialize<MovieImagesResponseDto>(contentString);
+        var mapper = new TmdbImagesToImages();
+
+
+
+       // return dto.BackdropImages.Select(mapper.Map()).ToList();
+        return null;
+    }   
 }

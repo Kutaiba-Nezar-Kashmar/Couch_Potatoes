@@ -14,12 +14,14 @@ public class MovieDetailsController: ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
 
-    public MovieDetailsController(IMediator mediator, IMapper mapper)
+    public MovieDetailsController(IMediator mediator, IMapper mapper, ILogger<MovieDetailsController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
     
     
@@ -36,7 +38,9 @@ public class MovieDetailsController: ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e);
+            _logger.LogCritical(0,e, e.Message);
+            
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie with movieId: "+movieId+" Not found!");
         }
     }
 }

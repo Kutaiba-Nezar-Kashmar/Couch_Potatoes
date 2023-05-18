@@ -24,7 +24,7 @@ public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection
             TmdbScore = from.VoteAverage,
             TmbdVoteCount = from.VoteCount,
             ReleaseDate = DateTime.Parse(from.ReleaseDate),
-            IsForKids = !from.Adult,
+            IsForKids = from.Adult,
             Languages = new List<Language>
             {
                 new()
@@ -47,6 +47,18 @@ public class TmdbKeywordsToKeywords : IDtoToDomainMapper<KeywordResponseDto, Key
         };
     }
 }
+
+public class TmdbImagesToImages : IDtoToDomainMapper<MovieImagesResponseDto,Image>
+{
+    public Image Map(MovieImagesResponseDto from)
+    {
+        return new Image
+        {
+            filePath = from.BackdropImages[0].ToString()
+        };
+    }
+}
+
 public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
 {
     public Movie Map(MovieDetail from)
@@ -66,7 +78,8 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             Revenue = from.Revenue,
             TmbdVoteCount = from.VoteCount,
             ReleaseDate = DateTime.Parse(from.ReleaseDate),
-            IsForKids = from.Adult,
+            IsForKids = !from.Adult,
+            TagLine = from.Tagline,
             Languages = from.SpokenLanguages.Select(l => new Language
             {
                 Code = l.Iso6391,
@@ -84,6 +97,7 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
                 Id = g.Id,
                 Name = g.Name
             }).ToList()
+           
         };
     }
 }

@@ -7,9 +7,10 @@ import {navBarVPaddingInRem, pageHPaddingInRem, pageVPaddingInRem} from "./setti
 interface BackgroundImageProps {
     children?: React.ReactNode;
     imageUri?: string;
+    blur?: boolean;
 }
 
-const BackgroundImageFull: FC<BackgroundImageProps> = ({children, imageUri}) => {
+const BackgroundImageFull: FC<BackgroundImageProps> = ({children, imageUri,blur}) => {
 
 
     return (
@@ -23,11 +24,13 @@ const BackgroundImageFull: FC<BackgroundImageProps> = ({children, imageUri}) => 
                 width="100%"
                 height="100%"
                 position="absolute"
+
                 zIndex="-1"
                 padding="0 0"
             >
+
             </Box>
-            <Box zIndex="1" padding="0 0">
+            <Box  zIndex="1" padding="0 0">
                 {
                     children
                 }

@@ -1,11 +1,12 @@
 ﻿namespace MovieInformation.Domain.Models;
 
 public class Movie
-{ 
+{
     public int Id { get; set; }
     public string Title { get; set; }
     public string Summary { get; set; }
     public string ImageUri { get; set; }
+    public string TagLine { get; set; }
     public string BackdropUri { get; set; }
     public float TmdbScore { get; set; }
     public int TmbdVoteCount { get; set; }
@@ -20,4 +21,7 @@ public class Movie
     public IEnumerable<Keyword> Keywords { get; set; }
     public IEnumerable<Language> Languages { get; set; }
     public IEnumerable<Genre> Genres { get; set; }
+    public IEnumerable<Image> Posters { get; set; }
+    public IEnumerable<Image> Backdrops { get; set; }
+    public IEnumerable<Image> Logos { get; set; }
 }

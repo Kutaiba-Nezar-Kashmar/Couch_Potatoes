@@ -21,7 +21,7 @@ import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import {useFetchCollections, useFetchPopularMovies} from "../services/movie-collection";
 import {getPosterImageUri} from "../services/images";
-import FrontPageMovieInfoBoxComponent from "../components/FrontPageMovieInfoBoxComponent";
+import FrontPageMovieInfoBoxComponent from "../components/movie-details/FrontPageMovieInfoBoxComponent";
 
 const IndexPage = () => {
     const navigate = useNavigate();
@@ -79,16 +79,16 @@ const IndexPage = () => {
                         {/* TMDB SCORE */}
                         <Flex direction="row" justify="flex-end" width={{base: '300px', md: '450px', lg: '600px'}}>
                             <Text textColor="white">
-                                IMDB Score: {movie?.tmdbScore}
+                                IMDB Score: {movie?.tmdbScore} / 10
                             </Text>
                         </Flex>
                         {/* SEARCH */}
-                        <InputGroup width={{base: '300px', md: '450px', lg: '600px'}} backgroundColor="white">
+                        <InputGroup width={{base: '300px', md: '450px', lg: '600px'}} >
                             <InputLeftElement
                                 pointerEvents="none"
                                 children={<SearchIcon color="gray.300"/>}
                             />
-                            <Input type="text" placeholder="Search"/>
+                            <Input bg="white" type="text" placeholder="Search"/>
                         </InputGroup>
                         {/* PLAY TRAILER */}
                         <Flex direction="row" justify="flex-start" width="100%">

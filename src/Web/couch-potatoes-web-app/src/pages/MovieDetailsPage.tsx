@@ -22,18 +22,19 @@ import {
     ModalOverlay,
     ModalContent,
     ModalCloseButton,
-    ModalBody, Image
+    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link
 } from "@chakra-ui/react";
-import StarRatingComponent from 'react-star-rating-component';
 import Movie from "../models/movie";
-import {SearchIcon} from "@chakra-ui/icons";
-import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-settings";
 import BackgroundImageFull from "../components/BackgroundImageFull";
-import {useFetchCollections, useFetchPopularMovies} from "../services/movie-collection";
 import {getPosterImageUri} from "../services/images";
-import FrontPageMovieInfoBoxComponent from "../components/FrontPageMovieInfoBoxComponent";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from 'react-responsive-carousel';
+import {useFetchMovieDetails} from "../services/movie-details";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay, Navigation, Pagination} from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const MovieDetailsPage = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -49,27 +50,24 @@ const MovieDetailsPage = () => {
         setIsOpen(false);
     };
 
-    const carouselMaxWidth = useBreakpointValue({base: "100%", md: "500px"});
+    const carouselMaxWidth = useBreakpointValue({base: "100%", md: "1000px"});
     const navigate = useNavigate();
-    const TEST_PAGE_URL = '/test';
+
     const [movie, setMovie] = useState<Movie | null>(null);
-    const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+    const {isLoading, isError, data: collections, error} = useFetchMovieDetails(8587);
 
-    const {isLoading, isError, data: collections, error} = useFetchCollections();
+    function convertToHoursAndMinutes(num: number) {
+        const hours = Math.floor(num / 60); // Get the number of hours
+        const minutes = num % 60; // Get the remaining minutes
 
-    // NOTE: (mibui 2023-05-15) Notice we use useEffect here to subscribe to the loading state of the useQuery hook.
-    //                          In the dependency array we put isLoading to ensure that the page rerenders everytime
-    //                          we are fetching data. Under the hood we are subscribing to some event emitter that
-    //                          react-query provides.
+        return `${hours}h ${minutes}m`; // Return the formatted string
+    }
+
     useEffect(() => {
         if (!isLoading) {
-            // NOTE: (mibui 2023-05-15) Take the most popular movie as featured.
-            // TODO: (mibui 2023-05-15) Fetch from /movies/:movieid instead of taking from collection.
-            //                          e.g. setMovie(getMovie((collections as any)!["popular"]["collection"][0]?.id))
             setMovie({
-                ...(collections as any)!["popular"]["collection"][0],
-                genres: [{name: "Horror", id: 1}, {name: "Thriller", id: 2}, {name: "Romance", id: 3}]
-            }); // TODO: Remove the genres, they are only there for testing purposes
+                ...(collections as any)
+            });
         }
     }, [isLoading])
 
@@ -94,71 +92,108 @@ const MovieDetailsPage = () => {
     }
 
     return (
-        <BackgroundImageFull imageUri={getPosterImageUri(movie?.imageUri as string) || Background_Temp}>
+
+        <BackgroundImageFull imageUri={getPosterImageUri(movie?.backdropUri as string)}>
             <BasePage>
                 <Grid
-                    templateColumns={{base: "1fr", md: "repeat(1, 1fr)", lg: "repeat(1, 1fr)"}}
+                    templateColumns={{base: "6fr", md: "repeat(6, 1fr)", lg: "repeat(6, 1fr)"}}
+
                     gap={4}
                 >
                     {/* TITEL AND RATING */}
-                    <GridItem colSpan={1}>
+                    <GridItem colSpan={6} rowSpan={1}>
                         <Stack direction="row" justify="space-between">
-                            <Box bg="yellow">
-                                <Text fontSize="3xl">
-                                    Movie Titel
-                                </Text> </Box>
-                            <Box bg="tomato">
-                                <Text fontSize="1xl">
-                                    Rating: Trash
+                            <Stack direction="column" divider={<StackDivider borderColor='gray.200'/>}>
+                                <Stack direction="row">
+                                    <Box>
+                                        <Text color={"white"} fontSize="3xl">
+                                            {movie?.title}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Text color={"gray"} fontSize="3xl">
+                                            ({movie?.releaseDate.slice(0, 4)})
+                                        </Text>
+                                    </Box>
+
+                                </Stack>
+
+
+                                <Box>
+                                    <Text fontStyle="italic" color={"white"} fontSize="2l">
+                                        {movie?.tagLine}
+                                    </Text>
+                                </Box>
+                            </Stack>
+
+
+                            <Box>
+                                <Text color={"white"} fontSize="2xl">
+                                    Rating: {movie?.tmdbScore}/10
+                                    {/* YEAR AND RUNTIME */}
+
+                                </Text>
+                                <Text color={"white"} fontSize="1xl" align="end">
+                                    Vote#: {movie?.tmdbVoteCount} dummy
+                                    {/* TODO: This does not work */}
                                 </Text>
                             </Box>
                         </Stack>
                     </GridItem>
 
-                    {/* YEAR AND RUNTIME */}
-                    <GridItem>
+                    {/*  YEAR AND RUNTIME */}
+                    <GridItem colSpan={6}
+                              rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
-                            <Box bg="yellow">
-                                <Text fontSize="lg">
-                                    2023
-                                </Text> </Box>
-                            <Box bg="tomato">
-                                <Text fontSize="lg">
-                                    2h 21m
+
+                            {movie?.genres.map((genre) => (
+                                <Text color='white' size='lg' key={genre.id}
+                                      className="keyword-box">
+                                    {genre.name}
+                                </Text>
+                            ))}
+
+
+                            <Box>
+                                <Text color={"white"} fontSize="lg">
+                                    {convertToHoursAndMinutes(movie?.runTime as number)}
                                 </Text>
                             </Box>
                         </Stack>
                     </GridItem>
                     {/* CAROUSEL */}
-                    <GridItem bg="tomato">
-                        <Box maxWidth={carouselMaxWidth} mx="auto">
-                            <Carousel  infiniteLoop={true} autoPlay={true} interval={3000}
-                                      stopOnHover={true}>
-                                <Box
-                                    onClick={() => handleImageClick("https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg")}>
-                                    <Image boxSize="300px" objectFit="cover"
-                                           src="https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg"/>
-                                    <p className="legend">Kutaiba</p>
+                    <GridItem colSpan={5} rowSpan={4}>
+                        <Box>
+                            <Carousel infiniteLoop={true} autoPlay={true} interval={3000}
+                                      stopOnHover={true} dynamicHeight={true}>
+                                <Box _hover={{cursor: "pointer"}}
+                                     onClick={() => handleImageClick(getPosterImageUri(movie?.imageUri as string))}>
+                                    <img style={{
+                                        width: "100%",
+                                        maxHeight: "500px",
+                                        height: "auto",
+                                        objectFit: "contain"
+                                    }}
+                                         src={getPosterImageUri(movie?.imageUri as string)}/>
                                 </Box>
-                                <Box
-                                    onClick={() => handleImageClick("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg")}>
-                                    <Image boxSize="300px" objectFit="cover"
-                                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"/>
-                                    <p className="legend">Michael</p>
+                                <Box _hover={{cursor: "pointer"}}
+                                     onClick={() => handleImageClick(getPosterImageUri(movie?.backdropUri as string))}>
+                                    <img style={{
+                                        width: "100%",
+                                        maxHeight: "500px",
+                                        height: "auto",
+                                        objectFit: "contain"
+                                    }}
+                                         src={getPosterImageUri(movie?.backdropUri as string)}/>
                                 </Box>
-                                <Box
-                                    onClick={() => handleImageClick("https://idsb.tmgrup.com.tr/ly/uploads/images/2021/09/08/142774.jpg")}>
-                                    <Image boxSize="300px" objectFit="cover"
-                                           src="https://idsb.tmgrup.com.tr/ly/uploads/images/2021/09/08/142774.jpg"/>
-                                    <p className="legend">Kasper</p>
-                                </Box>
+
                             </Carousel>
-                            <Modal isOpen={isOpen} onClose={handleModalClose} size="4xl">
+                            <Modal isOpen={isOpen} onClose={handleModalClose} size="6xl">
                                 <ModalOverlay/>
                                 <ModalContent>
                                     <ModalCloseButton/>
                                     <ModalBody justifyContent="center">
-                                        <Image src={expandedImage} alt="Expanded Image" mx="auto" maxHeight={500}/>
+                                        <Image src={expandedImage} alt="Expanded Image" mx="auto" maxHeight={750}/>
                                     </ModalBody>
                                 </ModalContent>
                             </Modal>
@@ -166,52 +201,175 @@ const MovieDetailsPage = () => {
 
                     </GridItem>
 
-                    {/* INFORMATION */}
-                    <GridItem>
-                        <Stack direction="column" divider={<StackDivider borderColor='gray.200'/>}>
-                            <Box bg="yellow">
-                                <Text fontSize="2xl">
-                                    Information
-                                </Text> </Box>
-                            <Box bg="tomato">
-                                <Stack direction="row">
-                                    <Text fontSize="lg" as="b">Summary:</Text>
-                                    <Text fontSize="lg">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et
-                                        tincidunt turpis, non cursus massa. Sed sapien elit, consectetur ut risus eget,
-                                        pulvinar ultricies justo. Nullam aliquam maximus bibendum. Fusce auctor nulla
-                                        maximus viverra gravida. Aliquam vitae viverra nisl. Sed justo justo, pretium et
-                                        vehicula at, imperdiet sit amet tellus. Morbi porta tellus sit amet ligula
-                                        dictum, vitae scelerisque lorem mattis. Nullam ultricies diam interdum sapien
-                                        faucibus tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                                        Vestibulum dapibus pharetra ante, eget aliquet quam vehicula a.
-                                    </Text>
-                                </Stack>
-                                <Stack direction="row">
-                                    <Text fontSize="lg" as="b">Run time:</Text>
-                                    <Text fontSize="lg">
-                                        3h 20 min
-                                    </Text>
-                                </Stack>
-                                <Stack direction="row">
-                                    <Text fontSize="lg" as="b">Release Date:</Text>
-                                    <Text fontSize="lg">
-                                        2023/03/94
-                                    </Text>
-                                </Stack>
-                                <Stack direction="row">
-                                    <Text fontSize="lg" as="b">Kid safe:</Text>
-                                    <Text fontSize="lg">
-                                        Hell naw'
-                                    </Text>
-                                </Stack>
+                    {/* INFORMATIONBAR RIGHT */}
+                    <GridItem rowSpan={6} colSpan={1}>
+                        <Card>
+                            <CardHeader>
+                                <Heading size='md'>Quick facts or something</Heading>
+                            </CardHeader>
 
-                            </Box>
-                        </Stack>
+                            <CardBody>
+                                <Stack divider={<StackDivider/>} spacing='4'>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Runtime
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            {movie?.runTime} minutes
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Release Date
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            {movie?.releaseDate.slice(0, 10)}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            kid friendly
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            {movie?.isForKids ? "Yes" : "No"}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            status
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            {movie?.status}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            home page
+                                        </Heading>
+                                        <Link pt='2' fontSize='sm' href={movie?.homepage}
+                                              color="blue.500"
+
+                                              _hover={{color: "blue.700"}}
+                                              _focus={{outline: "none", boxShadow: "outline"}}
+                                              _active={{color: "blue.700"}}
+                                              target="_blank"
+                                              rel="noopener noreferrer">
+                                            Link to homepage
+                                        </Link>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Budget
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            ${movie?.budget.toLocaleString()}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Revenue
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            ${movie?.revenue.toLocaleString()}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Keywords
+                                        </Heading>
+
+                                        {movie?.keywords.map((keyword) => (
+                                            <Button margin={0.5} colorScheme='teal' size='xs' key={keyword.id}
+                                                    className="keyword-box">
+                                                {keyword.name}
+                                            </Button>
+                                        ))}
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            spoken languages
+                                        </Heading>
+                                        {movie?.languages.map((language) => (
+                                            <Button margin={0.5} colorScheme='teal' size='xs' key={language.code}
+                                                    className="keyword-box">
+                                                {language.name}
+                                            </Button>
+                                        ))}
+                                    </Box>
+                                </Stack>
+                            </CardBody>
+                        </Card>
+                    </GridItem>
+
+                    {/* INFORMATIONBAR BOTTOM */}
+
+                    <GridItem colSpan={5} rowSpan={1}>
+                        <Card>
+                            <CardHeader>
+                                <Heading size='md'>Summary</Heading>
+                            </CardHeader>
+                            <CardBody>
+                                <Stack divider={<StackDivider/>} spacing='4'>
+                                    <Box>
+
+                                        <Text pt='2' fontSize='sm'>
+                                            {movie?.summary}
+                                        </Text>
+                                    </Box>
+
+
+                                </Stack>
+                            </CardBody>
+                        </Card>
+                    </GridItem>
+
+                    <GridItem colSpan={5} >
+                        <Card>
+                            <CardHeader>
+                                <Heading size='md'>Cast</Heading>
+                            </CardHeader>
+
+                            <CardBody>
+                                <Stack divider={<StackDivider/>} spacing='4'>
+
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Analysis
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            See a detailed analysis of all your business clients.
+                                        </Text>
+                                    </Box>
+                                </Stack>
+                            </CardBody>
+                        </Card>
+                    </GridItem>
+
+                    <GridItem colSpan={5} rowSpan={1}>
+                        <Card>
+                            <CardHeader>
+                                <Heading size='md'>Reviews</Heading>
+                            </CardHeader>
+
+                            <CardBody>
+                                <Stack divider={<StackDivider/>} spacing='4'>
+
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Analysis
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            See a detailed analysis of all your business clients.
+                                        </Text>
+                                    </Box>
+                                </Stack>
+                            </CardBody>
+                        </Card>
                     </GridItem>
                 </Grid>
             </BasePage>
         </BackgroundImageFull>
+
     );
 };
 
