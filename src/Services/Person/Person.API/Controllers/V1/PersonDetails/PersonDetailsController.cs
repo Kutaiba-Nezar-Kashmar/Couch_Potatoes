@@ -7,7 +7,7 @@ using Person.Application.FetchPersonDetails;
 namespace Person.API.Controllers.V1.PersonDetails;
 
 [ApiController]
-[Route("api/v1/person/details")]
+[Route("couch-potatoes/api/v1/person/details")]
 public class PersonDetailsController : ControllerBase
 {
     private readonly IMediator _mediator;
