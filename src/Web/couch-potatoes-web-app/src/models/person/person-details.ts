@@ -8,7 +8,7 @@ export default interface PersonDetails {
     homepage?: string;
     knownForDepartment?: string;
     name?: string;
-    PlaceOfBirth?: string;
-    Popularity?: number;
-    ProfilePath?: string;
+    placeOfBirth?: string;
+    popularity?: number;
+    profilePath?: string;
 }

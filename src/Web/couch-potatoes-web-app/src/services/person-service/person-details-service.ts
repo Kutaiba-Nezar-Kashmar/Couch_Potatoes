@@ -6,9 +6,7 @@ import PersonDetails from "../../models/person/person-details";
 export function useFetchPersonDetails(options: FetchPersonDetailsOptions) {
     return useQuery({
         queryKey: [CacheKeys.PERSON_DETAILS + options.personId], queryFn: async (): Promise<object> => {
-            return {
-                person: await fetchPersonDetails(options)
-            }
+            return await fetchPersonDetails(options)
         }
     })
 }
