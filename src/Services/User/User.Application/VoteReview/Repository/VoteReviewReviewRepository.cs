@@ -16,6 +16,51 @@ public class VoteReviewReviewRepository : IVoteReviewRepository
         _collectionReference = Firestore.Get().Collection(CollectionName);
     }
 
+    public async Task<IReadOnlyCollection<Review>> GetReviewsForMovie(int movieId)
+    {
+        var doc = _collectionReference.Document(movieId.ToString());
+        var snapshot = await doc.GetSnapshotAsync();
+
+        if (!snapshot.Exists)
+        {
+            return new List<Review>();
+        }
+
+        var elements = snapshot.ToDictionary();
+        var reviews = elements["Reviews"];
+
+        if (reviews is null)
+        {
+            return new List<Review>();
+        }
+
+        return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
+            .Select(dto => dto.ToDomainReview()).ToList();
+    }
+
+    public async Task DeleteVote(int movieId, Guid reviewId, Guid voteId)
+    {
+        var doc = _collectionReference.Document(movieId.ToString());
+        var snapshot = await doc.GetSnapshotAsync();
+
+        if (!snapshot.Exists)
+        {
+            return;
+        }
+
+        var reviews = await GetReviewsForMovie(movieId);
+
+        var review = reviews.First(review => review.ReviewId == reviewId);
+        review.Votes = review.Votes.Where(vote => vote.Id != voteId).ToList();
+
+        await doc.SetAsync(new Dictionary<string, object>()
+        {
+            {"Reviews", reviews.Select(rev => rev.ToFirestoreReview())}
+        });
+    }
+
+
     public async Task VoteReview(int movieId, Review review, Vote vote)
     {
         var reviewsRef = _collectionReference.Document(movieId.ToString());
@@ -31,14 +76,7 @@ public class VoteReviewReviewRepository : IVoteReviewRepository
             return;
         }
 
-        // NOTE: (mibui 2023-05-17) This is a hack to get it to cast properly
-        var domainReviews = JsonSerializer
-            .Deserialize<List<FirestoreReviewDto>>(JsonSerializer.Serialize(reviewsDto, new JsonSerializerOptions()
-            {
-                PropertyNameCaseInsensitive = true
-            }))?
-            .Select(dto => dto.ToDomainReview()).ToList();
-
+        var domainReviews = await GetReviewsForMovie(movieId);
 
         var reviewToUpvote = domainReviews.First(r => r.ReviewId == review.ReviewId);
 

@@ -7,6 +7,7 @@ using User.Application.GetUser;
 using User.Application.RemoveMovieFromFavorites;
 using User.Domain;
 using User.Domain.Exceptions;
+using User.Infrastructure;
 
 namespace User.API.Controllers;
 
@@ -33,13 +34,13 @@ public class UsersController : ControllerBase
         }
         catch (Exception e) when (e is UserDoesNotExistException)
         {
-            _logger.LogError(0, e.InnerException ?? e,
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
                 $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
             return NotFound(e.Message);
         }
         catch (Exception e)
         {
-            _logger.LogError(0, e.InnerException ?? e,
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
                 $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
@@ -55,12 +56,13 @@ public class UsersController : ControllerBase
         }
         catch (FailedToCreateReviewException e)
         {
-            _logger.LogError(0, e.InnerException ?? e, $"Failed to process {nameof(AddMovieToFavorite)}");
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(AddMovieToFavorite)}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
         }
         catch (Exception e)
         {
-            _logger.LogError(0, e, $"Failed to process {nameof(AddMovieToFavorite)}");
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(AddMovieToFavorite)}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }
@@ -75,13 +77,14 @@ public class UsersController : ControllerBase
         }
         catch (Exception e) when (e is UserDoesNotExistException)
         {
-            _logger.LogError(0, e.InnerException ?? e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
             return NotFound(e.Message)
                 ;
         }
         catch (Exception e)
         {
-            _logger.LogError(0, e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }

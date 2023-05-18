@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using User.Application.AddMovieToFavorites.Exceptions;
 using User.Application.RemoveMovieFromFavorites.Exceptions;
 using User.Application.RemoveMovieFromFavorites.Repository;
 using User.Domain.Exceptions;
@@ -38,7 +37,8 @@ public class RemoveMovieFromFavoritesHandler : IRequestHandler<RemoveMovieFromFa
         }
         catch (Exception e)
         {
-            _logger.LogError(1, e, $"Failed to process {nameof(Handle)} in {nameof(RemoveMovieFromFavoritesHandler)}");
+            _logger.LogError(LogEvent.Application, e,
+                $"Failed to process {nameof(Handle)} in {nameof(RemoveMovieFromFavoritesHandler)}");
             throw new FailedToRemoveMovieFromFavoritesException(request.userId, request.movieId, e);
         }
     }

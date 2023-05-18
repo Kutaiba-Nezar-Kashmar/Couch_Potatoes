@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Google.Cloud.Firestore;
+using Microsoft.Extensions.Logging;
 using User.Domain;
 using User.Infrastructure;
 
@@ -9,43 +10,63 @@ namespace User.Application.CreateReviewForMovie.Repository;
 public class CreateReviewForMovieRepository : ICreateReviewForMovieRepository
 {
     private readonly CollectionReference _reference;
+    private readonly ILogger _logger;
 
-    public CreateReviewForMovieRepository()
+    public CreateReviewForMovieRepository(ILogger<CreateReviewForMovieRepository>  logger)
     {
         _reference = Firestore.Get().Collection("Reviews");
+        _logger = logger;
     }
 
     public async Task CreateForMovie(int movieId, Review review)
     {
-        var docRef = _reference.Document(movieId.ToString());
-        var updatedReviewsState = new Dictionary<string, object>()
+        try
         {
-            {"Reviews", new List<FirestoreReviewDto>() {review.ToFirestoreReview()}}
-        };
+            var docRef = _reference.Document(movieId.ToString());
 
-        await docRef.SetAsync(updatedReviewsState, SetOptions.MergeAll);
+            var reviews = await GetReviewsForMovie(movieId);
+            var updatedReviewsState = reviews.Concat(new[] {review});
+
+            await docRef.SetAsync(new Dictionary<string, object>()
+            {
+                {"Reviews", updatedReviewsState.Select(rev => rev.ToFirestoreReview())}
+            });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(LogEvent.Infrastructure, "Failed to store in Firestore", e);
+            throw;
+        }
     }
 
     public async Task<IReadOnlyCollection<Review>> GetReviewsForMovie(int id)
     {
-        var doc = _reference.Document(id.ToString());
-        var snapshot = await doc.GetSnapshotAsync();
-
-        if (!snapshot.Exists)
+        try
         {
-            return new List<Review>();
+            var doc = _reference.Document(id.ToString());
+            var snapshot = await doc.GetSnapshotAsync();
+
+            if (!snapshot.Exists)
+            {
+                return new List<Review>();
+            }
+
+            var elements = snapshot.ToDictionary();
+            var reviews = elements["Reviews"];
+
+            if (reviews is null)
+            {
+                return new List<Review>();
+            }
+
+            return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                    JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
+                .Select(dto => dto.ToDomainReview()).ToList();
         }
-
-        var elements = snapshot.ToDictionary();
-        var reviews = elements["Reviews"];
-
-        if (reviews is null)
+        catch (Exception e)
         {
-            return new List<Review>();
+            _logger.LogError(LogEvent.Infrastructure, "Failed to store in Firestore", e);
+            throw;
         }
-
-        return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
-                JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
-            .Select(dto => dto.ToDomainReview()).ToList();
     }
 };

@@ -27,7 +27,7 @@ public static class MappingsInstaller
         MapperConfiguration config = new(cfg =>
         {
             cfg.CreateMap<VoteDto, Vote>().ReverseMap();
-            cfg.CreateMap<ReviewDto, Review>().ReverseMap();
+            cfg.CreateMap<ReadReviewDto, Review>().ReverseMap();
         });
 
         services.AddScoped<IMapper>(_ => new Mapper(config));

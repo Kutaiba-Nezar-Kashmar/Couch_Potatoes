@@ -13,6 +13,7 @@ public static class FirestoreReviewDtoExtensions
             Rating = dto.Rating,
             ReviewText = dto.ReviewText,
             CreationDate = DateTime.Parse(dto.CreationDate),
+            LastUpdatedDate = DateTime.Parse(dto.LastUpdatedDate),
             Votes = dto.Votes.Select(dtoVote => new Vote()
             {
                 UserId = dtoVote.UserId,
@@ -28,12 +29,13 @@ public static class FirestoreReviewDtoExtensions
     {
         return new FirestoreReviewDto()
         {
-            UserId = review.UserId.ToString(),
+            UserId = review.UserId,
             ReviewId = review.ReviewId.ToString(),
             MovieId = review.MovieId,
             Rating = review.Rating,
             ReviewText = review.ReviewText,
             CreationDate = review.CreationDate.Date.ToString(),
+            LastUpdatedDate = review.LastUpdatedDate.ToString(),
             Votes = review.Votes.Select(vote => new FirestoreVoteDto()
             {
                 UserId = vote.UserId.ToString(),
@@ -57,13 +59,16 @@ public class FirestoreReviewDto
     public int MovieId { get; set; }
 
     [FirestoreProperty]
-    public float Rating { get; set; }
+    public int Rating { get; set; }
 
     [FirestoreProperty]
     public string ReviewText { get; set; }
 
     [FirestoreProperty]
     public string CreationDate { get; set; }
+
+    [FirestoreProperty]
+    public string LastUpdatedDate { get; set; }
 
     [FirestoreProperty]
     public IReadOnlyCollection<FirestoreVoteDto> Votes { get; set; } = new List<FirestoreVoteDto>();

@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace User.API.Dtos;
 
-public class ReviewDto
+public class ReadReviewDto
 {
     [JsonProperty("reviewId")]
     public string ReviewId{ get; set; }
@@ -18,6 +18,9 @@ public class ReviewDto
     public string ReviewText { get; set; }
     [JsonProperty("creationDate")]
     public DateTime CreationDate { get; set; }
+    [JsonProperty("lastUpdatedDate")]
+    public DateTime LastUpdatedDate { get; set; }
+    
     [JsonProperty("votes")]
     public IReadOnlyCollection<VoteDto> Votes { get; set; } = new List<VoteDto>();
 

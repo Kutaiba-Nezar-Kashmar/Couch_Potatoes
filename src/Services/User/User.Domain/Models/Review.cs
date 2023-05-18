@@ -5,9 +5,10 @@ public class Review
     public Guid ReviewId { get; set; }
     public string UserId { get; set; }
     public int MovieId { get; set; }
-    public float Rating { get; set; }
+    public int Rating { get; set; }
     public string ReviewText { get; set; }
     public DateTime CreationDate { get; set; }
+    public DateTime LastUpdatedDate{ get; set; }
     public IReadOnlyCollection<Vote> Votes { get; set; } = new List<Vote>();
 
     public bool IsValid()

@@ -37,7 +37,7 @@ public class AddMovieToFavoritesHandler : IRequestHandler<AddMovieToFavoritesCom
         }
         catch (Exception e)
         {
-            _logger.LogError(1, e, $"Failed to process {nameof(Handle)} in {nameof(AddMovieToFavoritesHandler)}");
+            _logger.LogError(LogEvent.Application, e, $"Failed to process {nameof(Handle)} in {nameof(AddMovieToFavoritesHandler)}");
             throw new FailedToAddMovieToUserFavoritesException(request.userId, request.movieId, e);
         }
     }

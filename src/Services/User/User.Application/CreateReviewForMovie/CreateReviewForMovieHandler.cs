@@ -8,7 +8,7 @@ using User.Infrastructure;
 
 namespace User.Application.CreateReviewForMovie;
 
-public record CreateReviewForMovieCommand(int movieId, string userId, float rating, string reviewText) : IRequest;
+public record CreateReviewForMovieCommand(int movieId, string userId, int rating, string reviewText) : IRequest;
 
 public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieCommand>
 {
@@ -31,6 +31,7 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
             Rating = request.rating,
             MovieId = request.movieId,
             CreationDate = DateTime.UtcNow,
+            LastUpdatedDate = DateTime.UtcNow,
             ReviewText = request.reviewText,
             UserId = request.userId,
             Votes = new List<Vote>(),
@@ -43,7 +44,6 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
             throw new UserDoesNotExistException(request.userId);
         }
 
-        // TODO: Add check for if movie exists.
         if (!reviewToCreate.IsValid())
         {
             throw new InvalidReviewException();
@@ -63,7 +63,8 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
         }
         catch (Exception e) when (e is not UserHasExistingReviewException)
         {
-            _logger.LogError(1, e, $"Failed to process {nameof(Handle)} in {nameof(CreateReviewForMovieHandler)}");
+            _logger.LogError(LogEvent.Application, e,
+                $"Failed to process {nameof(Handle)} in {nameof(CreateReviewForMovieHandler)}");
             throw new FailedToCreateReviewException(reviewToCreate.MovieId, "", e);
         }
     }

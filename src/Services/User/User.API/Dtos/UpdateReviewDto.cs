@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace User.API.Dtos;
 
-public class CreateReviewDto
+public class UpdateReviewDto
 {
     [JsonProperty("userId")]
     public string UserId { get; set; }
