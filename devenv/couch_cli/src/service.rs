@@ -247,7 +247,7 @@ fn create_compose_file(serviceName: &str) {
         }
     };
 
-    let compose = Compose::new(serviceName, service, networks);
+    let compose = Compose::new(&serviceName.to_lowercase(), service, networks);
     let currentDir = get_current_dir();
     let file = std::fs::OpenOptions::new()
         .write(true)
@@ -260,7 +260,7 @@ fn create_compose_file(serviceName: &str) {
 fn get_dockerfile_string_template(serviceName: &str) -> String {
     let currentDir = get_current_dir().as_str();
     let str = include_str!("../dockerfile-template.txt");
-    str.replace("SERVICE_NAME_REPLACE_TARGET", serviceName)
+    str.replace("SERVICE_NAME_REPLACE_TARGET", &serviceName)
 }
 
 fn create_dockerfile(serviceName: &str) {
