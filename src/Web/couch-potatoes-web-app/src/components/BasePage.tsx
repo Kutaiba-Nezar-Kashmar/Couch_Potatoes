@@ -2,7 +2,12 @@ import { Box } from '@chakra-ui/react';
 import React, { FC, ReactElement, useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import User from '../models/user';
-import {navBarVPaddingInRem, pageHPaddingInRem, pageVPaddingInRem} from "./settings/page-settings";
+import {
+    navBarVPaddingInRem,
+    pageHPaddingInRem,
+    pageVPaddingInRem,
+} from './settings/page-settings';
+import { auth } from '../firebase';
 
 interface BasePageProps {
     children?: React.ReactNode;
@@ -13,7 +18,13 @@ const BasePage: FC<BasePageProps> = ({ children }) => {
 
     async function getUserIfLoggedIn(): Promise<void> {
         // TODO: (mibui 2023-04-14) Implement this
-        setUser({ avatarUri: 'https://bit.ly/dan-abramov', name: 'TEST TEST' });
+        const user = auth.currentUser;
+        if (user) {
+            setUser({
+                avatarUri: 'https://bit.ly/dan-abramov',
+                name: user.displayName || user.email || 'User',
+            });
+        }
     }
 
     useEffect(() => {
@@ -23,7 +34,12 @@ const BasePage: FC<BasePageProps> = ({ children }) => {
     return (
         <>
             <Navbar title="Couch Potatoes" user={user}></Navbar>
-            <Box padding={`${pageVPaddingInRem}rem ${pageHPaddingInRem}rem ${pageVPaddingInRem}rem ${pageHPaddingInRem}rem`}>{children}</Box>;
+            <Box
+                padding={`${pageVPaddingInRem}rem ${pageHPaddingInRem}rem ${pageVPaddingInRem}rem ${pageHPaddingInRem}rem`}
+            >
+                {children}
+            </Box>
+            ;
         </>
     );
 };

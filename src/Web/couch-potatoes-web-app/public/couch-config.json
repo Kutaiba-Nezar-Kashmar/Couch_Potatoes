@@ -1,3 +1,6 @@
 {
-  "baseUrl": "https://localhost:8080/api/"
+    "baseUrl": "https://localhost:8080/api/",
+    "firebase": {
+        "projectId": "couch-potatoes-sep6"
+    }
 }
