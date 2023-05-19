@@ -1,4 +1,5 @@
 ﻿using MovieInformation.Domain.Models;
+using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
@@ -48,7 +49,7 @@ public class TmdbKeywordsToKeywords : IDtoToDomainMapper<KeywordResponseDto, Key
     }
 }
 
-public class TmdbImagesToImages : IDtoToDomainMapper<MovieImagesResponseDto,Image>
+public class TmdbImagesToImages : IDtoToDomainMapper<MovieImagesResponseDto, Image>
 {
     public Image Map(MovieImagesResponseDto from)
     {
@@ -92,12 +93,51 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
                     Name = "fix"
                 }
             },
-            Genres = from.Genres.Select(g =>new Genre
+            Genres = from.Genres.Select(g => new Genre
             {
                 Id = g.Id,
                 Name = g.Name
             }).ToList()
-           
+        };
+    }
+}
+
+public class TmdbPersonMovieCreditToDomainMapper : IDtoToDomainMapper<GetPersonMovieCreditsResponseDto, PersonMovieCredits>
+{
+    public PersonMovieCredits Map(GetPersonMovieCreditsResponseDto from)
+    {
+        return new PersonMovieCredits
+        {
+            CreditsAsCast = from.Cast.Select(c => new CastMember
+            {
+                IsAdult = c.IsAdult,
+                Gender = c.Gender,
+                Id = c.Id,
+                KnownForDepartment = c.KnownForDepartment,
+                Name = c.Name,
+                OriginalName = c.OriginalName,
+                Popularity = c.Popularity,
+                ProfilePath = c.ProfilePath,
+                CastId = c.CastId,
+                Character = c.Character,
+                CreditId = c.CreditId,
+                Order = c.Order
+            }).ToList(),
+
+            CreditsAsCrew = from.Crew.Select(c => new CrewMember
+            {
+                IsAdult = c.IsAdult,
+                Gender = c.Gender,
+                Id = c.Id,
+                KnownForDepartment = c.KnownForDepartment,
+                Name = c.Name,
+                OriginalName = c.OriginalName,
+                Popularity = c.Popularity,
+                ProfilePath = c.ProfilePath,
+                CreditId = c.CreditId,
+                Department = c.Department,
+                job = c.Job
+            }).ToList()
         };
     }
 }

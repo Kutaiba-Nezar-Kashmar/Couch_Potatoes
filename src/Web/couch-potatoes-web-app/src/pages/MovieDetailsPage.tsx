@@ -35,6 +35,9 @@ import {Autoplay, Navigation, Pagination} from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import MovieCredits from "../models/movie_credits";
+import {useFetchMovieCredits} from "../services/movie-credits";
+import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
 
 const MovieDetailsPage = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +57,10 @@ const MovieDetailsPage = () => {
     const navigate = useNavigate();
 
     const [movie, setMovie] = useState<Movie | null>(null);
-    const {isLoading, isError, data: collections, error} = useFetchMovieDetails(8587);
+    const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
+
+    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
+
 
     function convertToHoursAndMinutes(num: number) {
         const hours = Math.floor(num / 60); // Get the number of hours
@@ -65,9 +71,15 @@ const MovieDetailsPage = () => {
 
     useEffect(() => {
         if (!isLoading) {
-            setMovie({
-                ...(collections as any)
-            });
+            const detailsAndCredits = data as MovieCreditsAndDetails
+            setMovie(
+               data?.movieDetails?? null
+
+            );
+            setMovieCredits(
+                data?.credits?? null
+
+            );
         }
     }, [isLoading])
 
@@ -87,8 +99,8 @@ const MovieDetailsPage = () => {
         console.log(error);
     }
 
-    if (collections) {
-        console.log(collections);
+    if (data) {
+        console.log(data);
     }
 
     return (
@@ -110,6 +122,13 @@ const MovieDetailsPage = () => {
                                             {movie?.title}
                                         </Text>
                                     </Box>
+
+                                    {movieCredits && movieCredits?.creditsAsCrew.filter((crew)=>(crew.job==="Sculptor")).map((cast) => (
+                                        <Button margin={0.5} colorScheme='teal' size='xs' key={cast.id}
+                                                className="keyword-box">
+                                            {cast.name}
+                                        </Button>
+                                    ))}
                                     <Box>
                                         <Text color={"gray"} fontSize="3xl">
                                             ({movie?.releaseDate.slice(0, 4)})
@@ -273,7 +292,7 @@ const MovieDetailsPage = () => {
                                             Keywords
                                         </Heading>
 
-                                        {movie?.keywords.map((keyword) => (
+                                        {movie && movie?.keywords.map((keyword) => (
                                             <Button margin={0.5} colorScheme='teal' size='xs' key={keyword.id}
                                                     className="keyword-box">
                                                 {keyword.name}
@@ -284,7 +303,7 @@ const MovieDetailsPage = () => {
                                         <Heading size='xs' textTransform='uppercase'>
                                             spoken languages
                                         </Heading>
-                                        {movie?.languages.map((language) => (
+                                        {movie && movie?.languages.map((language) => (
                                             <Button margin={0.5} colorScheme='teal' size='xs' key={language.code}
                                                     className="keyword-box">
                                                 {language.name}
@@ -316,7 +335,7 @@ const MovieDetailsPage = () => {
                                         <Heading size='xs' textTransform='uppercase'>
                                           Genres
                                         </Heading>
-                                        {movie?.genres.map((genre) => (
+                                        {movie && movie?.genres.map((genre) => (
                                             <Button margin={0.5} colorScheme='teal' size='xs' key={genre.id}
                                                     className="genre">
                                                 {genre.name}
