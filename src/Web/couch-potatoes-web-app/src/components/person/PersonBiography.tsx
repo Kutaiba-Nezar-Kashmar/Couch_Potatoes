@@ -12,9 +12,12 @@ const PersonBiography: FC<PersonBiographyInfo> =
          bio
      }) => {
         return (
-            <VStack align="flex-start" spacing={4} >
+            <VStack align="flex-start" spacing={4}>
                 <Heading color="white" as='h3' size='lg'>
                     {name}
+                </Heading>
+                <Heading color="white" as='h4' size='md'>
+                    Biography
                 </Heading>
                 <Text color="white">
                     {bio}
