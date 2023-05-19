@@ -12,7 +12,7 @@ using MovieInformation.Infrastructure.Util;
 namespace MovieInformation.API.Controllers;
 
 [ApiController]
-[Route("api/v1/movie-collection")]
+[Route("couch-potatoes/api/v1/movie-collection")]
 public class MovieCollectionsController : ControllerBase
 {
     private readonly IMediator _mediator;
