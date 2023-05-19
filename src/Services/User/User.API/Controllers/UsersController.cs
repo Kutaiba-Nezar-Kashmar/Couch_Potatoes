@@ -3,6 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using User.API.Dtos;
 using User.Application.AddMovieToFavorites;
+using User.Application.GetReviewsForUser;
+using User.Application.GetReviewsForUser.Exceptions;
 using User.Application.GetUser;
 using User.Application.RemoveMovieFromFavorites;
 using User.Domain;
@@ -79,8 +81,33 @@ public class UsersController : ControllerBase
         {
             _logger.LogError(LogEvent.Api, e.InnerException ?? e,
                 $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
-            return NotFound(e.Message)
-                ;
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
+    [HttpGet("{userId}/reviews")]
+    public async Task<ActionResult<IReadOnlyCollection<ReadReviewDto>>> GetUserReviews([FromRoute] string userId)
+    {
+        try
+        {
+            var reviews = await _mediator.Send(new GetReviewsForUserQuery(userId));
+            return Ok(reviews);
+        }
+        catch (Exception e) when (e is UserDoesNotExistException)
+        {
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            return NotFound(e.Message);
+        }
+        catch (Exception e) when (e is FailedToRetrieveReviewsForUserException)
+        {
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(RemoveFromFavorites)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
         }
         catch (Exception e)
         {

@@ -28,6 +28,7 @@ public static class MappingsInstaller
         {
             cfg.CreateMap<VoteDto, Vote>().ReverseMap();
             cfg.CreateMap<ReadReviewDto, Review>().ReverseMap();
+            cfg.CreateMap<ReadUserDto, CouchPotatoUser>().ReverseMap();
         });
 
         services.AddScoped<IMapper>(_ => new Mapper(config));

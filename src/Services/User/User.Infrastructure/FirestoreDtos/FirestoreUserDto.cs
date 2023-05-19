@@ -16,6 +16,15 @@ public class FirestoreUserDto
     public string Email { get; set; }
 
     [FirestoreProperty]
+    public string AvatarUri { get; set; }
+
+    [FirestoreProperty]
+    public string? LastSignInTimestamp { get; set; }
+
+    [FirestoreProperty]
+    public string? CreatedTimestamp { get; set; }
+
+    [FirestoreProperty]
     public List<int> FavoriteMovies { get; set; } = new List<int>();
 }
 
@@ -28,7 +37,10 @@ public static class FirestoreUserExtensions
             DisplayName = dto.DisplayName,
             Email = dto.Email,
             FavoriteMovies = dto.FavoriteMovies,
-            Id = dto.Id
+            Id = dto.Id,
+            AvatarUri = dto.AvatarUri,
+            LastSignInTimestamp = dto.LastSignInTimestamp != null ? DateTime.Parse(dto.LastSignInTimestamp) : null,
+            CreatedTimestamp = dto.CreatedTimestamp != null ? DateTime.Parse(dto.CreatedTimestamp) : null
         };
     }
 
@@ -39,7 +51,10 @@ public static class FirestoreUserExtensions
             DisplayName = user.DisplayName,
             Email = user.Email,
             FavoriteMovies = user.FavoriteMovies,
-            Id = user.Id
+            Id = user.Id,
+            AvatarUri = user.AvatarUri,
+            LastSignInTimestamp = user.LastSignInTimestamp.ToString(),
+            CreatedTimestamp = user.CreatedTimestamp.ToString()
         };
     }
 }
