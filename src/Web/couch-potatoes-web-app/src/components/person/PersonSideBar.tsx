@@ -1,5 +1,5 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Box, Image, VStack, StackDivider, Text, Heading, Grid, Flex, Spacer} from "@chakra-ui/react";
+import {Box, Image, VStack, StackDivider, Text, Heading, Grid, Flex, Spacer, Stack} from "@chakra-ui/react";
 
 interface PersonProperties {
     uri?: string;
@@ -24,37 +24,33 @@ const PersonSideBar: FC<PersonProperties> =
          homePage
      }) => {
         return (
-            <VStack spacing={10} align="stretch" padding="50">
-                <Image
-                    src={uri}
-                    alt={alt}
-                    w="20%"
-                    borderRadius='20px'
-                />
+            <VStack align="flex-start" spacing={4}>
+                <Image src={uri} alt={alt} borderRadius='20px'/>
                 <Box>
-                    <Heading as='h4' size='md'>Home Page</Heading>
+                    <Heading color="white" as='h4' size='md'>Home Page</Heading>
                     <Text>{homePage}</Text>
                 </Box>
                 <Box>
-                    <Heading as='h4' size='md'>Know For</Heading>
-                    <Text>{known}</Text>
+                    <Heading color="white" as='h4' size='md'>Know For</Heading>
+                    <Text color="white">{known}</Text>
                 </Box>
                 <Box>
-                    <Heading as='h4' size='md'>Gender</Heading>
-                    <Text>{gender}</Text>
+                    <Heading color="white" as='h4' size='md'>Gender</Heading>
+                    <Text color="white">{gender}</Text>
                 </Box>
                 <Box>
-                    <Heading as='h4' size='md'>Birthday</Heading>
-                    <Text>{birthday?.toString()}</Text>
+                    <Heading color="white" as='h4' size='md'>Birthday</Heading>
+                    <Text color="white">{birthday?.toString()}</Text>
                 </Box>
                 <Box>
-                    <Heading as='h4' size='md'>Place Of Birth</Heading>
-                    <Text>{placeOfBirth}</Text>
+                    <Heading color="white" as='h4' size='md'>Place Of Birth</Heading>
+                    <Text color="white">{placeOfBirth}</Text>
                 </Box>
                 <Box>
-                    <Heading as='h4' size='md'>Aliases</Heading>
-                    {aliases?.map(alias => <Text>{alias}</Text>)}
+                    <Heading as='h4' size='md' color="white">Aliases</Heading>
+                    {aliases?.map(alias => <Text color="white">{alias}</Text>)}
                 </Box>
+
             </VStack>
         )
     }
