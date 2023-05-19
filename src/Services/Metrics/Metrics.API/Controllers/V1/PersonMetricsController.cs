@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Metrics.API.Controllers.V1;
 
 [ApiController]
-[Route("api/v1/person_metrics")]
+[Route("couch-potatoes/api/v1/person_metrics")]
 public class PersonMetricsController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Person.Infrastructure\Person.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\V1\Dto\" />
-  </ItemGroup>
-
 </Project>
