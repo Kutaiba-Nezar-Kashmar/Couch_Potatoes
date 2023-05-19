@@ -8,6 +8,8 @@ import PersonBiography from "../components/person/PersonBiography";
 import BasePage from "../components/BasePage";
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import PersonMovieCredits from "../models/person/person-movie-credits";
+import PersonMovieCreditsCarousel from "../components/person/PersonMovieCreditsCarousel";
+import {PersonMovieCreditsProperties} from "../components/person/PersonCreditsCarouselItem";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
@@ -42,8 +44,9 @@ const PersonDetailsPage = () => {
 
     if (personData) {
         console.log(person)
+        console.log(movieCredits)
     }
-
+//TODO: change to list of cads instead of a carousel
     return (
         <BackgroundImageFull imageUri={Background_Temp}>
             <BasePage>
@@ -64,6 +67,7 @@ const PersonDetailsPage = () => {
                         <PersonBiography name={person?.name} bio={person?.biography}/>
                     </GridItem>
                 </Grid>
+                <PersonMovieCreditsCarousel credits={movieCredits?.creditsAsCast??[]}/>
             </BasePage>
         </BackgroundImageFull>
     )
