@@ -146,12 +146,7 @@ const MovieDetailsPage = () => {
                               rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
 
-                            {movie?.genres.map((genre) => (
-                                <Text color='white' size='lg' key={genre.id}
-                                      className="keyword-box">
-                                    {genre.name}
-                                </Text>
-                            ))}
+
 
 
                             <Box>
@@ -317,6 +312,18 @@ const MovieDetailsPage = () => {
                                         </Text>
                                     </Box>
 
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                          Genres
+                                        </Heading>
+                                        {movie?.genres.map((genre) => (
+                                            <Button margin={0.5} colorScheme='teal' size='xs' key={genre.id}
+                                                    className="genre">
+                                                {genre.name}
+                                            </Button>
+                                        ))}
+                                    </Box>
+
 
                                 </Stack>
                             </CardBody>
@@ -337,7 +344,7 @@ const MovieDetailsPage = () => {
                                             Analysis
                                         </Heading>
                                         <Text pt='2' fontSize='sm'>
-                                            See a detailed analysis of all your business clients.
+                                          UwU
                                         </Text>
                                     </Box>
                                 </Stack>
@@ -359,7 +366,7 @@ const MovieDetailsPage = () => {
                                             Analysis
                                         </Heading>
                                         <Text pt='2' fontSize='sm'>
-                                            See a detailed analysis of all your business clients.
+                                            UwU
                                         </Text>
                                     </Box>
                                 </Stack>
