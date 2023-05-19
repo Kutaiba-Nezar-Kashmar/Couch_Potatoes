@@ -1,4 +1,7 @@
-﻿namespace MovieInformation.Infrastructure.ResponseDtos;
+﻿using MovieInformation.Domain.Models;
+using MovieInformation.Infrastructure.TmbdDto.MovieDto;
+
+namespace MovieInformation.Infrastructure.ResponseDtos;
 
 public class ReadDetailedMovieDto
 {
@@ -9,6 +12,7 @@ public class ReadDetailedMovieDto
     public string ImageUri { get; set; }
     public string BackdropUri { get; set; }
     public float TmdbScore { get; set; }
+    public string TagLine { get; set; }
     public int TmbdVoteCount { get; set; }
     public DateTime ReleaseDate { get; set; }
     public int RunTime { get; set; }
@@ -21,6 +25,9 @@ public class ReadDetailedMovieDto
     public IEnumerable<ReadKeywordDto> Keywords { get; set; }
     public IEnumerable<ReadLanguageDto> Languages { get; set; }
     public IEnumerable<ReadGenreDto> Genres { get; set; }
+  //  public IEnumerable<PosterResponseDto> Posters { get; set; }
+  //  public IEnumerable<BackdropImageResponseDto> Backdrops { get; set; }
+   // public IEnumerable<LogoResponseDto> Logos { get; set; }
 }
 
 public class ReadKeywordDto
