@@ -22,7 +22,7 @@ import {
     ModalOverlay,
     ModalContent,
     ModalCloseButton,
-    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link
+    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link, Divider, background
 } from "@chakra-ui/react";
 import Movie from "../models/movie";
 import BackgroundImageFull from "../components/BackgroundImageFull";
@@ -31,18 +31,18 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {Carousel} from 'react-responsive-carousel';
 import {useFetchMovieDetails} from "../services/movie-details";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, Navigation, Pagination} from "swiper";
+import {Autoplay, Navigation, Pagination, Scrollbar} from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import MovieCredits from "../models/movie_credits";
-import {useFetchMovieCredits} from "../services/movie-credits";
+
 import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
+import MovieCredits from "../models/movie_credits";
 
 const MovieDetailsPage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [expandedImage, setExpandedImage] = useState("");
-
+    const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
     const handleImageClick = (imageUrl: string) => {
         setExpandedImage(imageUrl);
         setIsOpen(true);
@@ -73,12 +73,10 @@ const MovieDetailsPage = () => {
         if (!isLoading) {
             const detailsAndCredits = data as MovieCreditsAndDetails
             setMovie(
-               data?.movieDetails?? null
-
+                data?.movieDetails ?? null
             );
             setMovieCredits(
-                data?.credits?? null
-
+                data?.credits ?? null
             );
         }
     }, [isLoading])
@@ -123,27 +121,7 @@ const MovieDetailsPage = () => {
                                         </Text>
                                     </Box>
 
-                                    {movieCredits && movieCredits?.creditsAsCrew.filter((crew)=>(crew.job==="Sculptor")).map((cast) => (
-                                        <Button margin={0.5} colorScheme='teal' size='xs' key={cast.id}
-                                                className="keyword-box">
-                                            {cast.name}
-                                        </Button>
-                                    ))}
-                                    <Flex overflowX="auto">
-                                        <Box display="flex">
-                                            {/* Render your card elements here */}
-                                            <Box bg="blue.200" width="200px" height="200px" m="4">
-                                                Card 1
-                                            </Box>
-                                            <Box bg="green.200" width="200px" height="200px" m="4">
-                                                Card 2
-                                            </Box>
-                                            <Box bg="red.200" width="200px" height="200px" m="4">
-                                                Card 3
-                                            </Box>
-                                            {/* Add more card elements as needed */}
-                                        </Box>
-                                    </Flex>
+
                                     <Box>
                                         <Text color={"gray"} fontSize="3xl">
                                             ({movie?.releaseDate.slice(0, 4)})
@@ -168,7 +146,7 @@ const MovieDetailsPage = () => {
 
                                 </Text>
                                 <Text color={"white"} fontSize="1xl" align="end">
-                                    Vote#: {movie?.tmdbVoteCount} dummy
+                                    Vote#: {movie?.tmdbVoteCount}
                                     {/* TODO: This does not work */}
                                 </Text>
                             </Box>
@@ -179,8 +157,6 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6}
                               rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
-
-
 
 
                             <Box>
@@ -348,7 +324,7 @@ const MovieDetailsPage = () => {
 
                                     <Box>
                                         <Heading size='xs' textTransform='uppercase'>
-                                          Genres
+                                            Genres
                                         </Heading>
                                         {movie && movie?.genres.map((genre) => (
                                             <Button margin={0.5} colorScheme='teal' size='xs' key={genre.id}
@@ -364,24 +340,38 @@ const MovieDetailsPage = () => {
                         </Card>
                     </GridItem>
 
-                    <GridItem colSpan={5} >
+                    <GridItem colSpan={5}>
                         <Card>
                             <CardHeader>
                                 <Heading size='md'>Cast</Heading>
                             </CardHeader>
+                            <CardBody >
+                                <Flex overflowX="auto" >
+                                    {movieCredits && movieCredits?.creditsAsCast.map((cast) => (
+                                        <Card maxW='sm' minWidth={200} maxWidth={400}>
+                                            <CardBody>
+                                                {getPosterImageUri(cast?.profilePath) ? ( <Image
+                                                    src={getPosterImageUri(cast?.profilePath)}
+                                                    alt='Green double couch with wooden legs'
+                                                    borderRadius='lg'
+                                                />):( <Image
+                                                    src={Background_Temp}
+                                                    alt='yello double couch with wooden legs'
+                                                    borderRadius='lg'
+                                                />)}
 
-                            <CardBody>
-                                <Stack divider={<StackDivider/>} spacing='4'>
+                                                <Stack mt='3' direction="column">
+                                                    <Heading size='sm'> {cast?.name}</Heading>
+                                                    <Text alignSelf="end" fontStyle="italic"  color='teal' fontSize='md'>
+                                                        {cast?.character as string}
+                                                    </Text>
+                                                </Stack>
+                                            </CardBody>
+                                        </Card>
+                                    ))}
+                                </Flex>
 
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Analysis
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                          UwU
-                                        </Text>
-                                    </Box>
-                                </Stack>
+
                             </CardBody>
                         </Card>
                     </GridItem>

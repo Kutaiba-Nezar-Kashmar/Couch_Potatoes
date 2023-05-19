@@ -23,7 +23,7 @@ public class TmdbMovieCollectionToMovie : IDtoToDomainMapper<TmdbMovieCollection
             ImageUri = from.PosterPath,
             BackdropUri = from.BackdropPath,
             TmdbScore = from.VoteAverage,
-            TmbdVoteCount = from.VoteCount,
+            TmdbVoteCount = from.VoteCount,
             ReleaseDate = DateTime.Parse(from.ReleaseDate),
             IsForKids = from.Adult,
             Languages = new List<Language>
@@ -77,7 +77,7 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             Status = from.Status,
             Homepage = from.Homepage,
             Revenue = from.Revenue,
-            TmbdVoteCount = from.VoteCount,
+            TmdbVoteCount = from.VoteCount,
             ReleaseDate = DateTime.Parse(from.ReleaseDate),
             IsForKids = !from.Adult,
             TagLine = from.Tagline,
