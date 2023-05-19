@@ -10,14 +10,17 @@ import {
     navBarHeightInRem,
     pageVPaddingInRem,
 } from '../components/settings/page-settings';
-import { domainUserFromFirebaseUser, getUser } from '../services/user';
+import {
+    domainUserFromFirebaseUser,
+    getAuthenticatedUser,
+} from '../services/user';
 
 const LoginPage: FC = () => {
     const navigate = useNavigate();
     const AUTHENTICATED_REDIRECT = '/authenticated';
 
     const initLogin = async () => {
-        const currentUser = await getUser();
+        const currentUser = await getAuthenticatedUser();
         if (currentUser) {
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             navigate(AUTHENTICATED_REDIRECT);

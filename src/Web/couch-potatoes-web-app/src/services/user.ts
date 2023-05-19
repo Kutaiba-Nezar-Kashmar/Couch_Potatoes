@@ -3,8 +3,13 @@ import { getConfig } from '../configuration/configuration';
 import { auth } from '../firebase';
 import User from '../models/user';
 import { User as FirebaseUser } from 'firebase/auth';
+import userEvent from '@testing-library/user-event';
 
-export async function getUser(): Promise<User | null> {
+export enum UserCacheKeys {
+    GET_USER_WITH_ID = 'GET_USER_WITH_ID_',
+}
+
+export async function getAuthenticatedUser(): Promise<User | null> {
     const { currentUser } = auth;
 
     if (currentUser) {
@@ -65,4 +70,28 @@ export async function getUserFavoriteMovieIds(
     if (!response.ok) throw new Error('Something went wrong');
     const user: User = await response.json();
     return user.favoriteMovies ?? [];
+}
+
+export function useGetUserById(id: string) {
+    return useQuery({
+        queryKey: [UserCacheKeys.GET_USER_WITH_ID + id],
+        queryFn: async () => {
+            return getUserById(id);
+        },
+    });
+}
+
+export async function getUserById(id: string): Promise<User | null> {
+    const config = await getConfig();
+    const response = await fetch(`${config.baseUrl}v1/users/${id}`);
+    if (!response.ok) {
+        return null;
+    }
+
+    const user: User = await response.json();
+    if (!user.avatarUri) {
+        user.avatarUri = `${process.env['PUBLIC_URL']}/blank-profile.png`;
+    }
+
+    return user;
 }

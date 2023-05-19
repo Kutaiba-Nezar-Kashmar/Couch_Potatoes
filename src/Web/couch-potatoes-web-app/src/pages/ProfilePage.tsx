@@ -1,26 +1,45 @@
 import React, { FC, useEffect, useState } from 'react';
 import BasePage from '../components/BasePage';
-import { Flex, Grid, GridItem, Spinner } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Spinner, Text } from '@chakra-ui/react';
 import ProfileInfo, { ColorScheme } from '../components/profile/ProfileInfo';
 import User from '../models/user';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import { getUser } from '../services/user';
+import { getAuthenticatedUser, getUserById } from '../services/user';
 import BackgroundImageFull from '../components/BackgroundImageFull';
 import { navBarHeightInRem } from '../components/settings/page-settings';
 import FavoriteMovieDirectory from '../components/profile/FavoriteMovieDirectory';
+import { useParams } from 'react-router-dom';
 
 const ProfilePage: FC = () => {
     const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const { userId } = useParams();
 
     const navigate = useNavigate();
 
     const initProfile = async () => {
-        const currentUser = await getUser();
-        if (currentUser) {
-            setUser(currentUser);
+        setLoading(true);
+
+        if (!userId) {
+            const currentUser = await getAuthenticatedUser();
+            if (currentUser) {
+                setUser(currentUser);
+                setLoading(false);
+                return;
+            } else {
+                navigate('/login');
+                return;
+            }
+        }
+
+        const userToDisplay = await getUserById(userId);
+        if (userToDisplay) {
+            setUser(userToDisplay);
+            setLoading(false);
         } else {
-            navigate('/login');
+            setUser(null);
+            setLoading(false);
         }
     };
 
@@ -28,7 +47,7 @@ const ProfilePage: FC = () => {
         initProfile();
     }, []);
 
-    if (!user) {
+    if (loading) {
         return (
             <Flex
                 width="100%"
@@ -45,6 +64,18 @@ const ProfilePage: FC = () => {
                 />
             </Flex>
         );
+    }
+
+    if (!user) {
+        <BackgroundImageFull
+            imageUri={`${process.env['PUBLIC_URL']}/gradient-bg.jpg`}
+        >
+            <BasePage>
+                <Flex flexDir="row" width="100%" height="100%">
+                    <Text> User does not exist</Text>
+                </Flex>
+            </BasePage>
+        </BackgroundImageFull>;
     }
 
     return (

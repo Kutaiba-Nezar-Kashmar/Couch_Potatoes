@@ -10,7 +10,10 @@ import {
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import firebase from 'firebase/compat';
-import { domainUserFromFirebaseUser, getUser } from '../services/user';
+import {
+    domainUserFromFirebaseUser,
+    getAuthenticatedUser,
+} from '../services/user';
 
 interface BasePageProps {
     children?: React.ReactNode;
@@ -22,7 +25,7 @@ const BasePage: FC<BasePageProps> = ({ children, styles }) => {
 
     async function getUserIfLoggedIn(): Promise<void> {
         // TODO: (mibui 2023-04-14) Implement this
-        const currentUser = await getUser();
+        const currentUser = await getAuthenticatedUser();
         if (user) {
             setUser(currentUser);
             return;

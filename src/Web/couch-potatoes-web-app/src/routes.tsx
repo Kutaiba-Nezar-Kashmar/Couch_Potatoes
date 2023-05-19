@@ -26,6 +26,10 @@ const routes: RouteObject[] = [
         path: '/profile',
         element: <ProfilePage />,
     },
+    {
+        path: '/profile/:userId',
+        element: <ProfilePage />,
+    },
 ];
 
 export default routes;
