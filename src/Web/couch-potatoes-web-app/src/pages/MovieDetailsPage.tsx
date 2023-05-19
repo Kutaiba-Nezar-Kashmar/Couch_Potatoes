@@ -129,6 +129,21 @@ const MovieDetailsPage = () => {
                                             {cast.name}
                                         </Button>
                                     ))}
+                                    <Flex overflowX="auto">
+                                        <Box display="flex">
+                                            {/* Render your card elements here */}
+                                            <Box bg="blue.200" width="200px" height="200px" m="4">
+                                                Card 1
+                                            </Box>
+                                            <Box bg="green.200" width="200px" height="200px" m="4">
+                                                Card 2
+                                            </Box>
+                                            <Box bg="red.200" width="200px" height="200px" m="4">
+                                                Card 3
+                                            </Box>
+                                            {/* Add more card elements as needed */}
+                                        </Box>
+                                    </Flex>
                                     <Box>
                                         <Text color={"gray"} fontSize="3xl">
                                             ({movie?.releaseDate.slice(0, 4)})
