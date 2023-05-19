@@ -17,7 +17,21 @@ export async function getUser(): Promise<User | null> {
     // NOTE: (mibui 2023-05-19) we check for the string 'undefined' instead of actual undefined
     //                          since that is the behaviour of localStorage::getItem
     if (userJsonFromLocalStorage && userJsonFromLocalStorage !== 'undefined') {
-        const user = JSON.parse(userJsonFromLocalStorage);
+        const user: User = JSON.parse(userJsonFromLocalStorage);
+        if (
+            user.createdTimestamp &&
+            typeof user.createdTimestamp === 'string'
+        ) {
+            user.createdTimestamp = new Date(user.createdTimestamp);
+        }
+
+        if (
+            user.lastSignInTimestamp &&
+            typeof user.lastSignInTimestamp === 'string'
+        ) {
+            user.createdTimestamp = new Date(user.lastSignInTimestamp);
+        }
+
         return user;
     }
 

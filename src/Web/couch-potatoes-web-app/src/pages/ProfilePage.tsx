@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import BasePage from '../components/BasePage';
-import { Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Flex, Grid, GridItem, Spinner } from '@chakra-ui/react';
 import ProfileInfo, { ColorScheme } from '../components/profile/ProfileInfo';
 import User from '../models/user';
 import { auth } from '../firebase';
@@ -27,6 +27,25 @@ const ProfilePage: FC = () => {
     useEffect(() => {
         initProfile();
     }, []);
+
+    if (!user) {
+        return (
+            <Flex
+                width="100%"
+                height="100%"
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Spinner
+                    thickness="4px"
+                    speed="0.65s"
+                    emptyColor="gray.200"
+                    color="blue.500"
+                    size="xl"
+                />
+            </Flex>
+        );
+    }
 
     return (
         <BackgroundImageFull

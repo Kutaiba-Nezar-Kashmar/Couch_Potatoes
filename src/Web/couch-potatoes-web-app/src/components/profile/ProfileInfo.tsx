@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import User from '../../models/user';
 import { Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { safeConvertDateToString } from '../../util/dateutil';
 
 export enum ColorScheme {
     DARK,
@@ -14,8 +15,16 @@ export interface ProfileInfoProps {
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ user, colorScheme }) => {
     const getTextColor = () => {
-        return colorScheme == ColorScheme.DARK ? 'white' : 'black';
+        return colorScheme === ColorScheme.DARK ? 'white' : 'black';
     };
+
+    useEffect(() => {
+        console.log(user);
+    }, [user]);
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Flex direction="column" alignItems="flex-start">
@@ -42,14 +51,14 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, colorScheme }) => {
                 fontSize={{ base: 'xs', lg: 'sm', xl: 'md' }}
                 textColor={getTextColor()}
             >
-                User since: {user?.createdTimestamp?.toLocaleDateString()}
+                User since: {safeConvertDateToString(user.createdTimestamp)}
             </Text>
             <Text
                 fontSize={{ base: 'xs', lg: 'sm', xl: 'md' }}
                 textColor={getTextColor()}
             >
                 Last seen online:{' '}
-                {user?.lastSignInTimestamp?.toLocaleDateString()}
+                {safeConvertDateToString(user.lastSignInTimestamp)}
             </Text>
         </Flex>
     );
