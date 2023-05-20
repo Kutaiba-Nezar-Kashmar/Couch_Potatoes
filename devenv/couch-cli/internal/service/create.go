@@ -67,12 +67,20 @@ func CreatNewService(name string) error {
 		}
 	}
 
+	log.Println("Creating docker-compose.yaml...")
 	err = docker.WriteComposeFile(name)
 	if err != nil {
 		return err
 	}
 
+	log.Println("Creating Dockerfile...")
 	err = docker.WriteDockerfile(name)
+	if err != nil {
+		return err
+	}
+
+	log.Println("Creating .env file...")
+	err = osutil.WriteDotEnvFile(currentDir)
 	if err != nil {
 		return err
 	}
