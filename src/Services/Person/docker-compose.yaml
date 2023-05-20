@@ -1,5 +1,6 @@
 services:
   person:
+    container_name: person-service
     build:
       context: .
       dockerfile: ./Dockerfile

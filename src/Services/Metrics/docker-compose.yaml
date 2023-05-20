@@ -1,5 +1,6 @@
 services:
   metrics:
+    container_name: metrics-service
     build:
       context: .
       dockerfile: ./Dockerfile
