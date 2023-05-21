@@ -17,11 +17,12 @@ const FrontPageMovieInfoBoxComponent: FC<FrontPageMovieInfoBoxComponentProps> = 
             </Text>
             <Flex width="100%" justifyContent="center" alignItems="center">
                 <HStack>
-                    {movie?.genres?.slice(0, 3).map((genre, index) => index == movie.genres?.length - 1 ?
-                        <Text textColor="white" textTransform="uppercase"
-                              fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} </Text> :
-                        <Text textColor="white" textTransform="uppercase"
-                              fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} | </Text>)}
+                    {movie?.genres?.map((genre) =>(
+                            <Text textColor="white" textTransform="uppercase"
+                                  fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} </Text>
+                        ))}
+
+
                 </HStack>
             </Flex>
             <Text textColor="white" fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}>

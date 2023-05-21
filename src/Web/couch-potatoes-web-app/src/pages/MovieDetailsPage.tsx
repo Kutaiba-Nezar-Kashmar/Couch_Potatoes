@@ -65,7 +65,6 @@ const MovieDetailsPage = () => {
     };
 
     const themeColor = "teal";
-    const carouselMaxWidth = useBreakpointValue({base: "100%", md: "1000px"});
     const navigate = useNavigate();
 
 
@@ -73,7 +72,7 @@ const MovieDetailsPage = () => {
     const [recommendedMovies, setRecommendedMovies] = useState<MovieRecommendations | null>(null);
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
 
-    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
+    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(584);
 
 
     function convertToHoursAndMinutes(num: number) {
@@ -131,7 +130,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6} rowSpan={1}>
                         <MovieDetailsHeaderInformationbox movie={movie}
                                                           themeColor={themeColor}></MovieDetailsHeaderInformationbox>
-        <Text>{recommendedMovies?.collection[0].title}</Text>
+
 
                     </GridItem>
 
@@ -139,8 +138,6 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6}
                               rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
-
-
                             <Box>
                                 <Text color={"white"} fontSize="lg">
                                     {convertToHoursAndMinutes(movie?.runTime as number)}
@@ -204,7 +201,7 @@ const MovieDetailsPage = () => {
                     {/*CAST*/}
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
-                                                   movieCredits={movieCredits}></MovieDetailsCastComponent>
+                                                   movieCredits={movieCredits!}></MovieDetailsCastComponent>
                     </GridItem>
                     {/*Recommended Movies*/}
                     <GridItem colSpan={5}>
