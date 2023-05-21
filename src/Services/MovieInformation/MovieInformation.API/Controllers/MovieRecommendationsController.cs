@@ -13,7 +13,7 @@ using MovieInformation.Infrastructure.Util;
 namespace MovieInformation.API.Controllers;
 
 [ApiController]
-[Route("couch-potatoes/api/v1/recommended_movies")]
+[Route("couch-potatoes/api/v1/recommended-movies")]
 public class MovieRecommendationsController : ControllerBase
 {
     private readonly IMediator _mediator;

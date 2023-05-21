@@ -64,6 +64,7 @@ const MovieDetailsPage = () => {
     const navigate = useNavigate();
 
     const [movie, setMovie] = useState<Movie | null>(null);
+    const [recommendedMovies, setRecommendedMovies] = useState<Movie[] | null>(null);
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
 
     const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
@@ -85,6 +86,9 @@ const MovieDetailsPage = () => {
             setMovieCredits(
                 data?.credits ?? null
             );
+            setRecommendedMovies(
+                (data?.movieRecommendations as any)!
+            )
         }
     }, [isLoading])
 
@@ -121,6 +125,8 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6} rowSpan={1}>
                         <MovieDetailsHeaderInformationbox movie={movie}
                                                           themeColor={themeColor}></MovieDetailsHeaderInformationbox>
+
+                        {recommendedMovies![0].title}
                     </GridItem>
 
                     {/*  YEAR AND RUNTIME */}
