@@ -7,7 +7,6 @@ namespace MovieInformation.Application.GetRecommendedMovies.Repositories;
 
 public class GetRecommendedMoviesRepository : IGetRecommendedMoviesRepository
 {
-    // TODO: Make this configurable at runtime
     private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
     private HttpClient _httpClient;
 
