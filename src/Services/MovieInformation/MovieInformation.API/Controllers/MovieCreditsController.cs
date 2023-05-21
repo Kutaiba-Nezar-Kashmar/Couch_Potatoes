@@ -41,7 +41,7 @@ public class MovieCreditsController : ControllerBase
         {
             _logger.LogCritical(0,e, e.Message);
             
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie with movieId: "+movieId+" Not found!");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie credits for movie with movieId: "+movieId+" Not found!");
         }
     }
 }
