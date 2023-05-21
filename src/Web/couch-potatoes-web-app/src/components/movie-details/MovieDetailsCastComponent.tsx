@@ -23,7 +23,7 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                     <Heading size='md'>Cast</Heading>
                 </CardHeader>
                 <CardBody>
-                    <Flex overflowX="auto">
+                    <Flex gap={2} overflowX="auto">
                         {movieCredits && movieCredits?.creditsAsCast.map((cast) => (
                             <Card maxW='sm' minWidth={200} maxWidth={400}>
                                 <CardBody

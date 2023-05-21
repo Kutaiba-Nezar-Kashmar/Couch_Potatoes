@@ -44,6 +44,11 @@ import {MovieDetailsRightInformationbox} from "../components/movie-details/Movie
 import {MovieDetailsBottomInformationbox} from "../components/movie-details/MovieDetailsBottomInformationbox";
 import {MovieDetailsCastComponent} from "../components/movie-details/MovieDetailsCastComponent";
 import {MovieDetailsReviewsComponent} from "../components/movie-details/MovieDetailsReviewsComponent";
+import MovieRecommendations from "../models/movie-Recommedations";
+import {
+    MovieDetailsRecommendedMoviesComponent
+} from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
+
 
 const MovieDetailsPage = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -63,8 +68,9 @@ const MovieDetailsPage = () => {
     const carouselMaxWidth = useBreakpointValue({base: "100%", md: "1000px"});
     const navigate = useNavigate();
 
+
     const [movie, setMovie] = useState<Movie | null>(null);
-    const [recommendedMovies, setRecommendedMovies] = useState<Movie[] | null>(null);
+    const [recommendedMovies, setRecommendedMovies] = useState<MovieRecommendations | null>(null);
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
 
     const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
@@ -87,7 +93,7 @@ const MovieDetailsPage = () => {
                 data?.credits ?? null
             );
             setRecommendedMovies(
-                (data?.movieRecommendations as any)!
+               data?.movieRecommendations ?? null
             )
         }
     }, [isLoading])
@@ -125,8 +131,8 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6} rowSpan={1}>
                         <MovieDetailsHeaderInformationbox movie={movie}
                                                           themeColor={themeColor}></MovieDetailsHeaderInformationbox>
+        <Text>{recommendedMovies?.collection[0].title}</Text>
 
-                        {recommendedMovies![0].title}
                     </GridItem>
 
                     {/*  YEAR AND RUNTIME */}
@@ -199,6 +205,11 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
                                                    movieCredits={movieCredits}></MovieDetailsCastComponent>
+                    </GridItem>
+                    {/*Recommended Movies*/}
+                    <GridItem colSpan={5}>
+                        <MovieDetailsRecommendedMoviesComponent themeColor={themeColor} Background_Temp={Background_Temp}
+                                                   movieRecommendations={recommendedMovies}></MovieDetailsRecommendedMoviesComponent>
                     </GridItem>
 
                     {/*REVIEWS*/}
