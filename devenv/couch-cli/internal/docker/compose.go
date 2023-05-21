@@ -18,9 +18,10 @@ type Compose struct {
 }
 
 type ComposeService struct {
-	Build   ComposeBuild `yaml:"build"`
-	Ports   []string     `yaml:"ports"`
-	EnvFile []string     `yaml:"env_file"`
+	ContainerName string       `yaml:"container_name"`
+	Build         ComposeBuild `yaml:"build"`
+	Ports         []string     `yaml:"ports"`
+	EnvFile       []string     `yaml:"env_file"`
 }
 
 type ComposeBuild struct {
@@ -45,8 +46,9 @@ func NewComposeService(serviceName string, composeService ComposeService, networ
 
 func WriteComposeFile(serviceName string) error {
 	service := ComposeService{
-		Ports:   []string{"8080:80"},
-		EnvFile: []string{"./env"},
+		ContainerName: strings.ToLower(serviceName) + "-service",
+		Ports:         []string{"8080:80"},
+		EnvFile:       []string{"./env"},
 		Build: ComposeBuild{
 			Context:    ".",
 			DockerFile: "./Dockerfile",

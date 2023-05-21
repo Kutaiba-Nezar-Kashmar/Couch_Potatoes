@@ -2,6 +2,7 @@ package osutil
 
 import (
 	"bufio"
+	"fmt"
 	"io/fs"
 	"io/ioutil"
 	"log"
@@ -63,6 +64,19 @@ func ApplyDotenv(dotenvFile string) error {
 				return err2
 			}
 		}
+	}
+
+	return nil
+}
+
+func WriteDotEnvFile(folderPath string) error {
+	filePath := fmt.Sprintf("%v/.env", folderPath)
+
+	emptyBytes := make([]byte, 0)
+
+	err := os.WriteFile(filePath, emptyBytes, 0644)
+	if err != nil {
+		return err
 	}
 
 	return nil
