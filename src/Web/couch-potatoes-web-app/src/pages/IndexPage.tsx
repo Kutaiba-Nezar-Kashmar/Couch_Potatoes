@@ -21,7 +21,7 @@ import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import {useFetchCollections, useFetchPopularMovies} from "../services/movie-collection";
 import {getPosterImageUri} from "../services/images";
-import FrontPageMovieInfoBoxComponent from "../components/movie-details/FrontPageMovieInfoBoxComponent";
+import FrontPageMovieInfoBoxComponent from "../components/FrontPageMovieInfoBoxComponent";
 
 const IndexPage = () => {
     const navigate = useNavigate();

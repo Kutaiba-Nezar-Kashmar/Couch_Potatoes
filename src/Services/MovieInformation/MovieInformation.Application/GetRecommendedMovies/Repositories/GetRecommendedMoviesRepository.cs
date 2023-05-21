@@ -3,29 +3,26 @@ using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
 
-namespace MovieInformation.Application.GetMovieCollection.Repositories;
+namespace MovieInformation.Application.GetRecommendedMovies.Repositories;
 
-public class MovieCollectionRepository : IMovieCollectionRepository
+public class GetRecommendedMoviesRepository : IGetRecommendedMoviesRepository
 {
-  
     private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
     private HttpClient _httpClient;
 
-    public MovieCollectionRepository(IHttpClientFactory httpClientFactory)
+    public GetRecommendedMoviesRepository(IHttpClientFactory httpClientFactory)
     {
         _httpClient = httpClientFactory.CreateClient("HTTP_CLIENT");
     }
 
-    public async Task<MovieCollectionPage> GetMovieCollection
-    (int page,
-        string collectionType)
+    public async Task<MovieCollectionPage> GetRecommendedMovies(int page, int movieId)
     {
-        var res = await _httpClient.GetAsync($"{collectionType}?api_key={_apiKey}");
+        var res = await _httpClient.GetAsync($"{movieId}/recommendations?api_key={_apiKey}");
 
         if (!res.IsSuccessStatusCode)
         {
             throw new HttpException(
-                $"{nameof(GetMovieCollection)}: Failed to fetch movie collection of type: {collectionType}, with status code: {res.StatusCode}");
+                $"{nameof(GetRecommendedMovies)}: Failed to fetch recommended movies from movie with movieID: {movieId}, with status code: {res.StatusCode}");
         }
 
         var contentString = await res.Content.ReadAsStringAsync();

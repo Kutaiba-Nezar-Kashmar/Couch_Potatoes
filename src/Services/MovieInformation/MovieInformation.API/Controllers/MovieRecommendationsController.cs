@@ -4,6 +4,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetMovieCollection;
+using MovieInformation.Application.GetRecommendedMovies;
 using MovieInformation.Domain.Models;
 using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.ResponseDtos;
@@ -12,38 +13,38 @@ using MovieInformation.Infrastructure.Util;
 namespace MovieInformation.API.Controllers;
 
 [ApiController]
-[Route("couch-potatoes/api/v1/movie-collection")]
-public class MovieCollectionsController : ControllerBase
+[Route("couch-potatoes/api/v1/recommended-movies")]
+public class MovieRecommendationsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
 
-    public MovieCollectionsController(IMediator mediator, IMapper mapper, ILogger<MovieCollectionsController> logger)
+    public MovieRecommendationsController(IMediator mediator, IMapper mapper, ILogger<MovieRecommendationsController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
         _logger = logger;
     }
 
-    [HttpGet("{collectionType}")]
-    public async Task<ActionResult<ReadMovieCollectionDto>> GetPopularMovies
+    [HttpGet("{movieId:int}")]
+    public async Task<ActionResult<ReadMovieCollectionDto>> GetRecommendedMovies
     (
-        [FromRoute] string collectionType,
+        [FromRoute] int movieId,
         [FromQuery] int skip,
         [FromQuery] int numberOfPages
-        )
+    )
     {
         try
         {
-            var dto = await _mediator.Send(new GetMovieCollectionRequest(skip, numberOfPages, collectionType));
+            var dto = await _mediator.Send(new GetRecommendedMoviesRequest(skip, numberOfPages, movieId));
             return Ok(_mapper.Map<ReadMovieCollectionDto>(dto));
         }
         catch (Exception e)
         {
             _logger.LogCritical(0,e, e.Message);
             
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie collection of type: "+collectionType+" Not found!");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Recommended movies for movie with movieId: "+movieId+" Not found!");
         }
     }
 }

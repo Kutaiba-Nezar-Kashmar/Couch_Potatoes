@@ -22,7 +22,7 @@ import {
     ModalOverlay,
     ModalContent,
     ModalCloseButton,
-    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link
+    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link, Divider, background, color
 } from "@chakra-ui/react";
 import Movie from "../models/movie";
 import BackgroundImageFull from "../components/BackgroundImageFull";
@@ -31,18 +31,29 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import {Carousel} from 'react-responsive-carousel';
 import {useFetchMovieDetails} from "../services/movie-details";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, Navigation, Pagination} from "swiper";
+import {Autoplay, Navigation, Pagination, Scrollbar} from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import MovieCredits from "../models/movie_credits";
-import {useFetchMovieCredits} from "../services/movie-credits";
+
 import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
+import MovieCredits from "../models/movie_credits";
+import colors from "tailwindcss/colors";
+import {MovieDetailsHeaderInformationbox} from "../components/movie-details/MovieDetailsHeaderInformationbox";
+import {MovieDetailsRightInformationbox} from "../components/movie-details/MovieDetailsRightInformationbox";
+import {MovieDetailsBottomInformationbox} from "../components/movie-details/MovieDetailsBottomInformationbox";
+import {MovieDetailsCastComponent} from "../components/movie-details/MovieDetailsCastComponent";
+import {MovieDetailsReviewsComponent} from "../components/movie-details/MovieDetailsReviewsComponent";
+import MovieRecommendations from "../models/movie-Recommedations";
+import {
+    MovieDetailsRecommendedMoviesComponent
+} from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
+
 
 const MovieDetailsPage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [expandedImage, setExpandedImage] = useState("");
-
+    const Background_Temp = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
     const handleImageClick = (imageUrl: string) => {
         setExpandedImage(imageUrl);
         setIsOpen(true);
@@ -53,10 +64,13 @@ const MovieDetailsPage = () => {
         setIsOpen(false);
     };
 
+    const themeColor = "teal";
     const carouselMaxWidth = useBreakpointValue({base: "100%", md: "1000px"});
     const navigate = useNavigate();
 
+
     const [movie, setMovie] = useState<Movie | null>(null);
+    const [recommendedMovies, setRecommendedMovies] = useState<MovieRecommendations | null>(null);
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
 
     const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
@@ -73,13 +87,14 @@ const MovieDetailsPage = () => {
         if (!isLoading) {
             const detailsAndCredits = data as MovieCreditsAndDetails
             setMovie(
-               data?.movieDetails?? null
-
+                data?.movieDetails ?? null
             );
             setMovieCredits(
-                data?.credits?? null
-
+                data?.credits ?? null
             );
+            setRecommendedMovies(
+               data?.movieRecommendations ?? null
+            )
         }
     }, [isLoading])
 
@@ -112,60 +127,18 @@ const MovieDetailsPage = () => {
 
                     gap={4}
                 >
-                    {/* TITEL AND RATING */}
+                    {/* Movie header information */}
                     <GridItem colSpan={6} rowSpan={1}>
-                        <Stack direction="row" justify="space-between">
-                            <Stack direction="column" divider={<StackDivider borderColor='gray.200'/>}>
-                                <Stack direction="row">
-                                    <Box>
-                                        <Text color={"white"} fontSize="3xl">
-                                            {movie?.title}
-                                        </Text>
-                                    </Box>
+                        <MovieDetailsHeaderInformationbox movie={movie}
+                                                          themeColor={themeColor}></MovieDetailsHeaderInformationbox>
+        <Text>{recommendedMovies?.collection[0].title}</Text>
 
-                                    {movieCredits && movieCredits?.creditsAsCrew.filter((crew)=>(crew.job==="Sculptor")).map((cast) => (
-                                        <Button margin={0.5} colorScheme='teal' size='xs' key={cast.id}
-                                                className="keyword-box">
-                                            {cast.name}
-                                        </Button>
-                                    ))}
-                                    <Box>
-                                        <Text color={"gray"} fontSize="3xl">
-                                            ({movie?.releaseDate.slice(0, 4)})
-                                        </Text>
-                                    </Box>
-
-                                </Stack>
-
-
-                                <Box>
-                                    <Text fontStyle="italic" color={"white"} fontSize="2l">
-                                        {movie?.tagLine}
-                                    </Text>
-                                </Box>
-                            </Stack>
-
-
-                            <Box>
-                                <Text color={"white"} fontSize="2xl">
-                                    Rating: {movie?.tmdbScore}/10
-                                    {/* YEAR AND RUNTIME */}
-
-                                </Text>
-                                <Text color={"white"} fontSize="1xl" align="end">
-                                    Vote#: {movie?.tmdbVoteCount} dummy
-                                    {/* TODO: This does not work */}
-                                </Text>
-                            </Box>
-                        </Stack>
                     </GridItem>
 
                     {/*  YEAR AND RUNTIME */}
                     <GridItem colSpan={6}
                               rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
-
-
 
 
                             <Box>
@@ -179,7 +152,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5} rowSpan={4}>
                         <Box>
                             <Carousel infiniteLoop={true} autoPlay={true} interval={3000}
-                                      stopOnHover={true} dynamicHeight={true}>
+                                      stopOnHover={true}>
                                 <Box _hover={{cursor: "pointer"}}
                                      onClick={() => handleImageClick(getPosterImageUri(movie?.imageUri as string))}>
                                     <img style={{
@@ -217,180 +190,31 @@ const MovieDetailsPage = () => {
 
                     {/* INFORMATIONBAR RIGHT */}
                     <GridItem rowSpan={6} colSpan={1}>
-                        <Card>
-                            <CardHeader>
-                                <Heading size='md'>Quick facts or something</Heading>
-                            </CardHeader>
-
-                            <CardBody>
-                                <Stack divider={<StackDivider/>} spacing='4'>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Runtime
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            {movie?.runTime} minutes
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Release Date
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            {movie?.releaseDate.slice(0, 10)}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            kid friendly
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            {movie?.isForKids ? "Yes" : "No"}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            status
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            {movie?.status}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            home page
-                                        </Heading>
-                                        <Link pt='2' fontSize='sm' href={movie?.homepage}
-                                              color="blue.500"
-
-                                              _hover={{color: "blue.700"}}
-                                              _focus={{outline: "none", boxShadow: "outline"}}
-                                              _active={{color: "blue.700"}}
-                                              target="_blank"
-                                              rel="noopener noreferrer">
-                                            Link to homepage
-                                        </Link>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Budget
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            ${movie?.budget.toLocaleString()}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Revenue
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            ${movie?.revenue.toLocaleString()}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Keywords
-                                        </Heading>
-
-                                        {movie && movie?.keywords.map((keyword) => (
-                                            <Button margin={0.5} colorScheme='teal' size='xs' key={keyword.id}
-                                                    className="keyword-box">
-                                                {keyword.name}
-                                            </Button>
-                                        ))}
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            spoken languages
-                                        </Heading>
-                                        {movie && movie?.languages.map((language) => (
-                                            <Button margin={0.5} colorScheme='teal' size='xs' key={language.code}
-                                                    className="keyword-box">
-                                                {language.name}
-                                            </Button>
-                                        ))}
-                                    </Box>
-                                </Stack>
-                            </CardBody>
-                        </Card>
+                        <MovieDetailsRightInformationbox movie={movie}
+                                                         themeColor={themeColor}></MovieDetailsRightInformationbox>
                     </GridItem>
 
                     {/* INFORMATIONBAR BOTTOM */}
 
                     <GridItem colSpan={5} rowSpan={1}>
-                        <Card>
-                            <CardHeader>
-                                <Heading size='md'>Summary</Heading>
-                            </CardHeader>
-                            <CardBody>
-                                <Stack divider={<StackDivider/>} spacing='4'>
-                                    <Box>
-
-                                        <Text pt='2' fontSize='sm'>
-                                            {movie?.summary}
-                                        </Text>
-                                    </Box>
-
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                          Genres
-                                        </Heading>
-                                        {movie && movie?.genres.map((genre) => (
-                                            <Button margin={0.5} colorScheme='teal' size='xs' key={genre.id}
-                                                    className="genre">
-                                                {genre.name}
-                                            </Button>
-                                        ))}
-                                    </Box>
-
-
-                                </Stack>
-                            </CardBody>
-                        </Card>
+                        <MovieDetailsBottomInformationbox movie={movie} movieCredits={movieCredits}
+                                                          themeColor={themeColor}></MovieDetailsBottomInformationbox>
                     </GridItem>
 
-                    <GridItem colSpan={5} >
-                        <Card>
-                            <CardHeader>
-                                <Heading size='md'>Cast</Heading>
-                            </CardHeader>
-
-                            <CardBody>
-                                <Stack divider={<StackDivider/>} spacing='4'>
-
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Analysis
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                          UwU
-                                        </Text>
-                                    </Box>
-                                </Stack>
-                            </CardBody>
-                        </Card>
+                    {/*CAST*/}
+                    <GridItem colSpan={5}>
+                        <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
+                                                   movieCredits={movieCredits}></MovieDetailsCastComponent>
+                    </GridItem>
+                    {/*Recommended Movies*/}
+                    <GridItem colSpan={5}>
+                        <MovieDetailsRecommendedMoviesComponent themeColor={themeColor} Background_Temp={Background_Temp}
+                                                   movieRecommendations={recommendedMovies}></MovieDetailsRecommendedMoviesComponent>
                     </GridItem>
 
+                    {/*REVIEWS*/}
                     <GridItem colSpan={5} rowSpan={1}>
-                        <Card>
-                            <CardHeader>
-                                <Heading size='md'>Reviews</Heading>
-                            </CardHeader>
-
-                            <CardBody>
-                                <Stack divider={<StackDivider/>} spacing='4'>
-
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Analysis
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            UwU
-                                        </Text>
-                                    </Box>
-                                </Stack>
-                            </CardBody>
-                        </Card>
+                        <MovieDetailsReviewsComponent></MovieDetailsReviewsComponent>
                     </GridItem>
                 </Grid>
             </BasePage>

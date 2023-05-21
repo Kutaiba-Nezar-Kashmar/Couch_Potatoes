@@ -1,7 +1,7 @@
 import {Flex, HStack, Text, VStack} from "@chakra-ui/react";
 import StarRatingComponent from "react-star-rating-component";
 import React, {FC} from "react";
-import Movie from "../../models/movie";
+import Movie from "../models/movie";
 
 export interface FrontPageMovieInfoBoxComponentProps {
     movie: Movie | null;
