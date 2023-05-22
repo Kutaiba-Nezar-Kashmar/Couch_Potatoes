@@ -4,8 +4,10 @@ import {
     Grid,
     VStack,
     Flex,
+    Text,
     ResponsiveValue,
     useBreakpointValue,
+    Tooltip,
 } from '@chakra-ui/react';
 import Movie from '../../models/movie';
 import { Theme } from '../../models/theme';
@@ -36,18 +38,24 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
     });
 
     useEffect(() => {
-        setMoviesPerRow(moviesPerRowToDisplay ?? 3);
-    }, [moviesPerRow]);
+        setMoviesPerRow(moviesPerRowToDisplay ?? 5);
+    }, [moviesPerRow, movies]);
 
     return (
         <>
-            <Heading as="h3" textColor={getTextColor()}>
+            <Heading
+                as="h3"
+                size={{ base: 'lg', sm: 'md', md: 'lg' }}
+                textColor={getTextColor()}
+            >
                 Favorites{' '}
                 {!editing ? (
-                    <EditIcon
-                        cursor="pointer"
-                        onClick={() => setEditing(!editing)}
-                    />
+                    <Tooltip label="Edit favorite movies list">
+                        <EditIcon
+                            cursor="pointer"
+                            onClick={() => setEditing(!editing)}
+                        />
+                    </Tooltip>
                 ) : (
                     <CheckIcon
                         cursor="pointer"

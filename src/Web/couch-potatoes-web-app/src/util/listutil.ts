@@ -4,7 +4,7 @@ export function groupElements<T>(xs: T[], elementsPerGroup: number): T[][] {
 
     let buffer: T[] = [];
     xs.forEach((elm, index) => {
-        if (counter === 3) {
+        if (counter === elementsPerGroup) {
             counter = 0;
             groups.push(buffer);
             buffer = [];

@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import User from '../models/user';
 import { User as FirebaseUser } from 'firebase/auth';
 import userEvent from '@testing-library/user-event';
+import { stringify } from 'querystring';
 
 export enum UserCacheKeys {
     GET_USER_WITH_ID = 'GET_USER_WITH_ID_',
@@ -66,10 +67,33 @@ export async function getUserFavoriteMovieIds(
     userId: string
 ): Promise<number[]> {
     const config = await getConfig();
-    const response = await fetch(`${config.baseUrl}v1/users/${userId}`);
+    const response = await fetch(`${config.baseUrl}/users/${userId}`);
     if (!response.ok) throw new Error('Something went wrong');
     const user: User = await response.json();
     return user.favoriteMovies ?? [];
+}
+
+export async function addFavoriteMovie(
+    userId: string,
+    movieId: number
+): Promise<boolean> {
+    const config = await getConfig();
+    const body = { movieId: movieId };
+    const options: RequestInit = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+    };
+    const response = await fetch(
+        `${config.baseUrl}/users/${userId}/favorites`,
+        options
+    );
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return true;
 }
 
 export function useGetUserById(id: string) {
@@ -94,4 +118,21 @@ export async function getUserById(id: string): Promise<User | null> {
     }
 
     return user;
+}
+
+export async function deleteFavoriteMovieForUser(
+    userId: string,
+    movieId: number
+): Promise<boolean> {
+    const config = await getConfig();
+    const response = await fetch(
+        `${config.baseUrl}/users/${userId}/favorites/${movieId}`,
+        { method: 'DELETE', headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (!response.ok) {
+        return false;
+    }
+
+    return true;
 }

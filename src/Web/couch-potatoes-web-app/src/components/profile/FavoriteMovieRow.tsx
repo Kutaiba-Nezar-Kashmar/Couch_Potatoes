@@ -9,12 +9,10 @@ export interface FavoriteMovieProps {
 }
 
 const FavoriteMovieRow: FC<FavoriteMovieProps> = ({ movies, editing }) => {
-    const [isEditing, setIsEditing] = useState<boolean>(editing);
-
     return (
         <HStack gap={2}>
             {movies.map((movie) => (
-                <FavoriteMovieCard editing={isEditing} movie={movie} />
+                <FavoriteMovieCard editing={editing} movie={movie} />
             ))}
         </HStack>
     );

@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from './routes';
 import Navbar from './components/Navbar';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import initFavoriteMovieEmitter from './services/event-emitters/favorite-movie-emitter';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -15,6 +16,8 @@ const theme = extendTheme({
         body: `'Roboto', 'Helvetica Neue', sans-serif`,
     },
 });
+
+initFavoriteMovieEmitter();
 
 const App = () => {
     return (
