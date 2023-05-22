@@ -92,7 +92,7 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
                 }
             }
 
-            return count.OrderByDescending(keyValuePair => keyValuePair.Value)
+            return count
                 .FirstOrDefault().Key;
         }
         catch (Exception e)

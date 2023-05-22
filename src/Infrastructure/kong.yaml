@@ -51,4 +51,4 @@ services:
           - name: person-metrics
             strip_path: false
             paths:
-                - /api/v1/person_metrics
+                - /couch-potatoes/api/v1/person/metrics

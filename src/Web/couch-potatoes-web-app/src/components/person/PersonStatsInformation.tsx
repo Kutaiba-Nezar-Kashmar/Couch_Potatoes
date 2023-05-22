@@ -17,6 +17,7 @@ const PersonStatsInformation: FC<Stats> = ({
     return (
         <>
             <Heading color="white" as='h4' size='md'>Stats</Heading>
+            <br/>
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 <GridItem colSpan={1}>
                     <VStack spacing={2}>
@@ -51,7 +52,7 @@ const PersonStatsInformation: FC<Stats> = ({
                 <GridItem colSpan={1}>
                     <VStack spacing={2}>
                         <Box>
-                            <Heading color="white" as='h3' size='sm'>Best know for working with</Heading>
+                            <Heading color="white" as='h3' size='sm'>Best know for</Heading>
                         </Box>
                         <Box>
                             <Text color="white">{knownForGenre}</Text>
