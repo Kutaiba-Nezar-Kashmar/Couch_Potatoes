@@ -20,8 +20,8 @@ public class ReadDetailedMovieDto
     public string Status { get; set; } // TODO: make into Enum and find out how to deal with white spaces
     public string Homepage { get; set; }
     public string TrailerUri { get; set; }
-    public int Budget { get; set; }
-    public int Revenue { get; set; }
+    public long Budget { get; set; }
+    public long Revenue { get; set; }
     public IEnumerable<ReadKeywordDto> Keywords { get; set; }
     public IEnumerable<ReadLanguageDto> Languages { get; set; }
     public IEnumerable<ReadGenreDto> Genres { get; set; }
