@@ -2,20 +2,16 @@ import React, { FC, useEffect } from 'react';
 import User from '../../models/user';
 import { Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { safeConvertDateToString } from '../../util/dateutil';
-
-export enum ColorScheme {
-    DARK,
-    LIGHT,
-}
+import { Theme } from '../../models/theme';
 
 export interface ProfileInfoProps {
-    colorScheme: ColorScheme;
+    theme: Theme;
     user: User | null;
 }
 
-const ProfileInfo: FC<ProfileInfoProps> = ({ user, colorScheme }) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
     const getTextColor = () => {
-        return colorScheme === ColorScheme.DARK ? 'white' : 'black';
+        return theme === Theme.DARK ? 'white' : 'black';
     };
 
     useEffect(() => {

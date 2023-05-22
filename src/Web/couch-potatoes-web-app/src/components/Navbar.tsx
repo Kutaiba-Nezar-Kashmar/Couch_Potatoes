@@ -29,7 +29,7 @@ interface NavbarProps {
 const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
     const navigate = useNavigate();
     const gotoProfile = () => {
-        navigate('/profile');
+        navigate(`/profile/${user?.id}`);
     };
 
     return (

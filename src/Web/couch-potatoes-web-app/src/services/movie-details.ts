@@ -4,12 +4,16 @@ import { useQuery } from 'react-query';
 import { CacheKeys } from './cache-keys';
 import { GetMovieCollectionOptions } from './movie-collection';
 
-export function useFetchMovies(movieIds: number[]) {
+export function useFetchMovies(
+    movieIds: number[],
+    fetchPredicate?: () => boolean
+) {
     return useQuery({
         queryKey: [CacheKeys.MOVIES + JSON.stringify(movieIds)],
         queryFn: async () => {
             return await getMovies(movieIds);
         },
+        enabled: fetchPredicate ? fetchPredicate() : true,
     });
 }
 

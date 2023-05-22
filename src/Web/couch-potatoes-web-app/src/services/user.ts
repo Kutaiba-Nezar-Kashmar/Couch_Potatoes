@@ -83,7 +83,7 @@ export function useGetUserById(id: string) {
 
 export async function getUserById(id: string): Promise<User | null> {
     const config = await getConfig();
-    const response = await fetch(`${config.baseUrl}v1/users/${id}`);
+    const response = await fetch(`${config.baseUrl}/users/${id}`);
     if (!response.ok) {
         return null;
     }

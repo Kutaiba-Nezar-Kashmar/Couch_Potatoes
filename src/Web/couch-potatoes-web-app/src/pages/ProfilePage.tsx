@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import BasePage from '../components/BasePage';
 import { Flex, Grid, GridItem, Spinner, Text } from '@chakra-ui/react';
-import ProfileInfo, { ColorScheme } from '../components/profile/ProfileInfo';
+import ProfileInfo from '../components/profile/ProfileInfo';
 import User from '../models/user';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -10,13 +10,31 @@ import BackgroundImageFull from '../components/BackgroundImageFull';
 import { navBarHeightInRem } from '../components/settings/page-settings';
 import FavoriteMovieDirectory from '../components/profile/FavoriteMovieDirectory';
 import { useParams } from 'react-router-dom';
+import Movie from '../models/movie';
+import { useFetchMovies } from '../services/movie-details';
+import { Theme } from '../models/theme';
 
 const ProfilePage: FC = () => {
     const [user, setUser] = useState<User | null>(null);
+    const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const { userId } = useParams();
 
     const navigate = useNavigate();
+
+    const {
+        isLoading: isLoadingFavorites,
+        isError,
+        data,
+        error,
+    } = useFetchMovies(user ? user.favoriteMovies! : [], () => {
+        return (
+            user !== null &&
+            user.favoriteMovies !== null &&
+            user.favoriteMovies !== undefined &&
+            user.favoriteMovies.length > 0
+        );
+    });
 
     const initProfile = async () => {
         setLoading(true);
@@ -45,7 +63,8 @@ const ProfilePage: FC = () => {
 
     useEffect(() => {
         initProfile();
-    }, []);
+        setFavoriteMovies(data ?? []);
+    }, [isLoadingFavorites]);
 
     if (loading) {
         return (
@@ -83,21 +102,14 @@ const ProfilePage: FC = () => {
             imageUri={`${process.env['PUBLIC_URL']}/gradient-bg.jpg`}
         >
             <BasePage>
-                <Grid
-                    width="100%"
-                    templateColumns="repeat(100, 1fr)"
-                    height={`calc(100vh - ${navBarHeightInRem}rem)`}
-                >
+                <Grid width="100%" templateColumns="repeat(100, 1fr)">
                     <GridItem colSpan={20}>
-                        <ProfileInfo
-                            colorScheme={ColorScheme.DARK}
-                            user={user}
-                        />
+                        <ProfileInfo theme={Theme.DARK} user={user} />
                     </GridItem>
                     <GridItem colSpan={80}>
                         <FavoriteMovieDirectory
-                            movies={[]}
-                            colorScheme={ColorScheme.DARK}
+                            movies={favoriteMovies}
+                            theme={Theme.DARK}
                         />
                     </GridItem>
                 </Grid>
