@@ -18,6 +18,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import PersonCreditsFilterBar from "../components/person/PersonCreditsFilterBar";
 import CreditsAsCastDetails from "../components/person/CreditsAsCastDetails";
 import CreditsAsCrewDetails from "../components/person/CreditsAsCrewDetails";
+import PersonStats from "../models/person/person-stats";
+import PersonStatsInformation from "../components/person/PersonStatsInformation";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
@@ -33,6 +35,7 @@ const PersonDetailsPage = () => {
     } = useFetchPersonDetailsAndCredits({personId: (Number(personId))});
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [movieCredits, setMovieCredits] = useState<PersonMovieCredits | null>(null);
+    const [personStats, setPersonStats] = useState<PersonStats | null>(null);
     const [selectedOption, setSelectedOption] = useState<string | null>("All");
 
     const handleSelectOption = (selectedOption: string) => {
@@ -43,6 +46,7 @@ const PersonDetailsPage = () => {
         if (!isLoading) {
             setPerson(personData?.details as PersonDetails);
             setMovieCredits(personData?.credits as PersonMovieCredits);
+            setPersonStats(personData?.stats as PersonStats);
         }
     }, [isLoading])
 
@@ -65,6 +69,7 @@ const PersonDetailsPage = () => {
     if (personData) {
         console.log(person)
         console.log(movieCredits)
+        console.log(personStats)
     }
 
     return (
@@ -85,6 +90,14 @@ const PersonDetailsPage = () => {
                     </GridItem>
                     <GridItem colSpan={3}>
                         <PersonBiography name={person?.name} bio={person?.biography}/>
+                        <br/>
+                        <PersonStatsInformation
+                            numberOfMovies={personStats?.numberOfMovies}
+                            averageMoviesRatingsAsACast={personStats?.averageMoviesRatingsAsACast}
+                            averageMoviesRatingsAsACrew={personStats?.averageMoviesRatingsAsACrew}
+                            knownForGenre={personStats?.knownForGenre}
+                        />
+                        <br/>
                         <Swiper
                             navigation={true}
                             modules={[Navigation]}
@@ -112,28 +125,28 @@ const PersonDetailsPage = () => {
                                     .slice()
                                     .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
                                     .map(c =>
-                                    <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
-                                                          character={c.character}/>)
+                                        <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
+                                                              character={c.character}/>)
                                     .concat(movieCredits?.creditsAsCrew
                                         .slice()
                                         .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
                                         .map(c =>
-                                        <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
-                                                              releaseDate={new Date(c.releaseDate + "")}/>)) :
+                                            <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
+                                                                  releaseDate={new Date(c.releaseDate + "")}/>)) :
                                 <></>}
                             {selectedOption === "Acting" ? movieCredits?.creditsAsCast
                                     .slice()
                                     .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
                                     .map(c =>
-                                    <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
-                                                          character={c.character}/>) :
+                                        <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
+                                                              character={c.character}/>) :
                                 <></>}
                             {selectedOption === "Production" ? movieCredits?.creditsAsCrew
                                     .slice()
                                     .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
                                     .map(c =>
-                                    <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
-                                                          releaseDate={new Date(c.releaseDate + "")}/>) :
+                                        <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
+                                                              releaseDate={new Date(c.releaseDate + "")}/>) :
                                 <></>}
                         </SimpleGrid>
                     </GridItem>
