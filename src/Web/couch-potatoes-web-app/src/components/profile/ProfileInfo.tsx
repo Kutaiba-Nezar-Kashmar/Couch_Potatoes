@@ -2,6 +2,7 @@ import React, { FC, useEffect } from 'react';
 import User from '../../models/user';
 import { Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { safeConvertDateToString } from '../../util/dateutil';
+import { getTextColor } from '../../util/themeutil';
 import { Theme } from '../../models/theme';
 
 export interface ProfileInfoProps {
@@ -10,10 +11,6 @@ export interface ProfileInfoProps {
 }
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
-    const getTextColor = () => {
-        return theme === Theme.DARK ? 'white' : 'black';
-    };
-
     useEffect(() => {
         console.log(user);
     }, [user]);
@@ -24,6 +21,15 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
 
     return (
         <Flex direction="column" alignItems="flex-start">
+            <Heading
+                as="h3"
+                size={{ base: 'lg', sm: 'md', md: 'lg' }}
+                textAlign="start"
+                textColor={getTextColor(theme)}
+                marginBottom="0.6rem"
+            >
+                Profile
+            </Heading>
             <Image
                 rounded="lg"
                 width="150px"
@@ -33,25 +39,25 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
             <Heading
                 size={{ base: 'lg', lg: 'xl' }}
                 marginTop="1rem"
-                textColor={getTextColor()}
+                textColor={getTextColor(theme)}
             >
                 {user?.displayName ?? user?.email?.split('@')[0]}
             </Heading>
             <Text
                 fontSize={{ base: 'sm', lg: 'md', xl: 'xl' }}
-                textColor={getTextColor()}
+                textColor={getTextColor(theme)}
             >
                 {user?.email}
             </Text>
             <Text
                 fontSize={{ base: 'xs', lg: 'sm', xl: 'md' }}
-                textColor={getTextColor()}
+                textColor={getTextColor(theme)}
             >
                 User since: {safeConvertDateToString(user.createdTimestamp)}
             </Text>
             <Text
                 fontSize={{ base: 'xs', lg: 'sm', xl: 'md' }}
-                textColor={getTextColor()}
+                textColor={getTextColor(theme)}
             >
                 Last seen online:{' '}
                 {safeConvertDateToString(user.lastSignInTimestamp)}

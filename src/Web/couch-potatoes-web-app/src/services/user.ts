@@ -136,3 +136,16 @@ export async function deleteFavoriteMovieForUser(
 
     return true;
 }
+
+export async function getUsers(ids: string[]): Promise<User[]> {
+    const config = await getConfig();
+    const queryParams = ids.map((id) => `ids=${id}`).join('&');
+
+    const response = await fetch(`${config.baseUrl}/users?${queryParams}`);
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch movies');
+    }
+
+    return response.json();
+}

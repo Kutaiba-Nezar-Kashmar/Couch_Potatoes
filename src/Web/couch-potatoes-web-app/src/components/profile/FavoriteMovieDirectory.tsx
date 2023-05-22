@@ -14,6 +14,7 @@ import { Theme } from '../../models/theme';
 import { groupElements } from '../../util/listutil';
 import FavoriteMovieRow from './FavoriteMovieRow';
 import { CheckIcon, EditIcon } from '@chakra-ui/icons';
+import { getTextColor } from '../../util/themeutil';
 
 export interface FavoriteMovieDirectory {
     theme: Theme;
@@ -27,10 +28,6 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
     const [moviesPerRow, setMoviesPerRow] = useState<number>(5);
     const [editing, setEditing] = useState(false);
 
-    const getTextColor = () => {
-        return theme == Theme.DARK ? 'white' : 'black';
-    };
-
     const moviesPerRowToDisplay = useBreakpointValue({
         base: 3,
         md: 5,
@@ -43,26 +40,29 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
 
     return (
         <>
-            <Heading
-                as="h3"
-                size={{ base: 'lg', sm: 'md', md: 'lg' }}
-                textColor={getTextColor()}
-            >
-                Favorites{' '}
-                {!editing ? (
-                    <Tooltip label="Edit favorite movies list">
-                        <EditIcon
+            <Flex direction="row" justify="start" width="100%">
+                <Heading
+                    as="h3"
+                    size={{ base: 'lg', sm: 'md', md: 'lg' }}
+                    textAlign="start"
+                    textColor={getTextColor(theme)}
+                >
+                    Favorites{' '}
+                    {!editing ? (
+                        <Tooltip label="Edit favorite movies list">
+                            <EditIcon
+                                cursor="pointer"
+                                onClick={() => setEditing(!editing)}
+                            />
+                        </Tooltip>
+                    ) : (
+                        <CheckIcon
                             cursor="pointer"
                             onClick={() => setEditing(!editing)}
                         />
-                    </Tooltip>
-                ) : (
-                    <CheckIcon
-                        cursor="pointer"
-                        onClick={() => setEditing(!editing)}
-                    />
-                )}
-            </Heading>
+                    )}
+                </Heading>
+            </Flex>
             <Flex direction="column" justify="start" marginTop="0.5rem" gap={5}>
                 {groupElements(movies, moviesPerRow).map((row) => (
                     <FavoriteMovieRow editing={editing} movies={row} />
