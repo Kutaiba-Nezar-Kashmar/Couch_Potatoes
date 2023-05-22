@@ -23,6 +23,8 @@ public static class RootServiceInstaller
         services.InstallUpdateReviewForMovieServices();
         services.InstallDeleteReviewForMovieServices();
         services.InstallGetReviewsForUserServices();
+        
+        services.InstallGetUsersServices();
         services.AddScoped<IAuthenticationRepository, FirebaseAuthRepository>();
         return services;
     }

@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using User.API.Dtos;
+using User.Application;
 using User.Application.AddMovieToFavorites;
 using User.Application.GetReviewsForUser;
 using User.Application.GetReviewsForUser.Exceptions;
@@ -19,11 +21,13 @@ public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ILogger _logger;
+    private readonly IMapper _mapper;
 
-    public UsersController(IMediator mediator, ILogger<UsersController> logger)
+    public UsersController(IMediator mediator, ILogger<UsersController> logger, IMapper mapper)
     {
         _mediator = mediator;
         _logger = logger;
+        _mapper = mapper;
     }
 
     [HttpGet("{userId}")]
@@ -44,6 +48,23 @@ public class UsersController : ControllerBase
         {
             _logger.LogError(LogEvent.Api, e.InnerException ?? e,
                 $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IReadOnlyCollection<ReadUserDto>>> GetUsers(
+        [FromQuery] IReadOnlyCollection<string> ids)
+    {
+        try
+        {
+            var domainUsers = await _mediator.Send(new GetUsersQuery(ids));
+            var usersAsDto = domainUsers.Select(user => _mapper.Map<ReadUserDto>(user));
+            return Ok(usersAsDto);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(0, e, $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }
