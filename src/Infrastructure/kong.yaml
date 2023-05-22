@@ -44,11 +44,14 @@ services:
             strip_path: false
             paths:
                 - /couch-potatoes/api/v1/movie-details
-
+          - name: movie-recommendations
+            strip_path: false
+            paths:
+              - /couch-potatoes/api/v1/recommended-movies
     - name: metrics-service
       url: http://metrics-service
       routes:
           - name: person-metrics
             strip_path: false
             paths:
-                - /api/v1/person_metrics
+                - /couch-potatoes/api/v1/person/metrics

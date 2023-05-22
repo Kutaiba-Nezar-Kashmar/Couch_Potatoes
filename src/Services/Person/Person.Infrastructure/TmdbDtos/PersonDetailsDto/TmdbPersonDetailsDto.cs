@@ -17,5 +17,5 @@ public record TmdbPersonDetailsDto
     [property: JsonPropertyName("name")] string Name, 
     [property: JsonPropertyName("place_of_birth")] string PlaceOfBirth, 
     [property: JsonPropertyName("popularity")] float Popularity, 
-    [property: JsonPropertyName("ProfilePath")] string ProfilePath
+    [property: JsonPropertyName("profile_path")] string ProfilePath
 );
