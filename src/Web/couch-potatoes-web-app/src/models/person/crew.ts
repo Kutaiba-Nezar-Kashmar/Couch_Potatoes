@@ -1,7 +1,8 @@
 export default interface Crew {
-    BackdropPath?: string;
-    OriginalTitle?: string;
-    Department?: string;
-    Job?: string;
+    posterPath?: string;
+    title?: string;
+    department?: string;
+    job?: string;
     movieId?: number;
+    releaseDate?: Date;
 }

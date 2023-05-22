@@ -78,8 +78,8 @@ const PersonDetailsPage = () => {
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper" slidesPerView={5}
                             pagination={{clickable: true}} spaceBetween={2}>
                         {movieCredits?.creditsAsCast?.map(c => <SwiperSlide onClick={() => navigate(`movie/details/${c.movieId}`)}><PersonMovieCreditsItem
-                            imageUri={getPosterImageUri(c.backdropPath!) ?? Background_Temp}
-                            movieTitle={c.originalTitle as string}/></SwiperSlide>)}
+                            imageUri={getPosterImageUri(c.posterPath!) ?? Background_Temp}
+                            movieTitle={c.title as string}/></SwiperSlide>)}
                     </Swiper>
                 </Flex>
             </BasePage>

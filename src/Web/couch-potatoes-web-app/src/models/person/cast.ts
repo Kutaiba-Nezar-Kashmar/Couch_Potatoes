@@ -1,5 +1,7 @@
 export default interface Cast {
-    backdropPath?: string;
-    originalTitle?: string;
+    posterPath?: string;
+    title?: string;
     movieId?: number;
+    releaseDate?: Date;
+    character?: string;
 }

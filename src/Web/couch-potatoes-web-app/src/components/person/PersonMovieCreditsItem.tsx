@@ -11,15 +11,17 @@ const PersonMovieCreditsItem: FC<PersonMovieCreditsProperties> = ({imageUri, mov
     return (
         <Card maxW='sm' minWidth={200} maxWidth={400} minHeight={400} backgroundColor='transparent'>
             <CardBody _hover={{cursor: "pointer"}}>
-                <Image
-                    src={imageUri} alt={movieTitle}
+                <Stack spacing='4'>
+                    <Image
+                        src={imageUri} alt={movieTitle}
 
-                    height="auto"
-                    objectFit="contain"/>
+                        height="auto"
+                        objectFit="contain"/>
 
                     <Box>
-                        <Text color="white">{movieTitle}</Text>
+                        <Text color="white" align='center'>{movieTitle}</Text>
                     </Box>
+                </Stack>
 
             </CardBody>
         </Card>
