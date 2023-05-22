@@ -14,12 +14,15 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import {Navigation} from "swiper";
+import {useNavigate, useParams} from "react-router-dom";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
 
 const PersonDetailsPage = () => {
-    const {isLoading, isError, data: personData, error} = useFetchPersonDetailsAndCredits({personId: 2});
+    const navigate = useNavigate();
+    const {personId} = useParams();
+    const {isLoading, isError, data: personData, error} = useFetchPersonDetailsAndCredits({personId: (Number(personId))});
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [movieCredits, setMovieCredits] = useState<PersonMovieCredits | null>(null);
 
@@ -74,7 +77,7 @@ const PersonDetailsPage = () => {
                 <Flex>
                     <Swiper navigation={true} modules={[Navigation]} className="mySwiper" slidesPerView={5}
                             pagination={{clickable: true}} spaceBetween={2}>
-                        {movieCredits?.creditsAsCast?.map(c => <SwiperSlide><PersonMovieCreditsItem
+                        {movieCredits?.creditsAsCast?.map(c => <SwiperSlide onClick={() => navigate(`/details/${550}`)}><PersonMovieCreditsItem
                             imageUri={getPosterImageUri(c.backdropPath!) ?? Background_Temp}
                             movieTitle={c.originalTitle as string}/></SwiperSlide>)}
                     </Swiper>

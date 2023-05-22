@@ -14,7 +14,7 @@ const routes: RouteObject[] = [
         element: <TestPage/>,
     },
     {
-        path: '/person',
+        path: '/person/:personId',
         element: <PersonDetailsPage/>
     },
     {
