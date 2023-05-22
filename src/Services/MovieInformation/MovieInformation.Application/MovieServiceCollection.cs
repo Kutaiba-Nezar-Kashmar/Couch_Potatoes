@@ -2,6 +2,7 @@
 using MovieInformation.Application.GetCredits;
 using MovieInformation.Application.GetMovie;
 using MovieInformation.Application.GetMovieCollection;
+using MovieInformation.Application.GetMovies;
 using MovieInformation.Application.GetRecommendedMovies;
 
 namespace MovieInformation.Application;
@@ -15,7 +16,8 @@ public static class MovieServiceCollection
         services.InstallGetMovieServices();
         services.InstallGetCreditsServices();
         services.InstallRecommendedMoviesServices();
-        
+        services.InstallGetMoviesServices();
+
         return services;
     }
 }
