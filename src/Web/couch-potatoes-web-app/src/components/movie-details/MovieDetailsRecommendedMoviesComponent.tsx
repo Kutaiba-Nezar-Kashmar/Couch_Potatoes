@@ -5,6 +5,7 @@ import MovieCredits from "../../models/movie_credits";
 import Movie from "../../models/movie";
 import MovieRecommendations from "../../models/movie-Recommedations";
 import starIcon from "../../assets/iconstar.png";
+import {sliceNumber} from "../../util/numberutil";
 
 export interface MovieDetailsRecommendMoviesComponentProps {
     movieRecommendations: MovieRecommendations | null;
@@ -12,10 +13,7 @@ export interface MovieDetailsRecommendMoviesComponentProps {
     themeColor: string;
 }
 
-export function sliceNumber(number: number, decimals: number) {
-    const slicedNumber = number.toString().slice(0, decimals + 2);
-    return parseFloat(slicedNumber).toFixed(decimals);
-}
+
 
 export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMoviesComponentProps> = ({
                                                                                                           movieRecommendations,

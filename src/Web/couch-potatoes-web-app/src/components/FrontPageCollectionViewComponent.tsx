@@ -13,7 +13,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 // import required modules
 import {EffectCoverflow, FreeMode, Navigation, Pagination} from "swiper";
-import {sliceNumber} from "./movie-details/MovieDetailsRecommendedMoviesComponent";
+import {sliceNumber} from "../util/numberutil";
 
 
 export interface MovieCollectionComponentProps {

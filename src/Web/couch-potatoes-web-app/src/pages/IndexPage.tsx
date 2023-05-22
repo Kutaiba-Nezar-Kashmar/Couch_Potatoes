@@ -32,7 +32,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {sliceNumber} from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
+import {sliceNumber} from "../util/numberutil";
 
 
 const IndexPage = () => {

@@ -2,7 +2,8 @@ import {Box, Image, Stack, StackDivider, Text} from "@chakra-ui/react";
 import React, {FC} from "react";
 import {MovieDetailsComponentProps} from "./MovieDetailsBottomInformationbox";
 import starIcon from "../../assets/iconstar.png";
-import {sliceNumber} from "./MovieDetailsRecommendedMoviesComponent";
+import {sliceNumber} from "../../util/numberutil";
+
 
 export const MovieDetailsHeaderInformationbox: FC<MovieDetailsComponentProps> = ({movie}) => {
     return (
