@@ -14,12 +14,11 @@ const routes: RouteObject[] = [
         element: <TestPage/>,
     },
     {
-        path: '/movie/details/:movieId',
         path: '/person/:personId',
         element: <PersonDetailsPage/>
     },
     {
-        path: '/details',
+        path: '/movie/details/:movieId',
         element: <MovieDetailsPage/>,
     }
 ];

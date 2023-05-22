@@ -1,5 +1,7 @@
 import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Box, Grid, GridItem, Heading, Text, VStack} from "@chakra-ui/react";
+import {Box, Grid, GridItem, Heading, HStack, Text, VStack} from "@chakra-ui/react";
+import {sliceNumber} from "../../util/numberutil";
+import {StarIcon} from "@chakra-ui/icons";
 
 interface Stats {
     numberOfMovies?: number;
@@ -34,9 +36,10 @@ const PersonStatsInformation: FC<Stats> = ({
                         <Box>
                             <Heading color="white" as='h3' size='sm'>Ratings as Actor</Heading>
                         </Box>
-                        <Box>
-                            <Text color="white">{averageMoviesRatingsAsACast}</Text>
-                        </Box>
+                        <HStack spacing={2}>
+                            <StarIcon color='yellow'/>
+                            <Text color="white">{sliceNumber(averageMoviesRatingsAsACast ?? 0, 1)}</Text>
+                        </HStack>
                     </VStack>
                 </GridItem>
                 <GridItem colSpan={1}>
@@ -44,9 +47,10 @@ const PersonStatsInformation: FC<Stats> = ({
                         <Box>
                             <Heading color="white" as='h3' size='sm'>Ratings for production</Heading>
                         </Box>
-                        <Box>
-                            <Text color="white">{averageMoviesRatingsAsACrew}</Text>
-                        </Box>
+                        <HStack spacing={2}>
+                            <StarIcon color='yellow'/>
+                            <Text color="white">{sliceNumber(averageMoviesRatingsAsACrew ?? 0, 1)}</Text>
+                        </HStack>
                     </VStack>
                 </GridItem>
                 <GridItem colSpan={1}>

@@ -85,7 +85,6 @@ const PersonDetailsPage = () => {
                             birthday={person?.birthday}
                             placeOfBirth={person?.placeOfBirth}
                             aliases={person?.aliases}
-                            homePage={person?.homepage}
                         />
                     </GridItem>
                     <GridItem colSpan={3}>
@@ -107,7 +106,7 @@ const PersonDetailsPage = () => {
                         >
                             {movieCredits?.creditsAsCast?.map(c =>
                                 <SwiperSlide
-                                    onClick={() => navigate(`movie/details/${c.movieId}`)}>
+                                    onClick={() => navigate(`/movie/details/${c.movieId}`)}>
                                     <PersonMovieCreditsItem
                                         imageUri={getPosterImageUri(c.posterPath!) ?? Background_Temp}
                                         movieTitle={c.title as string}

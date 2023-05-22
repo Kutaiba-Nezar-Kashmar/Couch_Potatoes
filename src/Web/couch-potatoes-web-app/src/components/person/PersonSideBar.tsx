@@ -22,7 +22,6 @@ interface PersonProperties {
     birthday?: Date;
     placeOfBirth?: string;
     aliases?: string[];
-    homePage?: string;
 }
 
 const PersonSideBar: FC<PersonProperties> =
@@ -33,18 +32,13 @@ const PersonSideBar: FC<PersonProperties> =
          gender,
          birthday,
          placeOfBirth,
-         aliases,
-         homePage
+         aliases
      }) => {
         return (
             <Card backgroundColor="transparent">
                 <CardBody>
                     <Image src={uri} alt={alt} borderRadius='lg'/>
                     <Stack divider={<StackDivider/>} spacing='4' paddingTop={4}>
-                        <Box>
-                            <Heading color="white" as='h4' size='md'>Home Page</Heading>
-                            <Text>{homePage}</Text>
-                        </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Know For</Heading>
                             <Text color="white">{known}</Text>
@@ -55,7 +49,7 @@ const PersonSideBar: FC<PersonProperties> =
                         </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Birthday</Heading>
-                            <Text color="white">{birthday?.toString()}</Text>
+                            <Text color="white">{new Date(birthday?? 0).toLocaleDateString()}</Text>
                         </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Place Of Birth</Heading>
