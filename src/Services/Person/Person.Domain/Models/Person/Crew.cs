@@ -6,4 +6,5 @@ public class Crew
     public string OriginalTitle { get; set; } = default!;
     public string Department { get; set; } = default!;
     public string Job { get; set; } = default!;
+    public int MovieId { get; set; }
 }

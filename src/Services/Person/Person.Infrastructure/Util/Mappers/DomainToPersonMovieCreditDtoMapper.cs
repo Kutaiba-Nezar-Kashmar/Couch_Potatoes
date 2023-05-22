@@ -13,14 +13,16 @@ public class DomainToPersonMovieCreditDtoMapper : IDtoToDomainMapper<
             CreditsAsCast = from.CreditsAsCast.Select(c => new CastDto
             {
                 BackdropPath = c.BackdropPath,
-                OriginalTitle = c.OriginalTitle
+                OriginalTitle = c.OriginalTitle,
+                MovieId = c.MovieId
             }).ToList(),
             CreditsAsCrew = from.CreditsAsCrew.Select(c => new CrewDto
             {
                 BackdropPath = c.BackdropPath,
                 OriginalTitle = c.OriginalTitle,
                 Department = c.Department,
-                Job = c.Job
+                Job = c.Job,
+                MovieId = c.MovieId
             }).ToList()
         };
     }
