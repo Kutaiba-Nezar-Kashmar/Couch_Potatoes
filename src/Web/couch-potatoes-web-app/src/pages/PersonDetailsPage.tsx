@@ -15,6 +15,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import {Navigation} from "swiper";
 import {useNavigate, useParams} from "react-router-dom";
+import PersonCreditsFilterBar from "../components/person/PersonCreditsFilterBar";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
@@ -22,7 +23,12 @@ const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uplo
 const PersonDetailsPage = () => {
     const navigate = useNavigate();
     const {personId} = useParams();
-    const {isLoading, isError, data: personData, error} = useFetchPersonDetailsAndCredits({personId: (Number(personId))});
+    const {
+        isLoading,
+        isError,
+        data: personData,
+        error
+    } = useFetchPersonDetailsAndCredits({personId: (Number(personId))});
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [movieCredits, setMovieCredits] = useState<PersonMovieCredits | null>(null);
 
@@ -72,16 +78,28 @@ const PersonDetailsPage = () => {
                     </GridItem>
                     <GridItem colSpan={3}>
                         <PersonBiography name={person?.name} bio={person?.biography}/>
+                        <Swiper
+                            navigation={true}
+                            modules={[Navigation]}
+                            className="mySwiper"
+                            slidesPerView={5}
+                            pagination={{clickable: true}} spaceBetween={2}
+                        >
+                            {movieCredits?.creditsAsCast?.map(c =>
+                                <SwiperSlide
+                                    onClick={() => navigate(`movie/details/${c.movieId}`)}>
+                                    <PersonMovieCreditsItem
+                                        imageUri={getPosterImageUri(c.posterPath!) ?? Background_Temp}
+                                        movieTitle={c.title as string}
+                                    />
+                                </SwiperSlide>)}
+                        </Swiper>
+                        <PersonCreditsFilterBar
+                            actingCredits={movieCredits?.creditsAsCast.length}
+                            crewCredits={movieCredits?.creditsAsCrew.length}
+                        />
                     </GridItem>
                 </Grid>
-                <Flex>
-                    <Swiper navigation={true} modules={[Navigation]} className="mySwiper" slidesPerView={5}
-                            pagination={{clickable: true}} spaceBetween={2}>
-                        {movieCredits?.creditsAsCast?.map(c => <SwiperSlide onClick={() => navigate(`movie/details/${c.movieId}`)}><PersonMovieCreditsItem
-                            imageUri={getPosterImageUri(c.posterPath!) ?? Background_Temp}
-                            movieTitle={c.title as string}/></SwiperSlide>)}
-                    </Swiper>
-                </Flex>
             </BasePage>
         </BackgroundImageFull>
     )
