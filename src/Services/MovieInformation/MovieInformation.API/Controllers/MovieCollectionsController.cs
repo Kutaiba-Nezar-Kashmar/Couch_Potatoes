@@ -12,16 +12,18 @@ using MovieInformation.Infrastructure.Util;
 namespace MovieInformation.API.Controllers;
 
 [ApiController]
-[Route("api/v1/movie-collection")]
+[Route("couch-potatoes/api/v1/movie-collection")]
 public class MovieCollectionsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public MovieCollectionsController(IMediator mediator, IMapper mapper)
+    public MovieCollectionsController(IMediator mediator, IMapper mapper, ILogger<MovieCollectionsController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _logger = logger;
     }
 
     [HttpGet("{collectionType}")]
@@ -39,7 +41,9 @@ public class MovieCollectionsController : ControllerBase
         }
         catch (Exception e)
         {
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e);
+            _logger.LogCritical(0,e, e.Message);
+            
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie collection of type: "+collectionType+" Not found!");
         }
     }
 }

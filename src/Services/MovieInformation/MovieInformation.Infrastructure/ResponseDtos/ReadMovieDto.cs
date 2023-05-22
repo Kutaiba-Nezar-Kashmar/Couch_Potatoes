@@ -8,7 +8,7 @@ public class ReadMovieDto
     public string ImageUri { get; set; }
     public string BackdropUri { get; set; }
     public float TmdbScore { get; set; }
-    public int TmbdVoteCount { get; set; }
+    public int TmdbVoteCount { get; set; }
     public DateTime ReleaseDate { get; set; }
     public bool IsForKids { get; set; }
 }

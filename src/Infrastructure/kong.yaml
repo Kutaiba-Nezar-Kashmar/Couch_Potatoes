@@ -1,0 +1,54 @@
+_format_version: "3.0"
+_transform: true
+
+# NOTE: (mibui 2023-05-20) This is the configuration for Kong API Gateway for local development
+#                          Kong listens on port 8000 and redirects to the different services based
+#                          on the configured paths.
+#                          Kong also has a admin service that listens on port 8001, where we can
+#                          access information about the different services that has been created
+
+services:
+    - name: user-service
+      url: http://user-service
+      routes:
+          - name: users
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/users
+
+          - name: reviews
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/reviews
+
+    - name: person-service
+      url: http://person-service
+      routes:
+          - name: persons
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/person
+
+    - name: movieinformation-service
+      url: http://movieinformation-service
+      routes:
+          - name: movie-collection
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/movie-collection
+          - name: movie-credits
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/movie-credits
+          - name: movie-details
+            strip_path: false
+            paths:
+                - /couch-potatoes/api/v1/movie-details
+
+    - name: metrics-service
+      url: http://metrics-service
+      routes:
+          - name: person-metrics
+            strip_path: false
+            paths:
+                - /api/v1/person_metrics

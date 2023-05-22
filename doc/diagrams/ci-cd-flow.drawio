@@ -1,0 +1,172 @@
+<mxfile host="Electron" modified="2023-05-19T19:31:59.629Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="O2MEc9JOYXns9VnyfS8X" version="21.2.8" type="device">
+  <diagram name="Page-1" id="tf0HAuryZyC1QTyNphbu">
+    <mxGraphModel dx="3078" dy="1678" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-2" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="-220" y="320" width="90" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-3" value="&lt;font data-font-src=&quot;https://fonts.googleapis.com/css?family=Poppins&quot; face=&quot;Poppins&quot;&gt;&lt;b&gt;Couch Potatoes Repository&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-270" y="440" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-4" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.github_code;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="-200" y="358" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-6" style="orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;rounded=1;strokeColor=default;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-5" target="AjpjUnP0yhSjnW5pITdM-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-8" value="&lt;h3 style=&quot;font-size: 14px;&quot;&gt;&lt;font style=&quot;font-weight: normal; font-size: 14px;&quot; face=&quot;Poppins&quot;&gt;Merge feature branch into main&lt;/font&gt;&lt;/h3&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=0;fontSize=14;" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-6">
+          <mxGeometry x="-0.1243" y="-2" relative="1" as="geometry">
+            <mxPoint x="14" y="-27" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-5" value="&lt;font face=&quot;Poppins&quot;&gt;Developer&lt;/font&gt;" style="shape=mxgraph.cisco.people.androgenous_person;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="-580" y="334" width="69" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-10" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-9" target="AjpjUnP0yhSjnW5pITdM-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-11" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;Checkiout changes&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-10">
+          <mxGeometry x="0.1727" relative="1" as="geometry">
+            <mxPoint y="19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-30" style="orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-9" target="AjpjUnP0yhSjnW5pITdM-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-9" value="&lt;font face=&quot;Poppins&quot;&gt;&lt;b&gt;Github Actions Runner&lt;/b&gt;&lt;/font&gt;" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.weblogos.github" vertex="1" parent="1">
+          <mxGeometry x="-212.5" y="690" width="75" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-16" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-13" target="AjpjUnP0yhSjnW5pITdM-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-13" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Test&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontSize=14;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="80" y="323" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-18" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-15" target="AjpjUnP0yhSjnW5pITdM-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-15" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Setup .NET&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="495.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-20" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-17" target="AjpjUnP0yhSjnW5pITdM-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-17" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Restore dependencies&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="290" y="495.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-81" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-19" target="AjpjUnP0yhSjnW5pITdM-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-19" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Build&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="500" y="495.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-23" value="&lt;h1&gt;&lt;font face=&quot;Poppins&quot;&gt;Couch Potato Microservice CI/CD Flow&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-580" y="170" width="480" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-28" style="orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-24" target="AjpjUnP0yhSjnW5pITdM-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="970" y="706" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-24" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Run Tests&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="710" y="495.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-39" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-31" target="AjpjUnP0yhSjnW5pITdM-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-31" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Build + Publish Container Image&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;fontSize=14;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="70" y="770" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-44" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-38" target="AjpjUnP0yhSjnW5pITdM-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-38" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Setup Docker&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="80" y="980" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-46" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-42" target="AjpjUnP0yhSjnW5pITdM-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-42" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Restore GCP Service Account Key&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="290" y="980" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-48" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-45" target="AjpjUnP0yhSjnW5pITdM-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-45" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Build image&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="500" y="980" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-54" style="orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-47" target="AjpjUnP0yhSjnW5pITdM-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-47" value="&lt;font face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Push Image&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="710" y="980" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-53" value="&lt;font style=&quot;font-size: 14px;&quot; face=&quot;Poppins&quot;&gt;&lt;b&gt;Container Regsitry&lt;/b&gt;&lt;/font&gt;" style="editableCssRules=.*;html=1;shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnY9Imh0dHBzOi8vdmVjdGEuaW8vbmFubyIgd2lkdGg9IjIxLjk5OTAwMDU0OTMxNjQwNiIgaGVpZ2h0PSIyMC4zOTM5OTkwOTk3MzE0NDUiIHZpZXdCb3g9IjAgMCAyMS45OTkwMDA1NDkzMTY0MDYgMjAuMzkzOTk5MDk5NzMxNDQ1Ij4mI3hhOwk8c3R5bGUgdHlwZT0idGV4dC9jc3MiPiYjeGE7CS5zdDB7ZmlsbDojNDI4NWY0O2ZpbGwtcnVsZTpldmVub2RkfSYjeGE7CTwvc3R5bGU+JiN4YTsJPHBhdGggY2xhc3M9InN0MCIgZD0iTTUgMHYyLjQ1OEwxLjk5OSA0LjE5N3YxMi4wMUw1IDE3LjkzOHYyLjQ1NmwtNS0yLjg4N1YyLjg4NnptMTIgMGw0Ljk5OSAyLjg4NnYxNC42MjFMMTcgMjAuMzk0di0yLjQ1NmwzLTEuNzMxVjQuMTk3bC0zLTEuNzM5em0tNi4wMTYgNi42NzNsMi45NDctMS42NDYtMi45NDctMS42NDYtMi45NDcgMS42NDZ6bTMuMjY4LTEuMDk2bC0yLjg3MSAxLjY3OHYzLjI4N2wyLjg3MS0xLjY3NnpNNy43NzMgOC44NjZsMi44NzEgMS42NzRWNy4yNTZMNy43NzMgNS41Nzd6bS0uMjEyIDMuODc4bDIuODItMS42NDYtMi44Mi0xLjY0Ni0yLjgyIDEuNjQ2em0zLjEzMi0xLjA5OGwtMi44NzEgMS42Nzh2My4yODdsMi44NzEtMS42NzZ6bS02LjI2NCAzLjI4OUw3LjMgMTYuNjA5di0zLjI4NWwtMi44NzEtMS42Nzl6bTEwLjAyOS0yLjE5MWwyLjgyLTEuNjQ2LTIuODItMS42NDYtMi44MiAxLjY0NnptMy4xMzItMS4wOThsLTIuODcxIDEuNjc4djMuMjg3bDIuODcxLTEuNjc2em0tNi4yNjQgMy4yODlsMi44NzEgMS42NzR2LTMuMjg1bC0yLjg3MS0xLjY3OXoiLz4mI3hhOzwvc3ZnPg==;" vertex="1" parent="1">
+          <mxGeometry x="240" y="1170" width="133.33" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-58" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-55" target="AjpjUnP0yhSjnW5pITdM-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-63" value="&lt;font style=&quot;font-size: 14px;&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=Poppins&quot; face=&quot;Poppins&quot;&gt;Terraform Apply&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=13;" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-58">
+          <mxGeometry x="-0.1323" y="-3" relative="1" as="geometry">
+            <mxPoint x="-1" y="-24" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-55" value="&lt;font face=&quot;Poppins&quot;&gt;Developer&lt;/font&gt;" style="shape=mxgraph.cisco.people.androgenous_person;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="-561.66" y="1620" width="69" height="82" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-72" style="orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-57" target="AjpjUnP0yhSjnW5pITdM-67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-73" value="&lt;font data-font-src=&quot;https://fonts.googleapis.com/css?family=Poppins&quot; face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;Provision new service&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-72">
+          <mxGeometry x="-0.2086" y="1" relative="1" as="geometry">
+            <mxPoint x="10" y="-19" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-57" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://uploads-ssl.webflow.com/6340ceb04078362242dd4eb9/636131fe1f44d41e7af2eb78_terraform-logo.png;" vertex="1" parent="1">
+          <mxGeometry x="-272.15" y="1563" width="194.29" height="194" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-60" value="Declare new service as IaC to deploy" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Poppins;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DPoppins;fontSize=16;fontStyle=0" vertex="1" parent="1">
+          <mxGeometry x="-580" y="1480" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-62" value="&lt;h1&gt;&lt;font face=&quot;Poppins&quot;&gt;CI&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-511" y="253" width="50" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-74" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-67">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="307" y="1310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-76" value="&lt;font data-font-src=&quot;https://fonts.googleapis.com/css?family=Poppins&quot; face=&quot;Poppins&quot; style=&quot;font-size: 14px;&quot;&gt;Fetch image&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-74">
+          <mxGeometry x="-0.1021" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-78" style="edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AjpjUnP0yhSjnW5pITdM-67" target="AjpjUnP0yhSjnW5pITdM-77">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-79" value="&lt;font face=&quot;Poppins&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Deploy container on server traffic&lt;/span&gt;&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="AjpjUnP0yhSjnW5pITdM-78">
+          <mxGeometry x="0.2794" relative="1" as="geometry">
+            <mxPoint x="-40" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-67" value="" style="strokeColor=#dddddd;shadow=1;strokeWidth=1;rounded=1;absoluteArcSize=1;arcSize=2;" vertex="1" parent="1">
+          <mxGeometry x="241.67000000000002" y="1630" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-68" value="&lt;font color=&quot;#000000&quot;&gt;Service&lt;/font&gt;&lt;br&gt;Cloud Run" style="editableCssRules=.*;html=1;fontColor=#999999;shape=image;verticalLabelPosition=middle;labelBackgroundColor=#ffffff;verticalAlign=middle;labelPosition=right;align=left;spacingLeft=20;part=1;points=[];imageAspect=0;image=data:image/svg+xml,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnY9Imh0dHBzOi8vdmVjdGEuaW8vbmFubyIgd2lkdGg9IjM2NS40NjQ5OTY3NzA0MjQ5MyIgaGVpZ2h0PSIzNzkuMjIyOTk0NDYzNTc3OTUiIHZpZXdCb3g9IjAgMCA5Ni42OTU5OTkxNDU1MDc4MSAxMDAuMzM1OTk4NTM1MTU2MjUiPiYjeGE7PHN0eWxlIHR5cGU9InRleHQvY3NzIj4mI3hhOwkuc3Qwe2ZpbGw6IzQyODVmNDt9JiN4YTsJLnN0MXtmaWxsOiNhZWNiZmE7fSYjeGE7PC9zdHlsZT4mI3hhOwk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjkuNzk0IDEwMC4zMzZMNDYuOTIgNTAuMTY4aDQ5Ljc3NnpNMCA5OS42NzFsMTIuOTc2LTQ5LjUwMkgyOS4yMkwxNi44OTcgOTIuMDU0eiIvPiYjeGE7CTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOS43OTQgMEw0Ni45MiA1MC4xNjhoNDkuNzc2ek0wIC42NjZsMTIuOTc2IDQ5LjUwMkgyOS4yMkwxNi44OTcgOC4yODN6Ii8+JiN4YTs8L3N2Zz4=;" vertex="1" parent="AjpjUnP0yhSjnW5pITdM-67">
+          <mxGeometry width="30" height="30" relative="1" as="geometry">
+            <mxPoint x="15" y="15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-75" value="Containerized Microservice (Serverless)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fontFamily=Poppins;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DPoppins;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="670" y="1728" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AjpjUnP0yhSjnW5pITdM-77" value="" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/Docker.svg;" vertex="1" parent="1">
+          <mxGeometry x="650.31" y="1619.25" width="99.39" height="81.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -12,6 +12,7 @@ export default interface Movie {
     tmdbVoteCount: number;
     releaseDate: string;
     runTime: number;
+    tagLine: string;
     isForKids: boolean;
     status: string;
     homepage: string;

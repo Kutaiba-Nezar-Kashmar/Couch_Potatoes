@@ -1,6 +1,16 @@
 {
+<<<<<<< HEAD
     "baseUrl": "http://localhost:5023/couch-potatoes/api/",
     "firebase": {
         "projectId": "couch-potatoes-sep6"
     }
 }
+=======
+  "baseUrl": "http://localhost:5079/couch-potatoes/api/v1"
+}
+>>>>>>> main
+
+    "baseUrl": "http://localhost:5023/couch-potatoes/api/",
+    "firebase": {
+        "projectId": "couch-potatoes-sep6"
+    }

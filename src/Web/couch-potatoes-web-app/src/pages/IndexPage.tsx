@@ -21,6 +21,7 @@ import {navBarHeightInRem, pageHPaddingInRem} from "../components/settings/page-
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import {useFetchCollections, useFetchPopularMovies} from "../services/movie-collection";
 import {getPosterImageUri} from "../services/images";
+import FrontPageMovieInfoBoxComponent from "../components/FrontPageMovieInfoBoxComponent";
 
 const IndexPage = () => {
     const navigate = useNavigate();
@@ -78,16 +79,16 @@ const IndexPage = () => {
                         {/* TMDB SCORE */}
                         <Flex direction="row" justify="flex-end" width={{base: '300px', md: '450px', lg: '600px'}}>
                             <Text textColor="white">
-                                IMDB Score: {movie?.tmdbScore}
+                                IMDB Score: {movie?.tmdbScore} / 10
                             </Text>
                         </Flex>
                         {/* SEARCH */}
-                        <InputGroup width={{base: '300px', md: '450px', lg: '600px'}} backgroundColor="white">
+                        <InputGroup width={{base: '300px', md: '450px', lg: '600px'}} >
                             <InputLeftElement
                                 pointerEvents="none"
                                 children={<SearchIcon color="gray.300"/>}
                             />
-                            <Input type="text" placeholder="Search"/>
+                            <Input bg="white" type="text" placeholder="Search"/>
                         </InputGroup>
                         {/* PLAY TRAILER */}
                         <Flex direction="row" justify="flex-start" width="100%">
@@ -99,23 +100,7 @@ const IndexPage = () => {
                             </Button>}
                         </Flex>
                         {/* FEATURED MOVIE INFO */}
-                        <VStack>
-                            <Text marginTop="1rem" textColor="white" fontSize={{base: 'xl', md: '2xl', lg: '3xl'}}
-                                  textTransform="uppercase">
-                                {movie?.title}
-                            </Text>
-                            <Flex width="100%" justifyContent="center" alignItems="center">
-                                <HStack>
-                                    {movie?.genres?.slice(0,3).map((genre, index) => index == movie.genres?.length - 1 ?
-                                        <Text textColor="white" textTransform="uppercase" fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} </Text> :
-                                        <Text textColor="white" textTransform="uppercase" fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} | </Text>)}
-                                </HStack>
-                            </Flex>
-                            <Text textColor="white" fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}>
-                                {new Date(movie?.releaseDate as string).toLocaleDateString()}
-                            </Text>
-                            <StarRatingComponent  name="rating" value={movie?.tmdbScore || 0} starCount={10}/>
-                        </VStack>
+                       <FrontPageMovieInfoBoxComponent movie={movie}/>
                     </VStack>
                 </Flex>
             </BasePage>

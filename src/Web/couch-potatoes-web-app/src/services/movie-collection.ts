@@ -2,6 +2,7 @@ import {useQuery} from "react-query";
 import {CacheKeys} from "./cache-keys"
 import {getConfig} from "../configuration/configuration";
 import Movie from "../models/movie";
+import MovieRecommendations from "../models/movie-Recommedations";
 
 /**
  * Fetches all movie collections (popular, top rated, upcoming etc.)
@@ -26,15 +27,33 @@ export function useFetchPopularMovies(options?: GetMovieCollectionOptions) {
     })
 }
 
+export function useFetchTopRatedMovies(options?: GetMovieCollectionOptions) {
+    return useQuery({
+        queryKey: [CacheKeys.TOP_RATED], queryFn: async () => {
+            return await getMovieCollection("top_rated", options);
+        }
+    })
+}
+
 export interface GetMovieCollectionOptions {
     skipPages: number;
     numberOfPages: number;
 }
 
+
 async function getMovieCollection(collectionName: string, options?: GetMovieCollectionOptions): Promise<Movie[]> {
     const {skipPages, numberOfPages} = options || {skipPages: 0, numberOfPages: 1};
     const config = await getConfig();
-    const response = await fetch(`${config.baseUrl}v1/movie-collection/${collectionName}?skip=${skipPages}&numberOfPages=${numberOfPages}`)
+    const response = await fetch(`${config.baseUrl}/movie-collection/${collectionName}?skip=${skipPages}&numberOfPages=${numberOfPages}`)
+    if (!response.ok)
+        throw new Error("Something went wrong");
+    return response.json();
+}
+
+export async function getRecommendedMovies(movieId: number, options?: GetMovieCollectionOptions): Promise<MovieRecommendations> {
+    const {skipPages, numberOfPages} = options || {skipPages: 0, numberOfPages: 1};
+    const config = await getConfig();
+    const response = await fetch(`${config.baseUrl}/recommended-movies/${movieId}?skip=${skipPages}&numberOfPages=${numberOfPages}`)
     if (!response.ok)
         throw new Error("Something went wrong");
     return response.json();

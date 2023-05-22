@@ -6,9 +6,10 @@ public class Movie
     public string Title { get; set; }
     public string Summary { get; set; }
     public string ImageUri { get; set; }
+    public string TagLine { get; set; }
     public string BackdropUri { get; set; }
     public float TmdbScore { get; set; }
-    public int TmbdVoteCount { get; set; }
+    public int TmdbVoteCount { get; set; }
     public DateTime ReleaseDate { get; set; }
     public int RunTime { get; set; }
     public bool IsForKids { get; set; }
@@ -20,4 +21,7 @@ public class Movie
     public IEnumerable<Keyword> Keywords { get; set; }
     public IEnumerable<Language> Languages { get; set; }
     public IEnumerable<Genre> Genres { get; set; }
+    public IEnumerable<Image> Posters { get; set; }
+    public IEnumerable<Image> Backdrops { get; set; }
+    public IEnumerable<Image> Logos { get; set; }
 }
