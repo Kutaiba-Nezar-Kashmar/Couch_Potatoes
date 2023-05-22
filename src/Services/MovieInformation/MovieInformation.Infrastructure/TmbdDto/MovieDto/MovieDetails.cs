@@ -32,7 +32,7 @@ public record MovieDetail
     string BackdropPath,
     [property: JsonPropertyName("belongs_to_collection")]
     object BelongsToCollection,
-    [property: JsonPropertyName("budget")] int Budget,
+    [property: JsonPropertyName("budget")] long Budget,
     [property: JsonPropertyName("genres")] List<MovieDetailGenre> Genres,
     [property: JsonPropertyName("homepage")]
     string Homepage,
@@ -56,7 +56,7 @@ public record MovieDetail
     [property: JsonPropertyName("release_date")]
     string ReleaseDate,
     [property: JsonPropertyName("revenue")]
-    int Revenue,
+    long Revenue,
     [property: JsonPropertyName("runtime")]
     int Runtime,
     [property: JsonPropertyName("spoken_languages")]

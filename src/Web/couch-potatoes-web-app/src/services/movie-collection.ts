@@ -15,11 +15,15 @@ import {getMovieDetails} from "./movie-details";
 export function useFetchAllMovieCollections(options?: GetMovieCollectionOptions) {
 
     return useQuery({
-        queryKey: [CacheKeys.ALL_COLLECTIONS], queryFn: async () => {
+        queryKey: [CacheKeys.ALL_COLLECTIONS + "" + options?.numberOfPages + options?.skipPages], queryFn: async () => {
+            const popularMovies = await getMovieCollection("popular");
+            const topRatedMovies = await getMovieCollection("top_rated");
+            const nowPlayingMovies = await getMovieCollection("now_playing");
+
             return {
-                popularMovies: await getMovieCollection("popular"),
-                topRatedMovies: await getMovieCollection("top_rated"),
-                NowPlayingMovies: await getMovieCollection("now_playing")
+                popularMovies: popularMovies,
+                topRatedMovies: topRatedMovies,
+                NowPlayingMovies: nowPlayingMovies
             }
         }
     })
