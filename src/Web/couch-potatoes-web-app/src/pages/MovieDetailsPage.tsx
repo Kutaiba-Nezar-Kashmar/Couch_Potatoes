@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import BasePage from '../components/BasePage';
 import {
     Avatar,
@@ -51,6 +51,7 @@ import {
 
 
 const MovieDetailsPage = () => {
+    const {movieId} = useParams()
     const [isOpen, setIsOpen] = useState(false);
     const [expandedImage, setExpandedImage] = useState("");
     const Background_Temp = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
@@ -64,8 +65,15 @@ const MovieDetailsPage = () => {
         setIsOpen(false);
     };
 
+
     const themeColor = "teal";
-    const carouselMaxWidth = useBreakpointValue({base: "100%", md: "1000px"});
+    const emptyCreditsObject: MovieCredits =
+        {
+            id: 1,
+            creditsAsCast: [],
+            creditsAsCrew: []
+        }
+
     const navigate = useNavigate();
 
 
@@ -73,7 +81,7 @@ const MovieDetailsPage = () => {
     const [recommendedMovies, setRecommendedMovies] = useState<MovieRecommendations | null>(null);
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
 
-    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(8587);
+    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(Number(movieId));
 
 
     function convertToHoursAndMinutes(num: number) {
@@ -93,7 +101,7 @@ const MovieDetailsPage = () => {
                 data?.credits ?? null
             );
             setRecommendedMovies(
-               data?.movieRecommendations ?? null
+                data?.movieRecommendations ?? null
             )
         }
     }, [isLoading])
@@ -130,8 +138,8 @@ const MovieDetailsPage = () => {
                     {/* Movie header information */}
                     <GridItem colSpan={6} rowSpan={1}>
                         <MovieDetailsHeaderInformationbox movie={movie}
-                                                          themeColor={themeColor}></MovieDetailsHeaderInformationbox>
-        <Text>{recommendedMovies?.collection[0].title}</Text>
+                                                          themeColor={themeColor}/>
+
 
                     </GridItem>
 
@@ -139,8 +147,6 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6}
                               rowSpan={1}>
                         <Stack direction="row" divider={<StackDivider borderColor='gray.200'/>}>
-
-
                             <Box>
                                 <Text color={"white"} fontSize="lg">
                                     {convertToHoursAndMinutes(movie?.runTime as number)}
@@ -191,30 +197,31 @@ const MovieDetailsPage = () => {
                     {/* INFORMATIONBAR RIGHT */}
                     <GridItem rowSpan={6} colSpan={1}>
                         <MovieDetailsRightInformationbox movie={movie}
-                                                         themeColor={themeColor}></MovieDetailsRightInformationbox>
+                                                         themeColor={themeColor}/>
                     </GridItem>
 
                     {/* INFORMATIONBAR BOTTOM */}
 
                     <GridItem colSpan={5} rowSpan={1}>
                         <MovieDetailsBottomInformationbox movie={movie} movieCredits={movieCredits}
-                                                          themeColor={themeColor}></MovieDetailsBottomInformationbox>
+                                                          themeColor={themeColor}/>
                     </GridItem>
 
                     {/*CAST*/}
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
-                                                   movieCredits={movieCredits}></MovieDetailsCastComponent>
+                                                   movieCredits={movieCredits ??emptyCreditsObject}/>
                     </GridItem>
                     {/*Recommended Movies*/}
                     <GridItem colSpan={5}>
-                        <MovieDetailsRecommendedMoviesComponent themeColor={themeColor} Background_Temp={Background_Temp}
-                                                   movieRecommendations={recommendedMovies}></MovieDetailsRecommendedMoviesComponent>
+                        <MovieDetailsRecommendedMoviesComponent themeColor={themeColor}
+                                                                Background_Temp={Background_Temp}
+                                                                movieRecommendations={recommendedMovies}/>
                     </GridItem>
 
                     {/*REVIEWS*/}
                     <GridItem colSpan={5} rowSpan={1}>
-                        <MovieDetailsReviewsComponent></MovieDetailsReviewsComponent>
+                        <MovieDetailsReviewsComponent/>
                     </GridItem>
                 </Grid>
             </BasePage>

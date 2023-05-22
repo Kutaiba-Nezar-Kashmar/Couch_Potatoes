@@ -5,12 +5,15 @@ import MovieCredits from "../../models/movie_credits";
 import Movie from "../../models/movie";
 import MovieRecommendations from "../../models/movie-Recommedations";
 import starIcon from "../../assets/iconstar.png";
+import {sliceNumber} from "../../util/numberutil";
 
 export interface MovieDetailsRecommendMoviesComponentProps {
     movieRecommendations: MovieRecommendations | null;
     Background_Temp: string;
     themeColor: string;
 }
+
+
 
 export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMoviesComponentProps> = ({
                                                                                                           movieRecommendations,
@@ -47,7 +50,7 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                                    src={starIcon}/>
                                             <Text fontStyle="italic" color={themeColor} fontSize='sm'>
 
-                                                {movie?.tmdbScore}/10
+                                                {sliceNumber(movie?.tmdbScore, 1)}/10
                                             </Text>
 
                                         </Stack>

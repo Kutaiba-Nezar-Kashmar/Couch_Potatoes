@@ -5,7 +5,7 @@ import MovieCredits from "../../models/movie_credits";
 import Movie from "../../models/movie";
 
 export interface MovieDetailsCastComponentProps {
-    movieCredits: MovieCredits | null;
+    movieCredits: MovieCredits;
     Background_Temp: string;
     themeColor: string;
 }

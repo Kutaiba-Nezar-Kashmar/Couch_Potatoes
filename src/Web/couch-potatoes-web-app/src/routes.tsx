@@ -32,7 +32,7 @@ const routes: RouteObject[] = [
         element: <ProfilePage />,
     },
     {
-        path: '/details',
+        path: '/movie/details/:movieId',
         element: <MovieDetailsPage/>,
     }
 ];
