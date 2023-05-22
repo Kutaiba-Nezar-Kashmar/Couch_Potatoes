@@ -3,4 +3,5 @@ export default interface Crew {
     OriginalTitle?: string;
     Department?: string;
     Job?: string;
+    movieId?: number;
 }

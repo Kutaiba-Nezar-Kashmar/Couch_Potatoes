@@ -14,22 +14,6 @@ export function useFetchPersonDetailsAndCredits(options: FetchPersonDetailsOptio
     })
 }
 
-/*export function useFetchPersonDetails(options: FetchPersonDetailsOptions) {
-    return useQuery({
-        queryKey: [CacheKeys.PERSON_DETAILS + options.personId], queryFn: async (): Promise<object> => {
-            return await fetchPersonDetails(options)
-        }
-    })
-}
-
-export function useFetchPersonMovieCredits(options: FetchPersonDetailsOptions) {
-    return useQuery({
-        queryKey: [CacheKeys.PERSON_MOVIE_CREDITS + options.personId], queryFn: async (): Promise<object> => {
-            return await fetchPersonMovieCredits(options);
-        }
-    })
-}*/
-
 export interface FetchPersonDetailsOptions {
     personId: number
 }
