@@ -13,7 +13,7 @@ public class ReadDetailedMovieDto
     public string BackdropUri { get; set; }
     public float TmdbScore { get; set; }
     public string TagLine { get; set; }
-    public int TmbdVoteCount { get; set; }
+    public int TmdbVoteCount { get; set; }
     public DateTime ReleaseDate { get; set; }
     public int RunTime { get; set; }
     public bool IsForKids { get; set; }

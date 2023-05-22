@@ -1,6 +1,7 @@
 # start with docker compose up --build or use rider
 services:
   movieinformation:
+    container_name: movieinformation-service
     build:
       context: .
       dockerfile: ./Dockerfile

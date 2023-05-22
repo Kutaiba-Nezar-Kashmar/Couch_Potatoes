@@ -18,7 +18,7 @@ public record TmdbCastDto
     string ProfilePath,
     [property: JsonPropertyName("cast_id")]
     int CastId,
-    [property: JsonPropertyName("charater")]
+    [property: JsonPropertyName("character")]
     string Character,
     [property: JsonPropertyName("credit_id")]
     string CreditId,

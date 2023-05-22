@@ -7,7 +7,7 @@ namespace MovieInformation.Application.GetMovieCollection.Repositories;
 
 public class MovieCollectionRepository : IMovieCollectionRepository
 {
-    // TODO: Make this configurable at runtime
+  
     private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
     private HttpClient _httpClient;
 
