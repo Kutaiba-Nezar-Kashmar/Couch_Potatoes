@@ -211,7 +211,6 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
                                                    movieCredits={movieCredits ??emptyCreditsObject}/>
-                        {/*    TODO: MICMIC*/}
                     </GridItem>
                     {/*Recommended Movies*/}
                     <GridItem colSpan={5}>
