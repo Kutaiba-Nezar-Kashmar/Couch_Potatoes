@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Metrics.API.Controllers.V1;
 
 [ApiController]
-[Route("api/v1/person_metrics")]
+[Route("couch-potatoes/api/v1/person/metrics")]
 public class PersonMetricsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -36,7 +36,7 @@ public class PersonMetricsController : ControllerBase
                 NumberOfMovies = stats.NumberOfMovies,
                 AverageMoviesRatingsAsACast = stats.AverageMoviesRatingsAsACast,
                 AverageMoviesRatingsAsACrew = stats.AverageMoviesRatingsAsACrew,
-                KnownForgenre = stats.KnownForGenre
+                KnownForGenre = stats.KnownForGenre
             };
             return Ok(dto);
         }
