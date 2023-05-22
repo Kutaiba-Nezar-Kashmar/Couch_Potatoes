@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 // import required modules
-import {EffectCoverflow, Pagination} from "swiper";
+import {EffectCoverflow, FreeMode, Navigation, Pagination} from "swiper";
 
 
 export interface MovieCollectionComponentProps {
@@ -27,10 +27,12 @@ export const FrontPageCollectionViewComponent: FC<MovieCollectionComponentProps>
                 autoplay={true}
                 effect={"coverflow"}
                 grabCursor={true}
+                navigation={true}
                 direction="horizontal"
                 centeredSlides={true}
                 slidesPerView={7}
                 loop={true}
+                freeMode={true}
                 mousewheel={true}
                 coverflowEffect={{
                     rotate: 10,
@@ -40,8 +42,8 @@ export const FrontPageCollectionViewComponent: FC<MovieCollectionComponentProps>
                     slideShadows: true,
 
                 }}
-                pagination={true}
-                modules={[EffectCoverflow, Pagination]}
+
+                modules={[EffectCoverflow, Navigation, FreeMode]}
                 className="mySwiper"
             >
                 {movieCollection && movieCollection?.collection.map((movie) => (
