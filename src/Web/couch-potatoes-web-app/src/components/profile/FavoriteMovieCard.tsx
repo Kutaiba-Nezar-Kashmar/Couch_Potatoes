@@ -14,6 +14,7 @@ import {
 import { getPosterImageUri } from '../../services/images';
 import StarRatingComponent from 'react-star-rating-component';
 import { groupElements } from '../../util/listutil';
+import { useNavigate } from 'react-router';
 
 export interface FavoriteMovieCardProps {
     movie: Movie;
@@ -25,6 +26,8 @@ const FavoriteMovieCard: FC<FavoriteMovieCardProps> = ({ movie, editing }) => {
     const [isEditing, setIsEditing] = useState<boolean>(editing ?? false);
     const [genres, setGenres] = useState(groupElements(movie.genres, 3)[0]);
 
+    const navigate = useNavigate();
+
     return (
         <Box
             padding="1.0rem 1.5rem"
@@ -33,12 +36,13 @@ const FavoriteMovieCard: FC<FavoriteMovieCardProps> = ({ movie, editing }) => {
             minHeight={{ base: '400px' }}
             transition="all 0.2s ease-in-out"
             transform={hovered ? 'scale(1.05)' : 'scale(1.0)'}
-            filter={hovered ? 'brightness(1.1)' : 'brightness(0.9)'}
+            filter={hovered ? 'brightness(1)' : 'brightness(0.9)'}
             shadow={hovered ? 'dark-lg' : 'none'}
             cursor="pointer"
             width={{ base: '200px', md: '250px' }}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onClick={() => navigate(`/movie/details/${movie.id}`)}
         >
             <Flex justify="center" alignItems="center" direction="column">
                 <Text

@@ -11,6 +11,7 @@ import Movie from '../../models/movie';
 import { Theme } from '../../models/theme';
 import { groupElements } from '../../util/listutil';
 import FavoriteMovieRow from './FavoriteMovieRow';
+import { CheckIcon, EditIcon } from '@chakra-ui/icons';
 
 export interface FavoriteMovieDirectory {
     theme: Theme;
@@ -21,7 +22,8 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
     theme,
     movies,
 }) => {
-    const [moviesPerRow, setMoviesPerRow] = useState<number>(3);
+    const [moviesPerRow, setMoviesPerRow] = useState<number>(5);
+    const [editing, setEditing] = useState(false);
 
     const getTextColor = () => {
         return theme == Theme.DARK ? 'white' : 'black';
@@ -40,11 +42,22 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
     return (
         <>
             <Heading as="h3" textColor={getTextColor()}>
-                Favorites
+                Favorites{' '}
+                {!editing ? (
+                    <EditIcon
+                        cursor="pointer"
+                        onClick={() => setEditing(!editing)}
+                    />
+                ) : (
+                    <CheckIcon
+                        cursor="pointer"
+                        onClick={() => setEditing(!editing)}
+                    />
+                )}
             </Heading>
             <Flex direction="column" justify="start" marginTop="0.5rem" gap={5}>
                 {groupElements(movies, moviesPerRow).map((row) => (
-                    <FavoriteMovieRow movies={row} />
+                    <FavoriteMovieRow editing={editing} movies={row} />
                 ))}
             </Flex>
         </>
