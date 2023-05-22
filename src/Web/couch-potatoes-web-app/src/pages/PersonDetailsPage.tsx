@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {useFetchPersonDetailsAndCredits} from "../services/person-service/person-details-service";
 import PersonDetails from "../models/person/person-details";
-import {Box, Flex, Grid, GridItem, Spinner} from "@chakra-ui/react";
+import {Box, Button, Flex, Grid, GridItem, Spinner} from "@chakra-ui/react";
 import {getPosterImageUri} from "../services/images";
 import PersonSideBar from "../components/person/PersonSideBar";
 import PersonBiography from "../components/person/PersonBiography";
 import BasePage from "../components/BasePage";
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import PersonMovieCredits from "../models/person/person-movie-credits";
-import PersonMovieCreditsCarousel from "../components/person/PersonMovieCreditsCarousel";
-import {PersonMovieCreditsProperties} from "../components/person/PersonCreditsCarouselItem";
+import PersonMovieCreditsItem from "../components/person/PersonMovieCreditsItem";
+import {Swiper, SwiperSlide} from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import {Navigation} from "swiper";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
@@ -46,7 +50,7 @@ const PersonDetailsPage = () => {
         console.log(person)
         console.log(movieCredits)
     }
-//TODO: change to list of cads instead of a carousel
+
     return (
         <BackgroundImageFull imageUri={Background_Temp}>
             <BasePage>
@@ -67,7 +71,14 @@ const PersonDetailsPage = () => {
                         <PersonBiography name={person?.name} bio={person?.biography}/>
                     </GridItem>
                 </Grid>
-                <PersonMovieCreditsCarousel credits={movieCredits?.creditsAsCast??[]}/>
+                <Flex>
+                    <Swiper navigation={true} modules={[Navigation]} className="mySwiper" slidesPerView={5}
+                            pagination={{clickable: true}} spaceBetween={2}>
+                        {movieCredits?.creditsAsCast?.map(c => <SwiperSlide><PersonMovieCreditsItem
+                            imageUri={getPosterImageUri(c.backdropPath!) ?? Background_Temp}
+                            movieTitle={c.originalTitle as string}/></SwiperSlide>)}
+                    </Swiper>
+                </Flex>
             </BasePage>
         </BackgroundImageFull>
     )
