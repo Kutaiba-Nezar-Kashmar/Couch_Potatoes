@@ -17,7 +17,7 @@ export interface MovieCreditsAndDetails {
 
 export function useFetchMovieCreditsAndMovies(movieId: number) {
     return useQuery({
-        queryKey: [CacheKeys.MOVIE_CREDITS], queryFn: async () => {
+        queryKey: [CacheKeys.MOVIE_CREDITS+""+movieId], queryFn: async () => {
             return {
                 credits: await getMovieCredits(movieId),
                 movieDetails: await getMovieDetails(movieId),

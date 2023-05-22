@@ -50,7 +50,7 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsComponentProps> = (
 								home page
 							</Heading>
 							<Link pt='2' fontSize='sm' href={movie?.homepage}
-								  color="blue.500"
+								  color={themeColor}
 
 								  _hover={{color: "blue.700"}}
 								  _focus={{outline: "none", boxShadow: "outline"}}
