@@ -1,4 +1,4 @@
-import {Box, Button, Card, CardBody, Flex, Heading, Image, Stack, Text} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, Flex, Heading, Image, Stack, Text, Tooltip} from "@chakra-ui/react";
 import {getPosterImageUri} from "../services/images";
 import React, {FC} from "react";
 import MovieCredits from "../models/movie_credits";
@@ -48,11 +48,16 @@ export const FrontPageCollectionViewComponent: FC<MovieCollectionComponentProps>
             >
                 {movieCollection && movieCollection?.collection.map((movie) => (
                     <SwiperSlide onClick={() => navigate(`/movie/details/${movie.id}`)}>
-                        <Image maxWidth={225}
-                               src={getPosterImageUri(movie?.imageUri as string)}
-                               alt='No image available of actor'
-                               borderRadius='lg'
-                        />
+                        <Tooltip label={"Rating: "+movie?.tmdbScore.toFixed(1)} placement="top">
+                            <Image maxWidth={225}
+                                   src={getPosterImageUri(movie?.imageUri as string)}
+                                   alt={"poster of movie " + movie.title}
+                                   borderRadius='lg'
+                                   filter="brightness(0.9)"
+                                   _hover={{filter: "brightness(1.1)"}}
+                            />
+                        </Tooltip>
+
 
                     </SwiperSlide>
                 ))}

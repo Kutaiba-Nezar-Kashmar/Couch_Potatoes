@@ -47,7 +47,7 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                                    src={starIcon}/>
                                             <Text fontStyle="italic" color={themeColor} fontSize='sm'>
 
-                                                {movie?.tmdbScore}/10
+                                                {movie?.tmdbScore.toFixed(1)}/10
                                             </Text>
 
                                         </Stack>

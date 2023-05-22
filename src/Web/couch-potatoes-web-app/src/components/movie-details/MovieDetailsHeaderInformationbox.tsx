@@ -38,7 +38,7 @@ export const MovieDetailsHeaderInformationbox: FC<MovieDetailsComponentProps> = 
                     <Stack direction="row">
                         <Image src={starIcon} maxHeight={8}/>
                         <Text color={"white"} fontSize="2xl">
-                            {movie?.tmdbScore}/10
+                            {movie?.tmdbScore.toFixed(1)}/10
                             {/* YEAR AND RUNTIME */}
 
                         </Text>
