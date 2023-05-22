@@ -4,14 +4,19 @@ import {Grid, GridItem, Heading, HStack, Select, Stack, Text} from "@chakra-ui/r
 interface PersonCreditsFilterProperties {
     actingCredits?: number,
     crewCredits?: number,
-    isActing?: boolean
+    onSelectOption: (selectedOption: string) => void;
 }
 
 const PersonCreditsFilterBar: FC<PersonCreditsFilterProperties> = ({
                                                                        actingCredits,
                                                                        crewCredits,
-                                                                       isActing
+                                                                       onSelectOption
                                                                    }) => {
+    const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedOption = event.target.value;
+        onSelectOption(selectedOption);
+    };
+
     return (
         <Grid templateColumns='repeat(3, 1fr)' gap={6}>
             <GridItem colSpan={2}>
@@ -19,10 +24,10 @@ const PersonCreditsFilterBar: FC<PersonCreditsFilterProperties> = ({
             </GridItem>
             <GridItem colSpan={1}>
                 <HStack spacing={2}>
-                    <Select backgroundColor='white'>
-                        <option>All {(actingCredits ?? 0) + (crewCredits ?? 0)}</option>
-                        <option>Acting {actingCredits ?? 0}</option>
-                        <option>Production {crewCredits ?? 0}</option>
+                    <Select backgroundColor='white' onChange={handleOptionChange}>
+                        <option value="All">All {(actingCredits ?? 0) + (crewCredits ?? 0)}</option>
+                        <option value="Acting">Acting {actingCredits ?? 0}</option>
+                        <option value="Production">Production {crewCredits ?? 0}</option>
                     </Select>
                 </HStack>
             </GridItem>

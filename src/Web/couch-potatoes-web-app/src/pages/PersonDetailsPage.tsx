@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useFetchPersonDetailsAndCredits} from "../services/person-service/person-details-service";
 import PersonDetails from "../models/person/person-details";
-import {Box, Button, Flex, Grid, GridItem, Spinner} from "@chakra-ui/react";
+import {Box, Button, Flex, Grid, GridItem, SimpleGrid, Spinner} from "@chakra-ui/react";
 import {getPosterImageUri} from "../services/images";
 import PersonSideBar from "../components/person/PersonSideBar";
 import PersonBiography from "../components/person/PersonBiography";
@@ -16,6 +16,8 @@ import "swiper/css/pagination";
 import {Navigation} from "swiper";
 import {useNavigate, useParams} from "react-router-dom";
 import PersonCreditsFilterBar from "../components/person/PersonCreditsFilterBar";
+import CreditsAsCastDetails from "../components/person/CreditsAsCastDetails";
+import CreditsAsCrewDetails from "../components/person/CreditsAsCrewDetails";
 
 //TODO: replace the Background_Temp to a proper placeholder.
 const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
@@ -31,6 +33,11 @@ const PersonDetailsPage = () => {
     } = useFetchPersonDetailsAndCredits({personId: (Number(personId))});
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [movieCredits, setMovieCredits] = useState<PersonMovieCredits | null>(null);
+    const [selectedOption, setSelectedOption] = useState<string | null>("All");
+
+    const handleSelectOption = (selectedOption: string) => {
+        setSelectedOption(selectedOption);
+    };
 
     useEffect(() => {
         if (!isLoading) {
@@ -97,7 +104,38 @@ const PersonDetailsPage = () => {
                         <PersonCreditsFilterBar
                             actingCredits={movieCredits?.creditsAsCast.length}
                             crewCredits={movieCredits?.creditsAsCrew.length}
+                            onSelectOption={handleSelectOption}
                         />
+                        <br/>
+                        <SimpleGrid spacing={4} templateRows='repeat(auto-fill, minmax(1fr))'>
+                            {selectedOption === "All" ? movieCredits?.creditsAsCast
+                                    .slice()
+                                    .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
+                                    .map(c =>
+                                    <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
+                                                          character={c.character}/>)
+                                    .concat(movieCredits?.creditsAsCrew
+                                        .slice()
+                                        .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
+                                        .map(c =>
+                                        <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
+                                                              releaseDate={new Date(c.releaseDate + "")}/>)) :
+                                <></>}
+                            {selectedOption === "Acting" ? movieCredits?.creditsAsCast
+                                    .slice()
+                                    .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
+                                    .map(c =>
+                                    <CreditsAsCastDetails title={c.title} releaseDate={new Date(c.releaseDate + "")}
+                                                          character={c.character}/>) :
+                                <></>}
+                            {selectedOption === "Production" ? movieCredits?.creditsAsCrew
+                                    .slice()
+                                    .sort((a, b) => (new Date(a.releaseDate + "").getFullYear()) - (new Date(b.releaseDate + "").getFullYear()))
+                                    .map(c =>
+                                    <CreditsAsCrewDetails title={c.title} department={c.department} job={c.job}
+                                                          releaseDate={new Date(c.releaseDate + "")}/>) :
+                                <></>}
+                        </SimpleGrid>
                     </GridItem>
                 </Grid>
             </BasePage>
