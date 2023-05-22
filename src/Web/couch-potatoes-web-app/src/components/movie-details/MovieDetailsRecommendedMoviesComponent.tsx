@@ -12,6 +12,11 @@ export interface MovieDetailsRecommendMoviesComponentProps {
     themeColor: string;
 }
 
+export function sliceNumber(number: number, decimals: number) {
+    const slicedNumber = number.toString().slice(0, decimals + 2);
+    return parseFloat(slicedNumber).toFixed(decimals);
+}
+
 export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMoviesComponentProps> = ({
                                                                                                           movieRecommendations,
                                                                                                           Background_Temp,
@@ -47,7 +52,7 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                                    src={starIcon}/>
                                             <Text fontStyle="italic" color={themeColor} fontSize='sm'>
 
-                                                {movie?.tmdbScore.toFixed(1)}/10
+                                                {sliceNumber(movie?.tmdbScore, 1)}/10
                                             </Text>
 
                                         </Stack>

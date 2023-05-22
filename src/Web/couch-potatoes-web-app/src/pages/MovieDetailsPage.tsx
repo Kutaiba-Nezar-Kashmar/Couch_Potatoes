@@ -138,7 +138,7 @@ const MovieDetailsPage = () => {
                     {/* Movie header information */}
                     <GridItem colSpan={6} rowSpan={1}>
                         <MovieDetailsHeaderInformationbox movie={movie}
-                                                          themeColor={themeColor}></MovieDetailsHeaderInformationbox>
+                                                          themeColor={themeColor}/>
 
 
                     </GridItem>
@@ -197,32 +197,32 @@ const MovieDetailsPage = () => {
                     {/* INFORMATIONBAR RIGHT */}
                     <GridItem rowSpan={6} colSpan={1}>
                         <MovieDetailsRightInformationbox movie={movie}
-                                                         themeColor={themeColor}></MovieDetailsRightInformationbox>
+                                                         themeColor={themeColor}/>
                     </GridItem>
 
                     {/* INFORMATIONBAR BOTTOM */}
 
                     <GridItem colSpan={5} rowSpan={1}>
                         <MovieDetailsBottomInformationbox movie={movie} movieCredits={movieCredits}
-                                                          themeColor={themeColor}></MovieDetailsBottomInformationbox>
+                                                          themeColor={themeColor}/>
                     </GridItem>
 
                     {/*CAST*/}
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent themeColor={themeColor} Background_Temp={Background_Temp}
-                                                   movieCredits={movieCredits ??emptyCreditsObject}></MovieDetailsCastComponent>
+                                                   movieCredits={movieCredits ??emptyCreditsObject}/>
                         {/*    TODO: MICMIC*/}
                     </GridItem>
                     {/*Recommended Movies*/}
                     <GridItem colSpan={5}>
                         <MovieDetailsRecommendedMoviesComponent themeColor={themeColor}
                                                                 Background_Temp={Background_Temp}
-                                                                movieRecommendations={recommendedMovies}></MovieDetailsRecommendedMoviesComponent>
+                                                                movieRecommendations={recommendedMovies}/>
                     </GridItem>
 
                     {/*REVIEWS*/}
                     <GridItem colSpan={5} rowSpan={1}>
-                        <MovieDetailsReviewsComponent></MovieDetailsReviewsComponent>
+                        <MovieDetailsReviewsComponent/>
                     </GridItem>
                 </Grid>
             </BasePage>

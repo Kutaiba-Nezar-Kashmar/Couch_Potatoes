@@ -2,6 +2,7 @@ import {Box, Image, Stack, StackDivider, Text} from "@chakra-ui/react";
 import React, {FC} from "react";
 import {MovieDetailsComponentProps} from "./MovieDetailsBottomInformationbox";
 import starIcon from "../../assets/iconstar.png";
+import {sliceNumber} from "./MovieDetailsRecommendedMoviesComponent";
 
 export const MovieDetailsHeaderInformationbox: FC<MovieDetailsComponentProps> = ({movie}) => {
     return (
@@ -38,7 +39,7 @@ export const MovieDetailsHeaderInformationbox: FC<MovieDetailsComponentProps> = 
                     <Stack direction="row">
                         <Image src={starIcon} maxHeight={8}/>
                         <Text color={"white"} fontSize="2xl">
-                            {movie?.tmdbScore.toFixed(1)}/10
+                            {sliceNumber(Number(movie?.tmdbScore),1)}/10
                             {/* YEAR AND RUNTIME */}
 
                         </Text>

@@ -32,6 +32,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import {sliceNumber} from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
 
 
 const IndexPage = () => {
@@ -103,7 +104,7 @@ const IndexPage = () => {
                                     <Flex direction="row" justify="flex-end"
                                           width={{base: '300px', md: '450px', lg: '600px'}}>
                                         <Text textColor="white">
-                                            IMDB Score: {popularMovies?.collection[0]?.tmdbScore} / 10
+                                            IMDB Score: {sliceNumber(Number(popularMovies?.collection[0]?.tmdbScore),1) } / 10
                                         </Text>
                                     </Flex>
                                     {/* SEARCH */}

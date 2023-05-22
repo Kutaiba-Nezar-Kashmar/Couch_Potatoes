@@ -13,6 +13,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 // import required modules
 import {EffectCoverflow, FreeMode, Navigation, Pagination} from "swiper";
+import {sliceNumber} from "./movie-details/MovieDetailsRecommendedMoviesComponent";
 
 
 export interface MovieCollectionComponentProps {
@@ -48,7 +49,7 @@ export const FrontPageCollectionViewComponent: FC<MovieCollectionComponentProps>
             >
                 {movieCollection && movieCollection?.collection.map((movie) => (
                     <SwiperSlide onClick={() => navigate(`/movie/details/${movie.id}`)}>
-                        <Tooltip label={"Rating: "+movie?.tmdbScore.toFixed(1)} placement="top">
+                        <Tooltip label={"Rating: "+sliceNumber(movie?.tmdbScore,1) } placement="top">
                             <Image maxWidth={225}
                                    src={getPosterImageUri(movie?.imageUri as string)}
                                    alt={"poster of movie " + movie.title}
