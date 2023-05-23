@@ -77,23 +77,30 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 							</Stack>
 						</Box>
 
-						<Box>
-							<Heading marginBottom={3} size='sm' textTransform='uppercase'>
-								Genres
-							</Heading>
-							{movie && movie?.genres.map((genre) => (
-								<Button margin={0.5} colorScheme={themeColor} size='xs' key={genre.id}
-										className="genre">
-									{genre.name}
-								</Button>
-							))}
-						</Box>
-
-
-					</Stack>
-				</CardBody>
-			</Card>
-
-		</>
-	)
-}
+                        <Box>
+                            <Heading
+                                marginBottom={3}
+                                size="sm"
+                                textTransform="uppercase"
+                            >
+                                Genres
+                            </Heading>
+                            {movie &&
+                                movie?.genres.map((genre) => (
+                                    <Button
+                                        margin={0.5}
+                                        colorScheme={themeColor}
+                                        size="xs"
+                                        key={genre.id}
+                                        className="genre"
+                                    >
+                                        {genre.name}
+                                    </Button>
+                                ))}
+                        </Box>
+                    </Stack>
+                </CardBody>
+            </Card>
+        </>
+    );
+};

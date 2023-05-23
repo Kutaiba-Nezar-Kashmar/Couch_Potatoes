@@ -8,6 +8,8 @@ services:
       - 8087:80
     env_file:
       - ./.env
+    volumes:
+      - ./service-account-key.json:/usr/local/service-account-key.json
 networks:
   default:
     name: couch-potatoes-network

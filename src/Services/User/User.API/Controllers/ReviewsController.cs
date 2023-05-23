@@ -31,7 +31,7 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpGet("{movieId}")]
-    public async Task<ActionResult<IReadOnlyCollection<ReadReviewDto>>> Get([FromRoute] int movieId)
+    public async Task<ActionResult<IReadOnlyCollection<ReadReviewDto>>> GetReviewsForMovie([FromRoute] int movieId)
     {
         try
         {
@@ -43,29 +43,29 @@ public class ReviewsController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(Get)}");
+            _logger.LogError(LogEvent.Api, e, $"Failed to process {nameof(GetReviewsForMovie)}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
                 $"Failed to get reviews for movie with id {movieId}");
         }
     }
 
     [HttpPost("{movieId}")]
-    public async Task<ActionResult> Create([FromRoute] int movieId, [FromBody] CreateReviewDto reviewDto)
+    public async Task<ActionResult> CreateReview([FromRoute] int movieId, [FromBody] CreateReviewDto reviewDto)
     {
         try
         {
-            await _mediator.Send(new CreateReviewForMovieCommand(movieId, reviewDto.UserId, reviewDto.Rating,
+            var newReview = await _mediator.Send(new CreateReviewForMovieCommand(movieId, reviewDto.UserId, reviewDto.Rating,
                 reviewDto.ReviewText));
-            return Ok();
+            return Ok(_mapper.Map<ReadReviewDto>(newReview));
         }
         catch (Exception e) when (e is UserHasExistingReviewException)
         {
-            _logger.LogError(LogEvent.Api, e.InnerException ?? e, $"Failed to process {nameof(Create)}: {e}");
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e, $"Failed to process {nameof(CreateReview)}: {e}");
             return Conflict(e.Message);
         }
         catch (Exception e) when (e is FailedToCreateReviewException or InvalidReviewException)
         {
-            _logger.LogError(LogEvent.Api, e.InnerException ?? e, $"Failed to process {nameof(Create)}");
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e, $"Failed to process {nameof(CreateReview)}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
         }
     }
@@ -117,13 +117,13 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpPost("{movieId}/{reviewId}/votes")]
-    public async Task<ActionResult> Vote([FromRoute] int movieId, [FromRoute] Guid reviewId,
+    public async Task<ActionResult<Vote>> Vote([FromRoute] int movieId, [FromRoute] Guid reviewId,
         [FromBody] VoteReviewDto dto)
     {
         try
         {
-            await _mediator.Send(new VoteReviewCommand(dto.UserId, movieId, reviewId, dto.Direction.ToVoteDirection()));
-            return Ok();
+            var voteResult = await _mediator.Send(new VoteReviewCommand(dto.UserId, movieId, reviewId, dto.Direction.ToVoteDirection()));
+            return Ok(_mapper.Map<VoteDto>(voteResult));
         }
         catch (Exception e) when (e is UserDoesNotExistException or ReviewDoesNotExistException)
         {

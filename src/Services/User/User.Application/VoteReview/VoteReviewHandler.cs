@@ -9,9 +9,9 @@ using User.Infrastructure;
 
 namespace User.Application.UpvoteReview;
 
-public record VoteReviewCommand(string userId, int movieId, Guid reviewId, VoteDirection direction) : IRequest;
+public record VoteReviewCommand(string userId, int movieId, Guid reviewId, VoteDirection direction) : IRequest<Vote>;
 
-public class VoteReviewHandler : IRequestHandler<VoteReviewCommand>
+public class VoteReviewHandler : IRequestHandler<VoteReviewCommand, Vote>
 {
     private readonly ILogger _logger;
     private readonly IVoteReviewRepository _repository;
@@ -30,7 +30,7 @@ public class VoteReviewHandler : IRequestHandler<VoteReviewCommand>
     /// When an upvote already exists, it simply updates the existing vote.
     /// If an vote in the same direction already exists, then delete that vote.
     /// </summary>
-    public async Task Handle(VoteReviewCommand request, CancellationToken cancellationToken)
+    public async Task<Vote> Handle(VoteReviewCommand request, CancellationToken cancellationToken)
     {
         try
         {
@@ -61,18 +61,19 @@ public class VoteReviewHandler : IRequestHandler<VoteReviewCommand>
                     Id = Guid.NewGuid()
                 };
                 await _repository.VoteReview(request.movieId, review, newVote);
-                return;
+                return (newVote);
             }
 
             if (existingVote.Direction == request.direction)
             {
                 await _repository.DeleteVote(request.movieId, request.reviewId, existingVote.Id);
-                return;
+                return (null);
             }
 
             await _repository.DeleteVote(request.movieId, request.reviewId, existingVote.Id);
             existingVote.Direction = request.direction;
             await _repository.VoteReview(request.movieId, review, existingVote);
+            return existingVote;
         }
         catch (Exception e) when (e is not UserDoesNotExistException or ReviewDoesNotExistException)
         {

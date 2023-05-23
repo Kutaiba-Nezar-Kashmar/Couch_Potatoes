@@ -8,9 +8,9 @@ using User.Infrastructure;
 
 namespace User.Application.CreateReviewForMovie;
 
-public record CreateReviewForMovieCommand(int movieId, string userId, int rating, string reviewText) : IRequest;
+public record CreateReviewForMovieCommand(int movieId, string userId, int rating, string reviewText) : IRequest<Review>;
 
-public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieCommand>
+public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieCommand, Review>
 {
     private readonly ICreateReviewForMovieRepository _repository;
     private readonly IAuthenticationRepository _auth;
@@ -24,7 +24,7 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
         _logger = logger;
     }
 
-    public async Task Handle(CreateReviewForMovieCommand request, CancellationToken cancellationToken)
+    public async Task<Review> Handle(CreateReviewForMovieCommand request, CancellationToken cancellationToken)
     {
         var reviewToCreate = new Review
         {
@@ -60,6 +60,7 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
             }
 
             await _repository.CreateForMovie(reviewToCreate.MovieId, reviewToCreate);
+            return reviewToCreate;
         }
         catch (Exception e) when (e is not UserHasExistingReviewException)
         {

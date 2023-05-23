@@ -1,8 +1,13 @@
 import React, {FC} from "react";
-import {MovieDetailsComponentProps} from "./MovieDetailsBottomInformationbox";
 import {Box, Button, Card, CardBody, CardHeader, Heading, Link, Stack, StackDivider, Text} from "@chakra-ui/react";
+import Movie from "../../models/movie";
 
-export const MovieDetailsRightInformationbox: FC<MovieDetailsComponentProps> = ({movie,themeColor}) => {
+export interface MovieDetailsRightInformationBoxProps{
+    movie: Movie | null;
+    themeColor: string;
+}
+
+export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBoxProps> = ({movie,themeColor}) => {
 	return (
 		<>
 
