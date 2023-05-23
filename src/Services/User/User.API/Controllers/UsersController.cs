@@ -117,7 +117,7 @@ public class UsersController : ControllerBase
         try
         {
             var reviews = await _mediator.Send(new GetReviewsForUserQuery(userId));
-            return Ok(reviews);
+            return Ok(reviews.Select(_mapper.Map<ReadReviewDto>));
         }
         catch (Exception e) when (e is UserDoesNotExistException)
         {

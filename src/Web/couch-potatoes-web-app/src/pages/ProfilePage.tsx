@@ -21,6 +21,7 @@ import {
     getAuthenticatedUser,
     getUserById,
     useGetAuthenticatedUser,
+    useGetUserById,
 } from '../services/user';
 import BackgroundImageFull from '../components/BackgroundImageFull';
 import { navBarHeightInRem } from '../components/settings/page-settings';
@@ -46,6 +47,7 @@ const ProfilePage: FC = () => {
     const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
     const [reviews, setReviews] = useState<Review[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+
     const { userId } = useParams();
 
     const navigate = useNavigate();
@@ -67,11 +69,18 @@ const ProfilePage: FC = () => {
     });
 
     const {
+        isLoading: isLoadingAuthUser,
+        isError: isErrorAuthUser,
+        data: authUserData,
+        error: authUserError,
+    } = useGetAuthenticatedUser();
+
+    const {
         isLoading: isLoadingUser,
         isError: isErrorUser,
-        data: dataUser,
+        data: userData,
         error: userError,
-    } = useGetAuthenticatedUser();
+    } = useGetUserById(userId);
 
     const removeMovieFromFavorite = async (movieId: number): Promise<any> => {
         if (!user) {
@@ -123,23 +132,39 @@ const ProfilePage: FC = () => {
 
     useEffect(() => {
         subscribeRemoveFavoriteMovieEventListener(removeFavoriteListener);
-        if (!isLoadingUser) {
-            setUser(dataUser ?? null);
+        if (!isLoadingAuthUser && !isLoadingUser) {
+            if (userData) {
+                setUser(userData);
+            } else {
+                setUser(authUserData ?? null);
+            }
         }
         if (!isLoadingFavorites) {
             setFavoriteMovies(data ?? []);
         }
 
         if (!isLoadingReviews) {
+            console.log(reviewsData);
             setReviews(reviewsData ?? []);
         }
 
         return () => {
             unsubscribeRemoveFavoriteMovieEvent(removeFavoriteListener);
+            if (user) {
+                queryClient.invalidateQueries([
+                    UserCacheKeys.GET_USER_WITH_ID + user.id,
+                    UserCacheKeys.AUTHENTICATED_USER,
+                ]);
+            }
         };
-    }, [isLoadingFavorites, isLoadingReviews, isLoadingUser]);
+    }, [
+        isLoadingFavorites,
+        isLoadingReviews,
+        isLoadingAuthUser,
+        isLoadingUser,
+    ]);
 
-    if (isLoadingUser) {
+    if (isLoadingAuthUser) {
         return (
             <Flex
                 width="100%"
@@ -200,6 +225,7 @@ const ProfilePage: FC = () => {
                                 <ReviewList
                                     theme={Theme.DARK}
                                     reviews={reviews}
+                                    title="Your reviews"
                                 />
                             )}
                         </Box>

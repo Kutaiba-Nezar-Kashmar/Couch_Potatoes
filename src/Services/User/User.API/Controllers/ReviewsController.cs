@@ -117,13 +117,13 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpPost("{movieId}/{reviewId}/votes")]
-    public async Task<ActionResult> Vote([FromRoute] int movieId, [FromRoute] Guid reviewId,
+    public async Task<ActionResult<Vote>> Vote([FromRoute] int movieId, [FromRoute] Guid reviewId,
         [FromBody] VoteReviewDto dto)
     {
         try
         {
-            await _mediator.Send(new VoteReviewCommand(dto.UserId, movieId, reviewId, dto.Direction.ToVoteDirection()));
-            return Ok();
+            var voteResult = await _mediator.Send(new VoteReviewCommand(dto.UserId, movieId, reviewId, dto.Direction.ToVoteDirection()));
+            return Ok(_mapper.Map<VoteDto>(voteResult));
         }
         catch (Exception e) when (e is UserDoesNotExistException or ReviewDoesNotExistException)
         {

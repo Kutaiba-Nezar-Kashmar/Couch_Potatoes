@@ -103,6 +103,7 @@ export async function getReviewsForUser(userId: string): Promise<Review[]> {
     );
 
     const reviews = reviewDtos.map((dto) => {
+        console.log(dto.votes);
         return {
             creationDate: dto.creationDate,
             lastUpdatedDate: dto.lastUpdatedDate,
@@ -116,4 +117,74 @@ export async function getReviewsForUser(userId: string): Promise<Review[]> {
     });
 
     return reviews;
+}
+
+export async function voteReview(
+    userId: string,
+    movieId: number,
+    reviewId: string,
+    direction: string
+): Promise<Vote | null> {
+    const config = await getConfig();
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    const payload = {
+        userId: userId,
+        direction: direction,
+    };
+
+    const reviewsResponse = await fetch(
+        `${config.baseUrl}/reviews/${movieId}/${reviewId}/votes`,
+        {
+            headers: headers,
+            body: JSON.stringify(payload),
+            method: 'POST',
+        }
+    );
+
+    if (!reviewsResponse.ok) {
+        throw new Error('Failed to vote');
+    }
+
+    try {
+        return await reviewsResponse.json();
+    } catch (err) {
+        return null;
+    }
+}
+
+export async function updateReview(
+    userId: string,
+    movieId: number,
+    reviewId: string,
+    rating: number,
+    reviewText: string
+): Promise<ReviewDto> {
+    const config = await getConfig();
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    const payload = {
+        userId: userId,
+        rating: rating,
+        reviewText: reviewText,
+    };
+
+    const updateReviewResponse = await fetch(
+        `${config.baseUrl}/reviews/${movieId}/${reviewId}`,
+        {
+            headers: headers,
+            body: JSON.stringify(payload),
+            method: 'PUT',
+        }
+    );
+
+    if (!updateReviewResponse.ok) {
+        throw new Error('Failed to update');
+    }
+
+    return await updateReviewResponse.json();
 }

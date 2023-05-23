@@ -1,8 +1,8 @@
-import { useMutation, useQuery } from 'react-query';
+import { QueryClient, useMutation, useQuery } from 'react-query';
 import { getConfig } from '../configuration/configuration';
 import { auth } from '../firebase';
 import User from '../models/user';
-import { User as FirebaseUser } from 'firebase/auth';
+import { User as FirebaseUser, signOut } from 'firebase/auth';
 import userEvent from '@testing-library/user-event';
 import { stringify } from 'querystring';
 
@@ -106,10 +106,13 @@ export async function addFavoriteMovie(
     return true;
 }
 
-export function useGetUserById(id: string) {
+export function useGetUserById(id?: string) {
     return useQuery({
         queryKey: [UserCacheKeys.GET_USER_WITH_ID + id],
         queryFn: async () => {
+            if (!id) {
+                return null;
+            }
             return getUserById(id);
         },
     });
@@ -158,4 +161,17 @@ export async function getUsers(ids: string[]): Promise<User[]> {
     }
 
     return response.json();
+}
+
+export async function signUserOut(
+    onSignout: () => void,
+    onError: (error: any) => void
+) {
+    signOut(auth)
+        .then(() => {
+            onSignout();
+        })
+        .catch((err) => {
+            onError(err);
+        });
 }

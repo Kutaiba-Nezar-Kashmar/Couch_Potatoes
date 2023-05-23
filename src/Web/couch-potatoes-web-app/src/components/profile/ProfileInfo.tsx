@@ -1,9 +1,13 @@
 import React, { FC, useEffect } from 'react';
 import User from '../../models/user';
-import { Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { safeConvertDateToString } from '../../util/dateutil';
 import { getTextColor } from '../../util/themeutil';
 import { Theme } from '../../models/theme';
+import { useQueryClient } from 'react-query';
+import { UserCacheKeys, signUserOut } from '../../services/user';
+import { CacheKeys } from '../../services/cache-keys';
+import { useNavigate } from 'react-router';
 
 export interface ProfileInfoProps {
     theme: Theme;
@@ -11,12 +15,30 @@ export interface ProfileInfoProps {
 }
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+
     useEffect(() => {
         console.log(user);
     }, [user]);
 
     if (!user) {
         return <div>Loading...</div>;
+    }
+
+    function signOut() {
+        signUserOut(
+            () => {
+                queryClient.invalidateQueries([
+                    UserCacheKeys.AUTHENTICATED_USER,
+                    UserCacheKeys.GET_USER_WITH_ID + user!.id,
+                ]);
+                navigate('/');
+            },
+            (err) => {
+                console.error(err);
+            }
+        );
     }
 
     return (
@@ -62,6 +84,15 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
                 Last seen online:{' '}
                 {safeConvertDateToString(user.lastSignInTimestamp)}
             </Text>
+
+            <Button
+                size="sm"
+                marginTop="1rem"
+                width="100%"
+                onClick={() => signOut()}
+            >
+                Sign out
+            </Button>
         </Flex>
     );
 };
