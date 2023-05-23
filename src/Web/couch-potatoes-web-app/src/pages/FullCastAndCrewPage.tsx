@@ -82,7 +82,7 @@ const FullCastAndCrewPage = () => {
                       templateColumns={{base: "6fr", md: "repeat(6, 1fr)", lg: "repeat(6, 1fr)"}} gap={4}
                 >
                     <GridItem justifySelf="center" alignSelf="center" colSpan={6}>
-                        <Heading textTransform='uppercase' color={"white"}>Cast and crew for {movie?.title} </Heading>
+                        <Heading textTransform='uppercase' color={"white"}>Cast and crew for: {movie?.title} </Heading>
                     </GridItem>
                     <GridItem colSpan={6}>
                         <Button onClick={() => navigate(`/movie/details/${movie?.id}`)} margin={0.5}
@@ -94,7 +94,7 @@ const FullCastAndCrewPage = () => {
                             <Heading color={"white"}>Cast </Heading>
                             <Heading color={"grey"}>({movieCredits?.creditsAsCast.length}) </Heading>
                         </Stack>
-                        <Box bg={"white"}>
+                        <Box borderRadius={"lg"} bg={"white"}>
                             {movieCredits?.creditsAsCast.map((cast) => (
                                 <Box marginBottom={4}>
                                     <Stack padding={2} divider={<StackDivider borderColor='gray.300'/>}
@@ -112,9 +112,9 @@ const FullCastAndCrewPage = () => {
                                             borderRadius='lg'
                                         />)}
                                         <Stack direction={"column"}>
-                                            <Text fontSize={"lg"}>{cast.name}</Text>
+                                            <Text fontSize={"lg"}>{cast.name ? cast.name : "N/A"}</Text>
                                             <Text fontStyle="italic" color={themeColor}
-                                                  fontSize='md'>{cast.character}</Text>
+                                                  fontSize='md'>{cast.character ? cast.character : "N/A"}</Text>
                                         </Stack>
                                     </Stack>
                                 </Box>
@@ -130,7 +130,7 @@ const FullCastAndCrewPage = () => {
                             <Heading color={"grey"}>({movieCredits?.creditsAsCrew.length}) </Heading>
                         </Stack>
 
-                        <Box bg={"white"}>
+                        <Box borderRadius={"lg"} bg={"white"}>
                             {movieCredits?.creditsAsCrew.map((crew) => (
                                 <Box marginBottom={4}>
                                     <Stack padding={2} divider={<StackDivider borderColor='gray.300'/>}
@@ -150,8 +150,9 @@ const FullCastAndCrewPage = () => {
                                             borderRadius='lg'
                                         />)}
                                         <Stack direction={"column"}>
-                                            <Text fontSize={"lg"}>{crew.name}</Text>
-                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{crew.job}</Text>
+                                            <Text fontSize={"lg"}>{crew.name ? crew.name : "N/A"}</Text>
+                                            <Text fontStyle="italic" color={themeColor}
+                                                  fontSize='md'>{crew.job ? crew.job : "N/A"}</Text>
                                         </Stack>
                                     </Stack>
                                 </Box>
