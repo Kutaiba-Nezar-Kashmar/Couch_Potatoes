@@ -5,6 +5,7 @@ import routes from './routes';
 import Navbar from './components/Navbar';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import initFavoriteMovieEmitter from './services/event-emitters/favorite-movie-emitter';
+import initRemoveReviewEmitter from './services/event-emitters/review-emitter';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ const theme = extendTheme({
 });
 
 initFavoriteMovieEmitter();
+initRemoveReviewEmitter();
 
 const App = () => {
     return (
