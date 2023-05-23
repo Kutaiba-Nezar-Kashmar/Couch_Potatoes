@@ -38,12 +38,18 @@ import {
 } from '../../services/review';
 import { slowClone } from '../../util/clone';
 import { emitReviewRemoved } from '../../services/event-emitters/review-emitter';
+import { Theme } from '../../models/theme';
+import { getTextColor } from '../../util/themeutil';
 
 export interface ReviewComponentProps {
     review: Review;
+    theme: Theme;
 }
 
-const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
+const ReviewComponent: FC<ReviewComponentProps> = ({
+    review: reviewProp,
+    theme,
+}) => {
     const [movie, setMovie] = useState<Movie>(reviewProp.movie);
     const [review, setReview] = useState<Review>(reviewProp);
     const [isEditing, setIsEditing] = useState(false);
@@ -269,10 +275,11 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
             direction="row"
             gap={10}
             minHeight={{ base: '150px', md: '250px' }}
+            width="100%"
         >
-            <ReviewUserInfo user={review.user} />
-            <Flex direction="column">
-                <Text color="#ECEFF4" textTransform="uppercase">
+            <ReviewUserInfo theme={theme} user={review.user} />
+            <Flex direction="column" width="80%">
+                <Text color={getTextColor(theme)} textTransform="uppercase">
                     {movie.title} - <em>{movie.tagLine}</em>
                 </Text>
                 <Flex direction="row" justify="space-between" width="100%">
@@ -291,22 +298,23 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                             setReview(slowClone(review));
                         }}
                     />
-                    <Text textColor="#D8DEE9">
+                    <Text textColor={getTextColor(theme)}>
                         {new Date(review.creationDate).toLocaleDateString()}
                     </Text>
                 </Flex>
-                <Text as="em" color="#ECEFF4">
+                <Text as="em" color={getTextColor(theme)}>
                     Last edited:{' '}
                     {new Date(review.lastUpdatedDate).toLocaleDateString()}
                 </Text>
 
                 <Textarea
+                    width="100%"
                     isReadOnly={!isEditing}
                     onChange={(e) => {
                         review.reviewText = e.target.value;
                         setReview(slowClone(review));
                     }}
-                    textColor="#ECEFF4"
+                    textColor={getTextColor(theme)}
                     value={review.reviewText}
                 />
 
@@ -316,9 +324,9 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                             <Tooltip label="Edit review">
                                 <>
                                     <EditIcon
-                                        color="white"
+                                        color={getTextColor(theme)}
                                         boxSize={6}
-                                        _hover={{ color: 'black' }}
+                                        _hover={{ color: 'green' }}
                                         transition="all 0.2s ease-in-out"
                                         cursor="pointer"
                                         onClick={() => setIsEditing(true)}
@@ -329,7 +337,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                             <Tooltip label="Finish">
                                 <>
                                     <CheckIcon
-                                        color="white"
+                                        color={getTextColor(theme)}
                                         boxSize={6}
                                         _hover={{ color: 'black' }}
                                         transition="all 0.2s ease-in-out"
@@ -344,7 +352,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                     {isEditing && (
                         <Tooltip label="Delete review">
                             <DeleteIcon
-                                color="white"
+                                color={getTextColor(theme)}
                                 boxSize={6}
                                 _hover={{ color: 'red' }}
                                 transition="all 0.2s ease-in-out"
@@ -359,7 +367,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                                 color={
                                     useHasVotedInDirection('Up')
                                         ? 'green'
-                                        : 'white'
+                                        : getTextColor(theme)
                                 }
                                 boxSize={6}
                                 _hover={{ color: 'green' }}
@@ -369,7 +377,9 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                                     await vote('Up');
                                 }}
                             />
-                            <Text textColor="#ECEFF4">{getUpvoteCount()}</Text>
+                            <Text textColor={getTextColor(theme)}>
+                                {getUpvoteCount()}
+                            </Text>
                         </>
                     </Tooltip>
                     <Tooltip label="Downvote">
@@ -379,7 +389,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                                 color={
                                     useHasVotedInDirection('Down')
                                         ? 'red'
-                                        : 'white'
+                                        : getTextColor(theme)
                                 }
                                 _hover={{ color: 'red' }}
                                 transition="all 0.2s ease-in-out"
@@ -388,7 +398,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                                     await vote('Down');
                                 }}
                             />
-                            <Text textColor="#ECEFF4">
+                            <Text textColor={getTextColor(theme)}>
                                 {getDownvoteCount()}
                             </Text>
                         </>

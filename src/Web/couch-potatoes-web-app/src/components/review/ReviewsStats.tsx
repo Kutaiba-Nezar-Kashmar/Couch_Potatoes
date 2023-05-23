@@ -10,12 +10,15 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { sliceNumber } from '../../util/numberutil';
+import { Theme } from '../../models/theme';
+import { getTextColor } from '../../util/themeutil';
 
 export interface ReviewsStatsProp {
     reviews: Review[];
+    theme: Theme;
 }
 
-const ReviewsStats: FC<ReviewsStatsProp> = ({ reviews }) => {
+const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
     const getListLengthString = (xs: any[]) => {
         if (xs.length < 1000) {
             return reviews.length + '';
@@ -44,12 +47,16 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ reviews }) => {
                 <Heading
                     as="h6"
                     size="md"
-                    textColor="#D8DEE9"
+                    textColor={getTextColor(theme)}
                     textAlign="center"
                 >
                     Total Reviews
                 </Heading>
-                <Heading textColor="white" size="xl" textAlign="center">
+                <Heading
+                    textColor={getTextColor(theme)}
+                    size="xl"
+                    textAlign="center"
+                >
                     {getListLengthString(reviews)}
                 </Heading>
             </Flex>
@@ -60,12 +67,16 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ reviews }) => {
                 <Heading
                     as="h6"
                     size="md"
-                    textColor="#D8DEE9"
+                    textColor={getTextColor(theme)}
                     textAlign="center"
                 >
                     Average rating
                 </Heading>
-                <Heading textColor="white" size="xl" textAlign="center">
+                <Heading
+                    textColor={getTextColor(theme)}
+                    size="xl"
+                    textAlign="center"
+                >
                     {sliceNumber(
                         reviews.reduce((a, b) => a + b.rating, 0) /
                             reviews.length,
@@ -76,16 +87,20 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ reviews }) => {
             <Box height="100px" marginX="6rem">
                 <Divider orientation="vertical" />
             </Box>
-            <Flex direction="column" justify="center" alignItems="center">
+            <Flex direction="column" justify="start" alignItems="center">
                 <Heading
                     as="h6"
                     size="md"
-                    textColor="#D8DEE9"
+                    textColor={getTextColor(theme)}
                     textAlign="center"
                 >
                     Average Upvotes
                 </Heading>
-                <Heading textColor="white" size="xl" textAlign="center">
+                <Heading
+                    textColor={getTextColor(theme)}
+                    size="xl"
+                    textAlign="center"
+                >
                     {sliceNumber(
                         isNaN(getAverageUpvotes()) ? 0 : getAverageUpvotes(),
                         1

@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 import { getConfig } from '../configuration/configuration';
 import { Review } from '../models/review/review';
 import { Vote } from '../models/review/vote';
-import { getUsers } from '../services/user';
+import { getUserById, getUsers } from '../services/user';
 import { getMovies } from './movie-details';
 import Movie from '../models/movie';
 
@@ -217,4 +217,51 @@ export async function deleteReview(
     }
 
     return true;
+}
+
+export async function createReview(
+    movieId: number,
+    userId: string,
+    rating: number,
+    reviewText: string
+): Promise<Review> {
+    const config = await getConfig();
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    const payload = {
+        userId: userId,
+        rating: rating,
+        reviewText: reviewText,
+    };
+
+    const createReviewResponse = await fetch(
+        `${config.baseUrl}/reviews/${movieId}`,
+        {
+            headers: headers,
+            body: JSON.stringify(payload),
+            method: 'POST',
+        }
+    );
+
+    if (!createReviewResponse.ok) {
+        throw new Error('Failed to create review');
+    }
+
+    const reviewDto: ReviewDto = await createReviewResponse.json();
+    const user = await getUserById(userId);
+
+    const movies = await getMovies([movieId]);
+
+    return {
+        creationDate: reviewDto.creationDate,
+        lastUpdatedDate: reviewDto.lastUpdatedDate,
+        movie: movies[0],
+        rating: reviewDto.rating,
+        reviewId: reviewDto.reviewId,
+        user: user!,
+        votes: reviewDto.votes,
+        reviewText: reviewDto.reviewText,
+    };
 }

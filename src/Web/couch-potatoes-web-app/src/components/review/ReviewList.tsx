@@ -43,13 +43,13 @@ const ReviewList: FC<ReviewListProps> = ({ reviewsProp, theme, title }) => {
                 {title}
             </Heading>
             <Box marginBottom="1rem" marginTop="3rem">
-                <ReviewsStats reviews={reviews} />
+                <ReviewsStats theme={theme} reviews={reviews} />
             </Box>
             <Flex direction="column" gap={6}>
                 <Divider />
                 {reviews.map((review, index) => (
                     <>
-                        <ReviewComponent review={review} />
+                        <ReviewComponent theme={theme} review={review} />
                         {index !== reviews.length - 1 && <Divider />}
                     </>
                 ))}
