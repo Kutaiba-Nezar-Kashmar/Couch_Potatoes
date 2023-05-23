@@ -7,7 +7,7 @@ services:
         ports:
             - 8089:80
         env_file:
-            - ./env
+            - ./.env
 networks:
     default:
         name: couch-potatoes-network

@@ -38,7 +38,7 @@ public class MultiSearchRepository : IMultiSearchRepository
                 "Performing multi search with query parameter: {Query}", query);
             var response =
                 await _httpClient.GetAsync(
-                    $"search/multi?query={query}&api_key=ee89f342735e902ec9459f6edb50013a");
+                    $"search/multi?query={query}&api_key={_apiApi}");
             
             ValidateHttpResponse(response);
             var contentString = await response.Content.ReadAsStringAsync();
