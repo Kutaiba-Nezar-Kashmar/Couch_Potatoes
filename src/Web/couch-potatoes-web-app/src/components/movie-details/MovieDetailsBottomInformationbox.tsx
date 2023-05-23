@@ -2,6 +2,7 @@ import Movie from "../../models/movie";
 import React, {FC} from "react";
 import {Box, Button, Card, CardBody, CardHeader, Heading, Link, Stack, StackDivider, Text} from "@chakra-ui/react";
 import MovieCredits from "../../models/movie_credits";
+import {useNavigate} from "react-router-dom";
 
 export interface MovieDetailsComponentProps {
 	movie: Movie | null;
@@ -15,6 +16,7 @@ export interface MovieDetailsCreditsComponentProps {
 }
 
 export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentProps> = ({movieCredits,movie,themeColor}) => {
+	const navigate = useNavigate();
 	return (
 		<>
 
@@ -65,7 +67,7 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 									<Link
 										color={themeColor}
 										_hover={{color: "grey"}}
-										href="https://example.com"
+										onClick={() => navigate(`/movie/${movie?.id}/cast`)}
 										target="_blank"
 										rel="noopener noreferrer"
 									>

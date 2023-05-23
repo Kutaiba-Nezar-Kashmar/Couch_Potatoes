@@ -8,7 +8,7 @@ import MovieCredits from "../models/movie_credits";
 
 export function useFetchMovieCredits(movieId: number) {
     return useQuery({
-        queryKey: [CacheKeys.MOVIE_CREDITS], queryFn: async () => {
+        queryKey: [CacheKeys.MOVIE_CREDITSONLY+""+movieId], queryFn: async () => {
             return await getMovieCredits(movieId);
         }
     })
