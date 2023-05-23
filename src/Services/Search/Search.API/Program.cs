@@ -1,20 +1,16 @@
-using Metrics.API.Installers;
-using Metrics.Application;
+using Search.API.Installers;
+using Search.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.PropertyNamingPolicy = null;
-    options.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals;
-});
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.InstallMetricsServices();
 builder.Services.InstallMiddlewareServices();
+builder.Services.InstallSearchServices();
 
 // Register HTTP client here: 
 builder.Services.AddHttpClient("HTTP_CLIENT")
@@ -36,7 +32,9 @@ app.UseCors(options =>
 {
     options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 });
+
 app.UseHttpsRedirection();
+
 app.MapControllers();
 
 app.Run();

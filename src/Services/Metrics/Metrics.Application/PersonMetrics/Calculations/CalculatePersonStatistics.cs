@@ -16,8 +16,12 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
             var crewCreditCount =
                 credits.CreditsAsCrew.Count(
                     crew => uniqueCredits.Add(crew.CreditId));
+            if (castCreditCount >= 0 && crewCreditCount >= 0)
+            {
+                return castCreditCount + crewCreditCount;
+            }
 
-            return castCreditCount + crewCreditCount;
+            return 0;
         }
         catch (Exception e)
         {
@@ -37,7 +41,12 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
             var total = castCredit.Count;
             var sum = castCredit.Sum(cast => cast.VoteAverage);
 
-            return sum / total;
+            if (total >= 0 && sum >= 0)
+            {
+                return sum / total;
+            }
+
+            return 0;
         }
         catch (Exception e)
         {
@@ -57,8 +66,12 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
             var castCredit = credits.CreditsAsCrew;
             var total = castCredit.Count;
             var sum = castCredit.Sum(cast => cast.VoteAverage);
+            if (total >= 0 && sum >= 0)
+            {
+                return sum / total;
+            }
 
-            return sum / total;
+            return 0;
         }
         catch (Exception e)
         {
@@ -92,8 +105,13 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
                 }
             }
 
-            return count
-                .FirstOrDefault().Key;
+            if (count.Any())
+            {
+                return count
+                    .FirstOrDefault().Key;
+            }
+
+            return 0;
         }
         catch (Exception e)
         {

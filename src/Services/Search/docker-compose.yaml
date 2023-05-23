@@ -1,0 +1,14 @@
+services:
+    search:
+        container_name: search-service
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        ports:
+            - 8089:80
+        env_file:
+            - ./.env
+networks:
+    default:
+        name: couch-potatoes-network
+        external: true

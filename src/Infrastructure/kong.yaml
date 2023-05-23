@@ -55,3 +55,10 @@ services:
             strip_path: false
             paths:
                 - /couch-potatoes/api/v1/person/metrics
+    - name: search-service
+      url: http://search-service
+      routes:
+        - name: search
+          strip_path: false
+          paths:
+            - /couch-potatoes/api/v1/search/multi

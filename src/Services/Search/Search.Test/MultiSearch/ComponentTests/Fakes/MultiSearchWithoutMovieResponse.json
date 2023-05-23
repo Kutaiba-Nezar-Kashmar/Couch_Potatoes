@@ -1,0 +1,85 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "id": 73457,
+      "name": "Chris Pratt",
+      "original_name": "Chris Pratt",
+      "media_type": "person",
+      "popularity": 62.15,
+      "gender": 2,
+      "known_for_department": "Acting",
+      "profile_path": "/83o3koL82jt30EJ0rz4Bnzrt2dd.jpg",
+      "known_for": [
+        {
+          "adult": false,
+          "backdrop_path": "/uLtVbjvS1O7gXL8lUOwsFOH4man.jpg",
+          "id": 118340,
+          "title": "Guardians of the Galaxy",
+          "original_language": "en",
+          "original_title": "Guardians of the Galaxy",
+          "overview": "Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.",
+          "poster_path": "/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            878,
+            12
+          ],
+          "popularity": 197.97,
+          "release_date": "2014-07-30",
+          "video": false,
+          "vote_average": 7.904,
+          "vote_count": 26018
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/aJn9XeesqsrSLKcHfHP4u5985hn.jpg",
+          "id": 283995,
+          "title": "Guardians of the Galaxy Vol. 2",
+          "original_language": "en",
+          "original_title": "Guardians of the Galaxy Vol. 2",
+          "overview": "The Guardians must fight to keep their newfound family together as they unravel the mysteries of Peter Quill's true parentage.",
+          "poster_path": "/y4MBh0EjBlMuOzv9axM4qJlmhzz.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            878,
+            12,
+            28,
+            35
+          ],
+          "popularity": 423.676,
+          "release_date": "2017-04-19",
+          "video": false,
+          "vote_average": 7.624,
+          "vote_count": 19748
+        },
+        {
+          "adult": false,
+          "backdrop_path": "/aIGIYJTyOkEVUmEd3z5x6diYsFx.jpg",
+          "id": 135397,
+          "title": "Jurassic World",
+          "original_language": "en",
+          "original_title": "Jurassic World",
+          "overview": "Twenty-two years after the events of Jurassic Park, Isla Nublar now features a fully functioning dinosaur theme park, Jurassic World, as originally envisioned by John Hammond.",
+          "poster_path": "/A0LZHXUzo5C60Oahvt7VxvwuzHw.jpg",
+          "media_type": "movie",
+          "genre_ids": [
+            28,
+            12,
+            878,
+            53
+          ],
+          "popularity": 62.942,
+          "release_date": "2015-06-12",
+          "video": false,
+          "vote_average": 6.68,
+          "vote_count": 19065
+        }
+      ]
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 4
+}
