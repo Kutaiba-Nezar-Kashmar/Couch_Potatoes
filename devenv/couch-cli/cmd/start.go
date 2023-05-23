@@ -5,6 +5,7 @@ Copyright © 2023 Michael Bui 293886@via.dk
 package cmd
 
 import (
+	"couch-cli/internal/service"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -19,7 +20,7 @@ and .env in the service and apply the .env file
 `,
 	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := startservice.StartService(args[0])
+		err := service.StartService(args[0])
 		if err != nil {
 			log.Fatal(err)
 		}
