@@ -7,5 +7,6 @@ export enum CacheKeys {
     MOVIE_CREDITSONLY ="movie_credits_only",
     PERSON_DETAILS = "person_details",
     PERSON_MOVIE_CREDITS = "person_movie_credits",
-    PERSON_MOVIE_DETAILS_AND_CREDITS = "person_movie_details_and_credits"
+    PERSON_MOVIE_DETAILS_AND_CREDITS = "person_movie_details_and_credits",
+    SEARCH = "search"
 }
