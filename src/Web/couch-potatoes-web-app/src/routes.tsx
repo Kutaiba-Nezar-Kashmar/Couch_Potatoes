@@ -6,15 +6,16 @@ import MovieDetailsPage from "./pages/MovieDetailsPage";
 import LoginPage from './pages/LoginPage';
 import Authenticated from './pages/Authenticated';
 import ProfilePage from './pages/ProfilePage';
+import FullCastAndCrewPage from "./pages/FullCastAndCrewPage";
 
 const routes: RouteObject[] = [
     {
         path: '/',
-        element: <IndexPage />,
+        element: <IndexPage/>,
     },
     {
         path: '/test',
-        element: <TestPage />,
+        element: <TestPage/>,
     },
     {
         path: '/login',
@@ -39,6 +40,10 @@ const routes: RouteObject[] = [
     {
         path: '/movie/details/:movieId',
         element: <MovieDetailsPage/>,
+    },
+    {
+        path: '/movie/:movieId/cast',
+        element: <FullCastAndCrewPage/>
     }
 ];
 

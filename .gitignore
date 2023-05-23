@@ -487,3 +487,4 @@ $RECYCLE.BIN/
 ./serviceAccountKey.json
 */serviceAccountKey.json
 **/serviceAccountKey.json
+src/Services/User/service-account-key.json

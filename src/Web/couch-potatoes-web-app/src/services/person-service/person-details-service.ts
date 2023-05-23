@@ -7,7 +7,7 @@ import PersonStats from "../../models/person/person-stats";
 
 export function useFetchPersonDetailsAndCredits(options: FetchPersonDetailsOptions) {
     return useQuery({
-        queryKey: [CacheKeys.PERSON_MOVIE_DETAILS_AND_CREDITS], queryFn: async () => {
+        queryKey: [CacheKeys.PERSON_MOVIE_DETAILS_AND_CREDITS+""+options.personId], queryFn: async () => {
             return {
                 details: await fetchPersonDetails(options),
                 credits: await fetchPersonMovieCredits(options),
