@@ -188,3 +188,33 @@ export async function updateReview(
 
     return await updateReviewResponse.json();
 }
+
+export async function deleteReview(
+    movieId: number,
+    reviewId: string,
+    userId: string
+): Promise<boolean> {
+    const config = await getConfig();
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    const payload = {
+        userId: userId,
+    };
+
+    const updateReviewResponse = await fetch(
+        `${config.baseUrl}/reviews/${movieId}/${reviewId}`,
+        {
+            headers: headers,
+            body: JSON.stringify(payload),
+            method: 'DELETE',
+        }
+    );
+
+    if (!updateReviewResponse.ok) {
+        return false;
+    }
+
+    return true;
+}

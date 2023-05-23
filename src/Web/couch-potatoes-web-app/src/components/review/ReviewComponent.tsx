@@ -19,6 +19,7 @@ import {
     ArrowDownIcon,
     ArrowUpIcon,
     CheckIcon,
+    DeleteIcon,
     EditIcon,
 } from '@chakra-ui/icons';
 import User from '../../models/user';
@@ -31,10 +32,12 @@ import { useNavigate } from 'react-router';
 import { useQueryClient } from 'react-query';
 import {
     ReviewCacheKeys,
+    deleteReview,
     updateReview,
     voteReview,
 } from '../../services/review';
 import { slowClone } from '../../util/clone';
+import { emitReviewRemoved } from '../../services/event-emitters/review-emitter';
 
 export interface ReviewComponentProps {
     review: Review;
@@ -188,6 +191,41 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
         return existingVote.direction === direction;
     }
 
+    async function deleteMovieReview() {
+        if (!authenticatedUser) {
+            return;
+        }
+
+        try {
+            const movieDeleted = await deleteReview(
+                review.movie.id,
+                review.reviewId,
+                authenticatedUser.id
+            );
+
+            if (!movieDeleted) {
+                toast({
+                    status: 'error',
+                    title: 'Error',
+                    description: 'Failed to delete review',
+                    duration: 4000,
+                    isClosable: true,
+                });
+            }
+
+            emitReviewRemoved(review.reviewId);
+        } catch (err) {
+            console.error(err);
+            toast({
+                status: 'error',
+                title: 'Error',
+                description: 'Failed to delete review',
+                duration: 4000,
+                isClosable: true,
+            });
+        }
+    }
+
     async function updateUsersReview() {
         if (!authenticatedUser) {
             return;
@@ -303,6 +341,18 @@ const ReviewComponent: FC<ReviewComponentProps> = ({ review: reviewProp }) => {
                                 </>
                             </Tooltip>
                         ))}
+                    {isEditing && (
+                        <Tooltip label="Delete review">
+                            <DeleteIcon
+                                color="white"
+                                boxSize={6}
+                                _hover={{ color: 'red' }}
+                                transition="all 0.2s ease-in-out"
+                                cursor="pointer"
+                                onClick={() => deleteMovieReview()}
+                            />
+                        </Tooltip>
+                    )}
                     <Tooltip label="Upvote">
                         <>
                             <ArrowUpIcon

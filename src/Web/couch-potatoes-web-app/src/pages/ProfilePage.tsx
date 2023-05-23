@@ -224,7 +224,7 @@ const ProfilePage: FC = () => {
                             ) : (
                                 <ReviewList
                                     theme={Theme.DARK}
-                                    reviews={reviews}
+                                    reviewsProp={reviews}
                                     title="Your reviews"
                                 />
                             )}

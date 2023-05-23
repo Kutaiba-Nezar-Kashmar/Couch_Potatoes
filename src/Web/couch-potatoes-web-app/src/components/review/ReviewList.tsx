@@ -1,18 +1,36 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Review } from '../../models/review/review';
 import { Box, Divider, Flex, Heading, VStack } from '@chakra-ui/react';
 import { Theme } from '../../models/theme';
 import { getTextColor } from '../../util/themeutil';
 import ReviewComponent from './ReviewComponent';
 import ReviewsStats from './ReviewsStats';
+import { subscribeRemoveReviewEmitter } from '../../services/event-emitters/review-emitter';
+import { EventListener } from '../../services/event-emitters/event-listener';
 
 export interface ReviewListProps {
-    reviews: Review[];
+    reviewsProp: Review[];
     theme: Theme;
     title: string;
 }
 
-const ReviewList: FC<ReviewListProps> = ({ reviews, theme, title }) => {
+const ReviewList: FC<ReviewListProps> = ({ reviewsProp, theme, title }) => {
+    const [reviews, setReviews] = useState<Review[]>(reviewsProp);
+
+    const removeReviewListener: EventListener = {
+        onEvent(data) {
+            reviewsProp = reviewsProp.filter(
+                (review) => review.reviewId !== data!
+            );
+            setReviews(reviews.filter((review) => review.reviewId !== data!));
+        },
+    };
+
+    useEffect(() => {
+        subscribeRemoveReviewEmitter(removeReviewListener);
+        setReviews(reviewsProp);
+    }, [reviewsProp]);
+
     return (
         <>
             <Heading
