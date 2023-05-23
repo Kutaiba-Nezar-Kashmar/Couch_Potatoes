@@ -5,9 +5,9 @@ Copyright © 2023 Michael Bui 293886@via.dk
 package cmd
 
 import (
-	"couch-cli/internal/startservice"
-	"github.com/spf13/cobra"
 	"log"
+
+	"github.com/spf13/cobra"
 )
 
 // startCmd represents the start command
