@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useFetchPersonDetailsAndCredits} from "../services/person-service/person-details-service";
 import PersonDetails from "../models/person/person-details";
 import {
-    Box,
-    Button,
     Flex,
     Grid,
     GridItem, Image,

@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from "react";
 import MovieCredits from "../models/movie_credits";
 import {useNavigate, useParams} from "react-router-dom";
-import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
-import {useFetchMovieCredits} from "../services/movie-credits";
+import { useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
+
 import {
-    Box, Button, Card, CardBody,
+    Box, Button,
     Flex,
     Grid,
     GridItem, Heading, Image,
-    Modal, ModalBody, ModalCloseButton,
-    ModalContent,
-    ModalOverlay,
     Spinner,
     Stack,
     StackDivider,
@@ -19,18 +16,6 @@ import {
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import {getPosterImageUri} from "../services/images";
 import BasePage from "../components/BasePage";
-import {MovieDetailsHeaderInformationbox} from "../components/movie-details/MovieDetailsHeaderInformationbox";
-import {Carousel} from "react-responsive-carousel";
-import {MovieDetailsRightInformationbox} from "../components/movie-details/MovieDetailsRightInformationbox";
-import {MovieDetailsBottomInformationbox} from "../components/movie-details/MovieDetailsBottomInformationbox";
-import {MovieDetailsCastComponent} from "../components/movie-details/MovieDetailsCastComponent";
-import {
-    MovieDetailsRecommendedMoviesComponent
-} from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
-import {MovieDetailsReviewsComponent} from "../components/movie-details/MovieDetailsReviewsComponent";
-import backgroundImageFull from "../components/BackgroundImageFull";
-
-import {useFetchMovieDetails} from "../services/movie-details";
 import Movie from "../models/movie";
 
 const FullCastAndCrewPage = () => {
