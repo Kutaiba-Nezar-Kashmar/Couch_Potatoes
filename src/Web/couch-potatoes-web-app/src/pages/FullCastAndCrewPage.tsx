@@ -4,7 +4,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
 import {useFetchMovieCredits} from "../services/movie-credits";
 import {
-    Box,
+    Box, Card, CardBody,
     Flex,
     Grid,
     GridItem, Heading, Image,
@@ -29,6 +29,7 @@ import {
 } from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
 import {MovieDetailsReviewsComponent} from "../components/movie-details/MovieDetailsReviewsComponent";
 import backgroundImageFull from "../components/BackgroundImageFull";
+import {PersonCastCardComponent} from "../components/PersonCastCardComponent";
 
 const FullCastAndCrewPage = () => {
     const Background_Temp = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
@@ -76,12 +77,14 @@ const FullCastAndCrewPage = () => {
                 >
                     <GridItem colSpan={3}>
                         <Heading>Cast </Heading>
-                        <Stack direction="column">
-                            {movieCredits?.creditsAsCast.map((cast)=>(
-                                <Heading>{cast.name} </Heading>
 
-                            ))}
-                        </Stack>
+                        {movieCredits?.creditsAsCast.map((cast) => (
+                            <PersonCastCardComponent Background_Temp={Background_Temp} castMember={cast}
+                                                     themeColor={themeColor} maxSize={400}
+                                                     minSize={200}></PersonCastCardComponent>
+
+                        ))}
+
 
                     </GridItem>
                     <GridItem colSpan={3}>
