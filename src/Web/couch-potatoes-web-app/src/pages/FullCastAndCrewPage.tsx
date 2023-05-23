@@ -32,13 +32,17 @@ import backgroundImageFull from "../components/BackgroundImageFull";
 import {PersonCastCardComponent} from "../components/PersonCastCardComponent";
 
 const FullCastAndCrewPage = () => {
-    const Background_Temp = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+    const Empty_Profile_Pic = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
     const {movieId} = useParams()
 
     const [movieCredits, setMovieCredits] = useState<MovieCredits | null>(null);
     const themeColor = "teal";
     const navigate = useNavigate();
     const {isLoading, isError, data, error} = useFetchMovieCredits(Number(movieId));
+
+
+
 
     useEffect(() => {
         if (!isLoading) {
@@ -68,30 +72,71 @@ const FullCastAndCrewPage = () => {
         console.log(data);
     }
 
+   
 
     return (
         <BackgroundImageFull imageUri={Background_Temp}>
             <BasePage>
-                <Grid
-                    templateColumns={{base: "6fr", md: "repeat(6, 1fr)", lg: "repeat(6, 1fr)"}} gap={4}
+                <Grid autoFlow={"dense"}
+                      templateColumns={{base: "6fr", md: "repeat(6, 1fr)", lg: "repeat(6, 1fr)"}} gap={4}
                 >
-                    <GridItem colSpan={3}>
-                        <Heading>Cast </Heading>
 
-                        {movieCredits?.creditsAsCast.map((cast) => (
-                            <PersonCastCardComponent Background_Temp={Background_Temp} castMember={cast}
-                                                     themeColor={themeColor} maxSize={400}
-                                                     minSize={200}></PersonCastCardComponent>
-
-                        ))}
-
+                    <GridItem colSpan={3} gap={4}>
+                        <Heading color={"white"}>Cast </Heading>
+                        <Box  bg={"white"}>
+                            {movieCredits?.creditsAsCast.map((cast) => (
+                                <Box marginBottom={4}  >
+                                    <Stack direction={"row"} gap={2}>
+                                        {(cast?.profilePath) ? (<Image
+                                            height={"100px"}
+                                            src={getPosterImageUri(cast?.profilePath)}
+                                            alt='Profile picture of actor'
+                                            borderRadius='lg'
+                                        />) : (<Image
+                                            height={"100px"}
+                                            src={Empty_Profile_Pic}
+                                            alt='No image available of actor'
+                                            borderRadius='lg'
+                                        />)}
+                                        <Stack  direction={"column"}>
+                                            <Text fontSize={"lg"}>{cast.name}</Text>
+                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{cast.character}</Text>
+                                        </Stack>
+                                    </Stack>
+                                </Box>
+                            ))}
+                        </Box>
 
                     </GridItem>
-                    <GridItem colSpan={3}>
-                        <Heading>Crew </Heading>
-                        <Stack direction="column">
 
-                        </Stack>
+
+                    <GridItem colSpan={3} gap={4}>
+                        <Heading color={"white"}>Crew </Heading>
+                        <Box  bg={"white"}>
+                            {movieCredits?.creditsAsCrew.map((cast) => (
+                                <Box marginBottom={4}  >
+                                    <Stack direction={"row"} gap={2}>
+                                        {(cast?.profilePath) ? (<Image
+                                            height={"100px"}
+                                            src={getPosterImageUri(cast?.profilePath)}
+                                            alt='Profile picture of actor'
+                                            borderRadius='lg'
+
+                                        />) : (<Image
+                                            height={"100px"}
+
+                                            src={Empty_Profile_Pic}
+                                            alt='No image available of actor'
+                                            borderRadius='lg'
+                                        />)}
+                                        <Stack  direction={"column"}>
+                                            <Text fontSize={"lg"}>{cast.name}</Text>
+                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{cast.job}</Text>
+                                        </Stack>
+                                    </Stack>
+                                </Box>
+                            ))}
+                        </Box>
 
                     </GridItem>
 
