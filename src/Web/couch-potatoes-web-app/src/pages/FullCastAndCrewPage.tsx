@@ -42,8 +42,6 @@ const FullCastAndCrewPage = () => {
     const {isLoading, isError, data, error} = useFetchMovieCredits(Number(movieId));
 
 
-
-
     useEffect(() => {
         if (!isLoading) {
             setMovieCredits(
@@ -72,7 +70,6 @@ const FullCastAndCrewPage = () => {
         console.log(data);
     }
 
-   
 
     return (
         <BackgroundImageFull imageUri={Background_Temp}>
@@ -82,25 +79,31 @@ const FullCastAndCrewPage = () => {
                 >
 
                     <GridItem colSpan={3} gap={4}>
-                        <Heading color={"white"}>Cast </Heading>
-                        <Box  bg={"white"}>
+                        <Stack direction={"row"}>
+                            <Heading color={"white"}>Cast </Heading>
+                            <Heading color={"grey"}>({movieCredits?.creditsAsCast.length}) </Heading>
+                        </Stack>
+                        <Box bg={"white"}>
                             {movieCredits?.creditsAsCast.map((cast) => (
-                                <Box marginBottom={4}  >
-                                    <Stack direction={"row"} gap={2}>
+                                <Box marginBottom={4}>
+                                    <Stack padding={2} divider={<StackDivider borderColor='gray.300'/>}
+                                           onClick={() => navigate(`/person/${cast.id}`)} _hover={{cursor: "pointer"}}
+                                           direction={"row"} gap={2}>
                                         {(cast?.profilePath) ? (<Image
-                                            height={"100px"}
+                                            height={"130px"}
                                             src={getPosterImageUri(cast?.profilePath)}
                                             alt='Profile picture of actor'
                                             borderRadius='lg'
                                         />) : (<Image
-                                            height={"100px"}
+                                            height={"130px"}
                                             src={Empty_Profile_Pic}
                                             alt='No image available of actor'
                                             borderRadius='lg'
                                         />)}
-                                        <Stack  direction={"column"}>
+                                        <Stack direction={"column"}>
                                             <Text fontSize={"lg"}>{cast.name}</Text>
-                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{cast.character}</Text>
+                                            <Text fontStyle="italic" color={themeColor}
+                                                  fontSize='md'>{cast.character}</Text>
                                         </Stack>
                                     </Stack>
                                 </Box>
@@ -111,27 +114,33 @@ const FullCastAndCrewPage = () => {
 
 
                     <GridItem colSpan={3} gap={4}>
-                        <Heading color={"white"}>Crew </Heading>
-                        <Box  bg={"white"}>
-                            {movieCredits?.creditsAsCrew.map((cast) => (
-                                <Box marginBottom={4}  >
-                                    <Stack direction={"row"} gap={2}>
-                                        {(cast?.profilePath) ? (<Image
-                                            height={"100px"}
-                                            src={getPosterImageUri(cast?.profilePath)}
+                        <Stack direction={"row"}>
+                            <Heading color={"white"}>Crew </Heading>
+                            <Heading color={"grey"}>({movieCredits?.creditsAsCrew.length}) </Heading>
+                        </Stack>
+
+                        <Box bg={"white"}>
+                            {movieCredits?.creditsAsCrew.map((crew) => (
+                                <Box marginBottom={4}>
+                                    <Stack padding={2} divider={<StackDivider borderColor='gray.300'/>}
+                                           _hover={{cursor: "pointer"}} onClick={() => navigate(`/person/${crew.id}`)}
+                                           direction={"row"} gap={2}>
+                                        {(crew?.profilePath) ? (<Image
+                                            height={"130px"}
+                                            src={getPosterImageUri(crew?.profilePath)}
                                             alt='Profile picture of actor'
                                             borderRadius='lg'
 
                                         />) : (<Image
-                                            height={"100px"}
+                                            height={"130px"}
 
                                             src={Empty_Profile_Pic}
                                             alt='No image available of actor'
                                             borderRadius='lg'
                                         />)}
-                                        <Stack  direction={"column"}>
-                                            <Text fontSize={"lg"}>{cast.name}</Text>
-                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{cast.job}</Text>
+                                        <Stack direction={"column"}>
+                                            <Text fontSize={"lg"}>{crew.name}</Text>
+                                            <Text fontStyle="italic" color={themeColor} fontSize='md'>{crew.job}</Text>
                                         </Stack>
                                     </Stack>
                                 </Box>
