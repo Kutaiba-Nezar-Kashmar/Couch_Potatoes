@@ -46,10 +46,7 @@ const IndexPage = () => {
 
     const {isLoading, isError, data, error} = useFetchAllMovieCollections();
 
-    // NOTE: (mibui 2023-05-15) Notice we use useEffect here to subscribe to the loading state of the useQuery hook.
-    //                          In the dependency array we put isLoading to ensure that the page rerenders everytime
-    //                          we are fetching data. Under the hood we are subscribing to some event emitter that
-    //                          react-query provides.
+
     useEffect(() => {
         if (!isLoading) {
             setPopularMovies(
