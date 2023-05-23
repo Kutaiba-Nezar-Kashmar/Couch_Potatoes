@@ -2,43 +2,37 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import BasePage from '../components/BasePage';
 import {
-    Avatar,
+
     Box,
     Flex,
-    Input,
-    InputGroup,
-    InputLeftElement,
+
     Spinner,
     Text,
-    VStack,
-    HStack,
-    Button,
+
     Stack,
     Grid,
     GridItem,
     StackDivider,
-    useBreakpointValue,
+
     Modal,
     ModalOverlay,
     ModalContent,
     ModalCloseButton,
-    ModalBody, Image, Card, CardHeader, Heading, CardBody, Link, Divider, background, color
+    ModalBody, Image
 } from "@chakra-ui/react";
 import Movie from "../models/movie";
 import BackgroundImageFull from "../components/BackgroundImageFull";
 import {getPosterImageUri} from "../services/images";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import {Carousel} from 'react-responsive-carousel';
-import {useFetchMovieDetails} from "../services/movie-details";
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, Navigation, Pagination, Scrollbar} from "swiper";
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import {MovieCreditsAndDetails, useFetchMovieCreditsAndMovies} from "../services/movie-credits-and-details";
 import MovieCredits from "../models/movie_credits";
-import colors from "tailwindcss/colors";
+
 import {MovieDetailsHeaderInformationbox} from "../components/movie-details/MovieDetailsHeaderInformationbox";
 import {MovieDetailsRightInformationbox} from "../components/movie-details/MovieDetailsRightInformationbox";
 import {MovieDetailsBottomInformationbox} from "../components/movie-details/MovieDetailsBottomInformationbox";
@@ -93,7 +87,6 @@ const MovieDetailsPage = () => {
 
     useEffect(() => {
         if (!isLoading) {
-            const detailsAndCredits = data as MovieCreditsAndDetails
             setMovie(
                 data?.movieDetails ?? null
             );

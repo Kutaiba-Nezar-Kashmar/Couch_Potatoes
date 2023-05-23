@@ -3,6 +3,7 @@ import {getPosterImageUri} from "../../services/images";
 import React, {FC} from "react";
 import MovieCredits from "../../models/movie_credits";
 import Movie from "../../models/movie";
+import {useNavigate} from "react-router-dom";
 
 export interface MovieDetailsCastComponentProps {
     movieCredits: MovieCredits;
@@ -15,6 +16,7 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                                                                                   Background_Temp,
                                                                                   themeColor
                                                                               }) => {
+    const navigate = useNavigate();
     return (
         <>
 
@@ -27,7 +29,8 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                         {movieCredits && movieCredits?.creditsAsCast.map((cast) => (
                             <Card maxW='sm' minWidth={200} maxWidth={400}>
                                 <CardBody
-                                    _hover={{cursor: "pointer"}}> {/*TODO: Need onClick event to people page in cardbody*/}
+                                    _hover={{cursor: "pointer"}}
+                                    onClick={() => navigate(`/person/${cast.id}`)}>
                                     {(cast?.profilePath) ? (<Image
                                         src={getPosterImageUri(cast?.profilePath)}
                                         alt='Profile picture of actor'
