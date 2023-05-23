@@ -29,7 +29,6 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ reviews }) => {
     };
 
     const getAllUpvotes = (reviewList: Review[]) => {
-        console.log(reviewList);
         return reviewList
             .flatMap((review) => review.votes)
             .filter((review) => review.direction == 'Up').length;

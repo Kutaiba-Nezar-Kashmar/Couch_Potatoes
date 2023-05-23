@@ -1,6 +1,7 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
     Avatar,
+    Button,
     Flex,
     Heading,
     Image,
@@ -61,7 +62,7 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                             placeholder="Search"
                             backgroundColor="white"
                         />
-                        {user && ( // if user then render avatar && the and operator is short for if user exists.
+                        {user ? ( // if user then render avatar && the and operator is short for if user exists.
                             <Avatar
                                 marginLeft="1rem"
                                 name={user.displayName ?? ''}
@@ -70,6 +71,13 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                                 cursor="pointer"
                                 onClick={gotoProfile}
                             />
+                        ) : (
+                            <Button
+                                marginLeft="1rem"
+                                onClick={() => navigate('/login')}
+                            >
+                                Login
+                            </Button>
                         )}
                     </InputGroup>
                 </Stack>

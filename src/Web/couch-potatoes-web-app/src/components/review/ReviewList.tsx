@@ -9,9 +9,10 @@ import ReviewsStats from './ReviewsStats';
 export interface ReviewListProps {
     reviews: Review[];
     theme: Theme;
+    title: string;
 }
 
-const ReviewList: FC<ReviewListProps> = ({ reviews, theme }) => {
+const ReviewList: FC<ReviewListProps> = ({ reviews, theme, title }) => {
     return (
         <>
             <Heading
@@ -21,7 +22,7 @@ const ReviewList: FC<ReviewListProps> = ({ reviews, theme }) => {
                 textColor={getTextColor(theme)}
                 color={getTextColor(theme)}
             >
-                Your Reviews
+                {title}
             </Heading>
             <Box marginBottom="1rem" marginTop="3rem">
                 <ReviewsStats reviews={reviews} />
