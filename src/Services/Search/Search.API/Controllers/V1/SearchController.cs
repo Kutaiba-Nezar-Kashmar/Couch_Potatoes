@@ -23,7 +23,7 @@ public class SearchController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet("/multi")]
+    [HttpGet("multi")]
     public async Task<ActionResult<MultiSearchResponse>> MultiSearch(
         [FromQuery] string query)
     {
