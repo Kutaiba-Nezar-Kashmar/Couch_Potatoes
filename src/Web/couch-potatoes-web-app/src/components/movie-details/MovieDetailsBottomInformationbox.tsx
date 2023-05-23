@@ -29,7 +29,7 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 						<Box >
 							<Heading  textTransform='uppercase' size='sm'>Summary</Heading>
 							<Text pt='2' fontSize='sm' marginBottom={5}>
-								{movie?.summary}
+								{movie?.summary ? movie.summary : "N/A"}
 							</Text>
 							<Stack  direction="row"  spacing='8'>
 								<Stack>
@@ -40,7 +40,7 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 												<Link
 													color={themeColor}
 													_hover={{color: "grey"}}
-													href="https://example.com"
+													onClick={() => navigate(`/person/${crew.id}`)}
 													target="_blank"
 													rel="noopener noreferrer"
 												> {crew.name}</Link>
@@ -55,8 +55,8 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 											.map(crew => (
 												<Link
 													color={themeColor}
+													onClick={() => navigate(`/person/${crew.id}`)}
 													_hover={{color: "grey"}}
-													href="https://example.com"
 													target="_blank"
 													rel="noopener noreferrer"
 												> {crew.name}</Link>
@@ -71,7 +71,6 @@ export const MovieDetailsBottomInformationbox: FC<MovieDetailsCreditsComponentPr
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{/* TODO: change href to list of cast and crew  */}
 										Full list of cast and crew</Link>
 								</Text>
 

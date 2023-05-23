@@ -29,7 +29,7 @@ import {
 } from "../components/movie-details/MovieDetailsRecommendedMoviesComponent";
 import {MovieDetailsReviewsComponent} from "../components/movie-details/MovieDetailsReviewsComponent";
 import backgroundImageFull from "../components/BackgroundImageFull";
-import {PersonCastCardComponent} from "../components/PersonCastCardComponent";
+
 import {useFetchMovieDetails} from "../services/movie-details";
 import Movie from "../models/movie";
 

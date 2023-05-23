@@ -73,6 +73,7 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsComponentProps> = (
 								Revenue
 							</Heading>
 							<Text pt='2' fontSize='sm'>
+
 								${movie?.revenue.toLocaleString()}
 							</Text>
 						</Box>
