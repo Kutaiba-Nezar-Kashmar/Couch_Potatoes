@@ -48,7 +48,7 @@ func WriteComposeFile(serviceName string) error {
 	service := ComposeService{
 		ContainerName: strings.ToLower(serviceName) + "-service",
 		Ports:         []string{"8080:80"},
-		EnvFile:       []string{"./env"},
+		EnvFile:       []string{"./.env"},
 		Build: ComposeBuild{
 			Context:    ".",
 			DockerFile: "./Dockerfile",

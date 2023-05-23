@@ -15,7 +15,16 @@ func CreatNewService(name string) error {
 		return err
 	}
 
-	err := os.Mkdir(name, 0644)
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	if _, err := os.Stat(fmt.Sprintf("%v/%v", cwd, name)); !os.IsNotExist(err) {
+		log.Fatal(fmt.Sprintf("Existing service with name %v detected. Please use another name or delete existing service\n", name))
+	}
+
+	err = os.Mkdir(name, 0644)
 	if err != nil {
 		return err
 	}

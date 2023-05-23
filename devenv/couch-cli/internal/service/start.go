@@ -1,4 +1,4 @@
-package startservice
+package service
 
 import (
 	"couch-cli/internal/dotnet"
