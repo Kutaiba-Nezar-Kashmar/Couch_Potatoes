@@ -63,6 +63,7 @@ import {
     UserCacheKeys,
     addFavoriteMovie,
     getAuthenticatedUser,
+    useGetAuthenticatedUser,
 } from '../services/user';
 import { useQueryClient } from 'react-query';
 import User from '../models/user';
@@ -104,10 +105,12 @@ const MovieDetailsPage = () => {
         Number(movieId)
     );
 
-    async function initUser() {
-        const user = await getAuthenticatedUser();
-        setAuthenticatedUser(user);
-    }
+    const {
+        isLoading: isLoadingUser,
+        isError: isErrorUser,
+        data: userData,
+        error: userError,
+    } = useGetAuthenticatedUser();
 
     function convertToHoursAndMinutes(num: number) {
         const hours = Math.floor(num / 60); // Get the number of hours
@@ -117,14 +120,16 @@ const MovieDetailsPage = () => {
     }
 
     useEffect(() => {
-        initUser();
+        if (!isLoadingUser) {
+            setAuthenticatedUser(userData ?? null);
+        }
         if (!isLoading) {
             const detailsAndCredits = data as MovieCreditsAndDetails;
             setMovie(data?.movieDetails ?? null);
             setMovieCredits(data?.credits ?? null);
             setRecommendedMovies(data?.movieRecommendations ?? null);
         }
-    }, [isLoading, authenticatedUser]);
+    }, [isLoading, isLoadingUser]);
 
     if (isLoading) {
         return (

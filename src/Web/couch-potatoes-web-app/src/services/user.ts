@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { getConfig } from '../configuration/configuration';
 import { auth } from '../firebase';
 import User from '../models/user';
@@ -8,6 +8,16 @@ import { stringify } from 'querystring';
 
 export enum UserCacheKeys {
     GET_USER_WITH_ID = 'GET_USER_WITH_ID_',
+    AUTHENTICATED_USER = 'AUTHENTICATED_USER',
+}
+
+export function useGetAuthenticatedUser() {
+    return useQuery({
+        queryKey: [UserCacheKeys.AUTHENTICATED_USER],
+        queryFn: async () => {
+            return await getAuthenticatedUser();
+        },
+    });
 }
 
 export async function getAuthenticatedUser(): Promise<User | null> {

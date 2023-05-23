@@ -20,6 +20,7 @@ import {
     deleteFavoriteMovieForUser,
     getAuthenticatedUser,
     getUserById,
+    useGetAuthenticatedUser,
 } from '../services/user';
 import BackgroundImageFull from '../components/BackgroundImageFull';
 import { navBarHeightInRem } from '../components/settings/page-settings';
@@ -53,9 +54,9 @@ const ProfilePage: FC = () => {
 
     const {
         isLoading: isLoadingFavorites,
-        isError,
+        isError: isErrorFavorites,
         data,
-        error,
+        error: favoritesError,
     } = useFetchMovies(user ? user.favoriteMovies! : [], () => {
         return (
             user !== null &&
@@ -65,30 +66,12 @@ const ProfilePage: FC = () => {
         );
     });
 
-    const initProfile = async () => {
-        setLoading(true);
-
-        if (!userId) {
-            const currentUser = await getAuthenticatedUser();
-            if (currentUser) {
-                setUser(currentUser);
-                setLoading(false);
-                return;
-            } else {
-                navigate('/login');
-                return;
-            }
-        }
-
-        const userToDisplay = await getUserById(userId);
-        if (userToDisplay) {
-            setUser(userToDisplay);
-            setLoading(false);
-        } else {
-            setUser(null);
-            setLoading(false);
-        }
-    };
+    const {
+        isLoading: isLoadingUser,
+        isError: isErrorUser,
+        data: dataUser,
+        error: userError,
+    } = useGetAuthenticatedUser();
 
     const removeMovieFromFavorite = async (movieId: number): Promise<any> => {
         if (!user) {
@@ -111,7 +94,10 @@ const ProfilePage: FC = () => {
             favoriteMovies.filter((movie) => movie.id !== movieId)
         );
 
-        queryClient.invalidateQueries(UserCacheKeys.GET_USER_WITH_ID + user.id);
+        queryClient.invalidateQueries([
+            UserCacheKeys.GET_USER_WITH_ID + user.id,
+            UserCacheKeys.AUTHENTICATED_USER,
+        ]);
 
         toast({
             title: 'Sucess',
@@ -137,7 +123,9 @@ const ProfilePage: FC = () => {
 
     useEffect(() => {
         subscribeRemoveFavoriteMovieEventListener(removeFavoriteListener);
-        initProfile();
+        if (!isLoadingUser) {
+            setUser(dataUser ?? null);
+        }
         if (!isLoadingFavorites) {
             setFavoriteMovies(data ?? []);
         }
@@ -149,9 +137,9 @@ const ProfilePage: FC = () => {
         return () => {
             unsubscribeRemoveFavoriteMovieEvent(removeFavoriteListener);
         };
-    }, [isLoadingFavorites, favoriteMovies, isLoadingReviews]);
+    }, [isLoadingFavorites, isLoadingReviews, isLoadingUser]);
 
-    if (loading) {
+    if (isLoadingUser) {
         return (
             <Flex
                 width="100%"

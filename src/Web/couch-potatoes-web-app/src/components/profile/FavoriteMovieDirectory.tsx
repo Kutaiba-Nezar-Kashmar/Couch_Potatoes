@@ -15,6 +15,7 @@ import { groupElements } from '../../util/listutil';
 import FavoriteMovieRow from './FavoriteMovieRow';
 import { CheckIcon, EditIcon } from '@chakra-ui/icons';
 import { getTextColor } from '../../util/themeutil';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 export interface FavoriteMovieDirectory {
     theme: Theme;
@@ -28,15 +29,16 @@ const FavoriteMoviesDirectory: FC<FavoriteMovieDirectory> = ({
     const [moviesPerRow, setMoviesPerRow] = useState<number>(5);
     const [editing, setEditing] = useState(false);
 
-    const moviesPerRowToDisplay = useBreakpointValue({
-        base: 3,
-        md: 5,
-        lg: 7,
+    let moviesPerRowToDisplay = useBreakpointValue({
+        base: 2,
+        md: 3,
+        lg: 5,
+        xl: 7,
     });
 
     useEffect(() => {
         setMoviesPerRow(moviesPerRowToDisplay ?? 5);
-    }, [moviesPerRow, movies]);
+    }, [movies]);
 
     return (
         <>

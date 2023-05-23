@@ -15,7 +15,7 @@ import { sliceNumber } from '../../util/numberutil';
 import { AddIcon } from '@chakra-ui/icons';
 import Movie from '../../models/movie';
 import User from '../../models/user';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { UserCacheKeys, addFavoriteMovie } from '../../services/user';
 
@@ -59,9 +59,10 @@ export const MovieDetailsHeaderInformationbox: FC<
             isClosable: true,
         });
 
-        queryClient.invalidateQueries(
-            UserCacheKeys.GET_USER_WITH_ID + user!.id
-        );
+        queryClient.invalidateQueries([
+            UserCacheKeys.GET_USER_WITH_ID + user!.id,
+            UserCacheKeys.AUTHENTICATED_USER,
+        ]);
         setIsFavorite(true);
     };
 
@@ -103,7 +104,7 @@ export const MovieDetailsHeaderInformationbox: FC<
                             </Text>
                         </Box>
 
-                        {!isFavorite && (
+                        {!isFavorite && user && (
                             <Flex
                                 direction="row"
                                 justify="center"
