@@ -6,7 +6,7 @@ import {GetMovieCollectionOptions} from "./movie-collection";
 import MovieCredits from "../models/movie_credits";
 
 
-export function useFetchMovieCredits(movieId:number) {
+export function useFetchMovieCredits(movieId: number) {
     return useQuery({
         queryKey: [CacheKeys.MOVIE_CREDITS], queryFn: async () => {
             return await getMovieCredits(movieId);

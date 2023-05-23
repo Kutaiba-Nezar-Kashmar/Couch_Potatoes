@@ -3,6 +3,7 @@ import IndexPage from './pages/IndexPage';
 import TestPage from './pages/TestPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import MovieDetailsPage from "./pages/MovieDetailsPage";
+import FullCastAndCrewPage from "./pages/FullCastAndCrewPage";
 
 const routes: RouteObject[] = [
     {
@@ -20,6 +21,10 @@ const routes: RouteObject[] = [
     {
         path: '/movie/details/:movieId',
         element: <MovieDetailsPage/>,
+    },
+    {
+        path: '/movie/:movieId/cast',
+        element: <FullCastAndCrewPage/>
     }
 ];
 
