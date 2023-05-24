@@ -1,50 +1,46 @@
-import {RouteObject} from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import IndexPage from './pages/IndexPage';
 import TestPage from './pages/TestPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
-import MovieDetailsPage from "./pages/MovieDetailsPage";
+import MovieDetailsPage from './pages/MovieDetailsPage';
 import LoginPage from './pages/LoginPage';
 import Authenticated from './pages/Authenticated';
 import ProfilePage from './pages/ProfilePage';
-import FullCastAndCrewPage from "./pages/FullCastAndCrewPage";
+import FullCastAndCrewPage from './pages/FullCastAndCrewPage';
 
 const routes: RouteObject[] = [
     {
-        path: '/',
-        element: <IndexPage/>,
+        path: '/Couch_Potatoes',
+        element: <IndexPage />,
     },
     {
-        path: '/test',
-        element: <TestPage/>,
-    },
-    {
-        path: '/login',
+        path: '/Couch_Potatoes/login',
         element: <LoginPage />,
     },
     {
-        path: '/authenticated',
+        path: '/Couch_Potatoes/authenticated',
         element: <Authenticated />,
     },
     {
-        path: '/profile',
+        path: '/Couch_Potatoes/profile',
         element: <ProfilePage />,
     },
     {
-        path: '/profile/:userId',
+        path: '/Couch_Potatoes/profile/:userId',
         element: <ProfilePage />,
     },
     {
-        path: '/person/:personId',
-        element: <PersonDetailsPage/>
+        path: '/Couch_Potatoes/person/:personId',
+        element: <PersonDetailsPage />,
     },
     {
-        path: '/movie/details/:movieId',
-        element: <MovieDetailsPage/>,
+        path: '/Couch_Potatoes/movie/details/:movieId',
+        element: <MovieDetailsPage />,
     },
     {
-        path: '/movie/:movieId/cast',
-        element: <FullCastAndCrewPage/>
-    }
+        path: '/Couch_Potatoes//movie/:movieId/cast',
+        element: <FullCastAndCrewPage />,
+    },
 ];
 
 export default routes;
