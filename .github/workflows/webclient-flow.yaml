@@ -27,17 +27,11 @@ jobs:
               working-directory: src/Web/couch-potatoes-web-app/
               run: npm run build
 
-            - name: Package artifacts to upload
-              working-directory: src/Web/couch-potatoes-web-app/
-              run: tar -zcvf github-pages.tar.gz ./build
-
             - name: Upload artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-pages-artifact
               with:
-                  name: github-pages
-                  path: src/Web/couch-potatoes-web-app/github-pages.tar.gz
-                  retention-days: 2
-                  if-no-files-found: error
+                  path: src/Web/couch-potatoes-web-app/build
+                  retention-days: 1
 
     deploy:
         # Add a dependency to the build job
