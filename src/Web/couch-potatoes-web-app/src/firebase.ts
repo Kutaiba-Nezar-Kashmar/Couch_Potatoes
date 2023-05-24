@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
+
 const firebaseConfig = {
     apiKey: 'AIzaSyBuYphvxEeQ1qdGgVp3b-QbYL7RZ3DwL2U',
     authDomain: 'couch-potatoes-sep6.firebaseapp.com',
