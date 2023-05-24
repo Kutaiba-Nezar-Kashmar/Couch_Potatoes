@@ -2,26 +2,93 @@
 # NOTE: (mibui 2023-05-18) Run 'gcloud auth application-default login' before trying to interact with our cloud
 
 # REMOTE STATE BACKEND  -------------------------------
-terraform {
-  backend "s3" {
-    bucket         = "terraform-state-michaelbui99"
-    key            = "global/s3/terraform.tfstate"
-    region         = "eu-west-1"
-    dynamodb_table = "terraform-state-locking-db"
-    encrypt        = true
+
+
+resource "google_storage_bucket" "default" {
+  name          = "couch-potatoes-sep6-bucket-tfstate"
+  force_destroy = false
+  location      = "EU"
+  storage_class = "STANDARD"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+  versioning {
+    enabled = true
   }
 }
-
 # END REMOTE STATE BACKEND ------------------------------------
-variable "TMDB_API_KEY" {
-  type      = string
-  sensitive = true
-}
-module "container-service" {
-  source        = "./modules/container-service"
-  service_name  = "movie-information"
-  image         = "docker.io/michaelbui293886/couch-potatoes-movieinformation"
-  tmdb_api_key  = var.TMDB_API_KEY
-  max_instances = 1
-  port          = 80
-}
+# API GATEWAY ---------------------------------------------------
+## NOTE: (mibui 2023-05-24) For more info, read /src/Infrastructure/gateway-bootstrapper/README.md
+# resource "google_cloud_run_v2_service" "service" {
+#   name     = "couch-potatoes-api-gateway"
+#   location = "europe-west1"
+#   ingress  = "INGRESS_TRAFFIC_ALL"
+
+#   template {
+#     scaling {
+#       max_instance_count = 1
+#     }
+#     containers {
+#       image = "docker.io/michaelbui293886/couch-potatoes-gateway-bootstrapper"
+#       env {
+#         name  = "GATEWAY_MOVIEINFORMATION_SERVICE"
+#         value = module.movieinformation_service.service_url
+#       }
+#       env {
+#         name  = "GATEWAY_USER_SERVICE"
+#         value = module.movieinformation_service.service_url
+#       }
+#       env {
+#         name  = "GATEWAY_PERSON_SERVICE"
+#         value = module.movieinformation_service.service_url
+#       }
+#       env {
+#         name  = "GATEWAY_METRICS_SERVICE"
+#         value = module.movieinformation_service.service_url
+#       }
+#       env {
+#         name  = "GATEWAY_SEARCH_SERVICE"
+#         value = module.movieinformation_service.service_url
+#       }
+#       ports {
+#         container_port = 8000
+#       }
+#     }
+#   }
+# }
+
+# // NOTE: (mibui 2023-05-19) We are using a no auth policy since the API will exposed as public APIs
+# data "google_iam_policy" "no_auth_policy" {
+#   binding {
+#     role = "roles/run.invoker"
+#     members = [
+#       "allUsers"
+#     ]
+#   }
+# }
+
+# resource "google_cloud_run_v2_service_iam_policy" "service_iam_policy" {
+#   name     = google_cloud_run_v2_service.service.name
+#   project  = google_cloud_run_v2_service.service.project
+#   location = google_cloud_run_v2_service.service.location
+
+#   policy_data = data.google_iam_policy.no_auth_policy.policy_data
+# }
+
+
+
+# # END API GATEWAY ---------------------------------------------------------------
+
+# variable "TMDB_API_KEY" {
+#   type      = string
+#   sensitive = true
+# }
+# module "movieinformation_service" {
+#   source        = "./modules/container-service"
+#   service_name  = "movie-information"
+#   image         = "docker.io/michaelbui293886/couch-potatoes-movieinformation"
+#   tmdb_api_key  = var.TMDB_API_KEY
+#   max_instances = 1
+#   port          = 80
+# }

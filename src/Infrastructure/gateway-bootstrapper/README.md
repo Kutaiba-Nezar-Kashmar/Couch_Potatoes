@@ -2,10 +2,12 @@
 Dynamically changes `kong.yaml` URLs during container startup based on environment variables.
 
 ```javascript
-// NOTE: (mibui 2023-05-24) We need to rebuild the image
-//                          everytime we add a new service
-//                          since it needs the services.json inside the image
-
+// NOTE: (mibui 2023-05-24) We need to rebuild the image everytime
+//                          we add a new service since it needs the
+//                          services.json inside the image. Furthermore
+//                          We need to ensure that no "URL" is empty for the kong.yaml
+//                          that gets created, i.e. every service we declare in services.json,
+//                          must have a corresponding GATEWAY_SERVICE_NAME environment variable set
 ```
 
 ## Configuration
