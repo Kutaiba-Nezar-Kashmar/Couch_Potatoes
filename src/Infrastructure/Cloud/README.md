@@ -28,6 +28,13 @@ $ gcloud auth application-default login
 
 # Usage
 
+## Before deploying
+To install the custom modules, e.g. `container-service` run: 
+
+```bash
+$ terraform get
+```
+
 ## See changes
 
 To preview changes before deploying run:
