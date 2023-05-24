@@ -1,0 +1,40 @@
+name: Deploy webclient
+
+on:
+    push:
+        branches:
+            - "main"
+        paths:
+            - src/Services/Web/couch-potatoes-web-app/.*/**
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18.16.0
+
+            - name: Install dependencies
+              working-directory: src/Web/couch-potatoes-web-app/
+              run: npm ci
+
+            - name: Build static files
+              working-directory: src/Web/couch-potatoes-web-app/
+              run: npm run build
+
+            - name: Package artifacts to upload
+              working-directory: src/Web/couch-potatoes-web-app/
+              run: tar -zcvf github-pages.tar.gz ./build
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: github-pages
+                  path: src/Web/couch-potatoes-web-app/github-pages.tar.gz
+                  retention-days: 2
+                  if-no-files-found: error

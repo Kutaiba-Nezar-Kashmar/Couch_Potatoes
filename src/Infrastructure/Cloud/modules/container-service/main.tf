@@ -20,7 +20,7 @@ resource "google_cloud_run_v2_service" "service" {
       image = var.image
       env {
         name  = "TMDB_API_KEY"
-        value = var.TMDB_API_KEY // NOTE: (mibui 2023-05-19) We set this at deploy time
+        value = var.tmdb_api_key
       }
       ports {
         container_port = var.port
@@ -39,10 +39,10 @@ data "google_iam_policy" "no_auth_policy" {
   }
 }
 
-resource "google_cloud_run_service_iam_policy" "service_iam_policy" {
+resource "google_cloud_run_v2_service_iam_policy" "service_iam_policy" {
+  name     = google_cloud_run_v2_service.service.name
   project  = google_cloud_run_v2_service.service.project
   location = google_cloud_run_v2_service.service.location
-  service  = google_cloud_run_v2_service.service.name
 
-  policy_data = data.google_iam_policy.no_auth_policy
+  policy_data = data.google_iam_policy.no_auth_policy.policy_data
 }

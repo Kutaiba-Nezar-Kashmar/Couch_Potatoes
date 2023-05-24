@@ -12,47 +12,16 @@ terraform {
   }
 }
 
-resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-michaelbui99"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "aws_s3_bucket_versioning" "terraform_state_versioning" {
-  bucket = aws_s3_bucket.terraform_state.bucket
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_encryption" {
-  bucket = aws_s3_bucket.terraform_state.bucket
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-state-locking-db"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
-
 # END REMOTE STATE BACKEND ------------------------------------
-
-
-
-# module "container_service_no_db" {
-#   source       = "./modules/container_service_no_db"
-#   service_name = "MovieInformation"
-#   image        = "MOVIEINFORMATION_IMAGE_NAME" # Replace this when we have uploaded the image
-# }
+variable "TMDB_API_KEY" {
+  type      = string
+  sensitive = true
+}
+module "container-service" {
+  source        = "./modules/container-service"
+  service_name  = "movie-information"
+  image         = "docker.io/michaelbui293886/couch-potatoes-movieinformation"
+  tmdb_api_key  = var.TMDB_API_KEY
+  max_instances = 1
+  port          = 80
+}
