@@ -11,7 +11,6 @@ import initRemoveReviewEmitter from './services/event-emitters/review-emitter';
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter(routes);
-
 const theme = extendTheme({
     fonts: {
         heading: `'Roboto', 'Helvetica Neue', sans-serif`,
