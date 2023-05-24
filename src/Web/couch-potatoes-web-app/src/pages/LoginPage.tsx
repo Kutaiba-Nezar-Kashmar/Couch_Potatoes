@@ -17,7 +17,7 @@ import {
 
 const LoginPage: FC = () => {
     const navigate = useNavigate();
-    const AUTHENTICATED_REDIRECT = '/authenticated';
+    const AUTHENTICATED_REDIRECT = '/Couch_Potatoes/authenticated';
 
     const initLogin = async () => {
         const currentUser = await getAuthenticatedUser();
