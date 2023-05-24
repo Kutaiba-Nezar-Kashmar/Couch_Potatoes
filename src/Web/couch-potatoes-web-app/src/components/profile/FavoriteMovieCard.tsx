@@ -54,7 +54,8 @@ const FavoriteMovieCard: FC<FavoriteMovieCardProps> = ({ movie, editing }) => {
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
                 onClick={() =>
-                    !editing && navigate(`/movie/details/${movie.id}`)
+                    !editing &&
+                    navigate(`/Couch_Potatoes/movie/details/${movie.id}`)
                 }
             >
                 <Flex justify="center" alignItems="center" direction="column">

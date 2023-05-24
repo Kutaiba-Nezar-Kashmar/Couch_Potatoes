@@ -7,7 +7,7 @@ const Authenticated = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate('/');
+        navigate('/Couch_Potatoes/');
     }, []);
 
     return <div>Authenticated!</div>;

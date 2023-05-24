@@ -33,7 +33,7 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
                     UserCacheKeys.AUTHENTICATED_USER,
                     UserCacheKeys.GET_USER_WITH_ID + user!.id,
                 ]);
-                navigate('/');
+                navigate('/Couch_Potatoes/');
             },
             (err) => {
                 console.error(err);

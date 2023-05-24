@@ -58,7 +58,7 @@ export const MovieDetailsReviewsComponent: FC<
     async function create() {
         try {
             if (!authenticatedUser) {
-                navigate('/login');
+                navigate('/Couch_Potatoes/login');
             }
 
             const createdReview = await createReview(
@@ -95,7 +95,7 @@ export const MovieDetailsReviewsComponent: FC<
                                 _hover={{ color: 'green' }}
                                 onClick={() => {
                                     if (!authenticatedUser) {
-                                        navigate('/login');
+                                        navigate('/Couch_Potatoes/login');
                                     }
                                     onOpen();
                                 }}

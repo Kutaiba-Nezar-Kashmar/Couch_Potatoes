@@ -36,7 +36,7 @@ export const MovieDetailsHeaderInformationbox: FC<
 
     const addMovieToFavorite = async (movieId: number) => {
         if (!user) {
-            navigate('/login');
+            navigate('/Couch_Potatoes/login');
         }
 
         const movieWasAdded = await addFavoriteMovie(user!.id, movieId);

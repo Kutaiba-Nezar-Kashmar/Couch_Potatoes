@@ -45,7 +45,7 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                     <Heading
                         fontSize="2xl"
                         cursor="pointer"
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/Couch_Potatoes/')}
                         color="white"
                     >
                         {title.toUpperCase()}

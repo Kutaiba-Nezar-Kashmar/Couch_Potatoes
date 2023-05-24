@@ -106,7 +106,7 @@ const ReviewComponent: FC<ReviewComponentProps> = ({
 
     async function vote(direction: string) {
         if (!authenticatedUser) {
-            navigate('/login');
+            navigate('/Couch_Potatoes/login');
         }
 
         try {
