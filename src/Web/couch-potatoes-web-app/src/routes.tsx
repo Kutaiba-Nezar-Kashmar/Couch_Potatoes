@@ -38,7 +38,7 @@ const routes: RouteObject[] = [
         element: <MovieDetailsPage />,
     },
     {
-        path: '/Couch_Potatoes//movie/:movieId/cast',
+        path: '/Couch_Potatoes/movie/:movieId/cast',
         element: <FullCastAndCrewPage />,
     },
 ];
