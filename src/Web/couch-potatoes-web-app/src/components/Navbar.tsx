@@ -30,7 +30,7 @@ interface NavbarProps {
 const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
     const navigate = useNavigate();
     const gotoProfile = () => {
-        navigate(`/profile/${user?.id}`);
+        navigate(`/Couch_Potatoes/profile/${user?.id}`);
     };
 
     return (
@@ -74,7 +74,9 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                         ) : (
                             <Button
                                 marginLeft="1rem"
-                                onClick={() => navigate('/login')}
+                                onClick={() =>
+                                    navigate('/Couch_Potatoes/login')
+                                }
                             >
                                 Login
                             </Button>
