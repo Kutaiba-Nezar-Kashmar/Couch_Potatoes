@@ -1,16 +1,16 @@
-name: User service CI/CD flow
+name: Search Service CI/CD flow
 
 on:
   push:
     branches:
       - 'main'
     paths:
-      - src/Services/User/User.*/**
-      - src/Services/User/Dockerfile
+      - src/Services/Search/Search.*/**
+      - src/Services/Search/Dockerfile
 
 jobs:
   test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,15 +21,17 @@ jobs:
           dotnet-version: '7.0.x'
 
       - name: Install Dependencies
-        working-directory: src/Services/User
+        working-directory: src/Services/Search
         run: dotnet restore
 
       - name: Build
-        working-directory: src/Services/User
+        working-directory: src/Services/Search
         run: dotnet build -c Release --no-restore
 
       - name: Run Tests
-        working-directory: src/Services/User
+        working-directory: src/Services/Search
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: dotnet test
 
   build-and-publish-image:
@@ -41,18 +43,18 @@ jobs:
       - name: Setup docker
         uses: docker/setup-buildx-action@v2
 
+      #TODO: (mibui 2023-05-19) Ensure these secrets has been added to the Github repository. Ping Kutaiba about this.
       - name: Login to docker
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build image
-        run: docker build -t "$DOCKERHUB_USERNAME"/couch-potatoes-sep6-user-service:latest .
+        run: docker build -t "$DOCKERHUB_USERNAME"/couch-potatoes-sep6-search-service:latest .
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
-      #TODO: (mibui 2023-05-19) Ensure these secrets has been added to the Github repository. Ping Kutaiba about this.
       - name: Push image
-        run: docker push "$DOCKERHUB_USERNAME"/couch-potatoes-sep6-user-service:latest .
+        run: docker push "$DOCKERHUB_USERNAME"/couch-potatoes-sep6-search-service:latest .
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
