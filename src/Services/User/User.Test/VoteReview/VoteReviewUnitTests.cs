@@ -9,7 +9,7 @@ using User.Infrastructure;
 namespace User.Test;
 
 [TestFixture]
-public class VoteReviewTest
+public class VoteReviewUnitTests
 {
     private readonly Mock<IAuthenticationRepository> _authMock = new();
     private readonly Mock<IVoteReviewRepository> _repositoryMock = new();
@@ -36,25 +36,12 @@ public class VoteReviewTest
     public void VoteReview_ReviewDoesNotExist_ThrowsReviewDoesNotExistException()
     {
         // Arrange
-        var testUserId = "yW3zBelUzeWWO380vu8IiTsgxWq2";
+        var existingUser = TestUtil.CreateGenericUser();
         var movieId = 1;
         var handler = CreateHandler(
-            (repository) =>
-            {
-                repository.Setup(x => x.GetReviewsForMovie(movieId).Result).Returns(new List<Review>());
-            },
-            (auth) =>
-            {
-                CouchPotatoUser user = new()
-                {
-                    Id = testUserId,
-                    FavoriteMovies = new List<int>(),
-                    Email = "test@hest.com",
-                    DisplayName = "TEST"
-                };
-                auth.Setup(x => x.GetUserById(testUserId).Result).Returns(user);
-            });
-        VoteReviewCommand voteReviewCommand = new(testUserId, 1, Guid.NewGuid(), VoteDirection.Up);
+            repository => { repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(new List<Review>()); },
+            auth => { auth.Setup(x => x.GetUserById(existingUser.Id)).ReturnsAsync(existingUser); });
+        VoteReviewCommand voteReviewCommand = new(existingUser.Id, movieId, Guid.NewGuid(), VoteDirection.Up);
 
         // Act & Assert
         Assert.ThrowsAsync<ReviewDoesNotExistException>(async () =>
@@ -78,6 +65,7 @@ public class VoteReviewTest
             UserId = testUserId,
             Direction = VoteDirection.Up
         };
+
         Review review = new()
         {
             UserId = testUserId2,
@@ -114,10 +102,82 @@ public class VoteReviewTest
         VoteReviewCommand voteReviewCommand = new(testUserId, 1, reviewId, VoteDirection.Up);
 
         // Act 
-        await handler.Handle(voteReviewCommand, new CancellationToken());
+        var result = await handler.Handle(voteReviewCommand, new CancellationToken());
 
         // Assert
         _repositoryMock.Verify(mock => mock.DeleteVote(movieId, reviewId, voteId), Times.Once);
+        Assert.That(result, Is.Null);
+    }
+
+
+    [Test]
+    public async Task VoteReview_UserHasNotVoted_CreatesNewVote()
+    {
+        // Arrange
+        var movieId = 550;
+        var existingUser1 = TestUtil.CreateGenericUser();
+        var existingUser2 = TestUtil.CreateGenericUser();
+
+        var review = TestUtil.CreateReview(existingUser1.Id, movieId);
+        var reviews = new List<Review>() {review};
+
+        var handler = CreateHandler(
+            repository => repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(reviews),
+            auth =>
+            {
+                auth.Setup(x => x.GetUserById(existingUser1.Id)).ReturnsAsync(existingUser1);
+                auth.Setup(x => x.GetUserById(existingUser2.Id)).ReturnsAsync(existingUser2);
+            }
+        );
+
+        VoteReviewCommand testCommand = new(existingUser2.Id, movieId, review.ReviewId, VoteDirection.Up);
+
+        // Act
+        var createdVote = await handler.Handle(testCommand, new CancellationToken());
+
+        // Assert
+        Assert.That(createdVote, Is.Not.Null);
+        Assert.That(createdVote.Direction, Is.EqualTo(VoteDirection.Up));
+        Assert.That(createdVote.UserId, Is.EqualTo(existingUser2.Id));
+    }
+
+    [Test]
+    public async Task VoteReview_UserHasExistingVoteAndVotesInOppositeDirection_UpdatesExistingVote()
+    {
+        // Arrange
+        var movieId = 550;
+        var existingUser1 = TestUtil.CreateGenericUser();
+        var existingUser2 = TestUtil.CreateGenericUser();
+
+        var existingVoteDirection = VoteDirection.Up;
+        var existingVote = new Vote
+        {
+            UserId = existingUser2.Id,
+            Direction = existingVoteDirection,
+            Id = Guid.NewGuid()
+        };
+
+        var review = TestUtil.CreateReview(existingUser1.Id, movieId, rev => rev.Votes = new List<Vote> {existingVote});
+        var reviews = new List<Review> {review};
+
+        var handler = CreateHandler(
+            repository => repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(reviews),
+            auth =>
+            {
+                auth.Setup(x => x.GetUserById(existingUser1.Id)).ReturnsAsync(existingUser1);
+                auth.Setup(x => x.GetUserById(existingUser2.Id)).ReturnsAsync(existingUser2);
+            }
+        );
+
+        VoteReviewCommand testCommand = new(existingUser2.Id, movieId, review.ReviewId, VoteDirection.Down);
+
+        // Act
+        var voteResult = await handler.Handle(testCommand, new CancellationToken());
+
+        // Assert
+        Assert.That(voteResult.Id, Is.EqualTo(existingVote.Id));
+        Assert.That(voteResult.Direction, Is.EqualTo(testCommand.direction));
+        Assert.That(voteResult.Direction, Is.Not.EqualTo(existingVoteDirection));
     }
 
 
