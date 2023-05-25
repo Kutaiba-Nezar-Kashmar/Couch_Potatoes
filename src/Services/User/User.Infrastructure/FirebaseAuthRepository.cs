@@ -33,7 +33,10 @@ public class FirebaseAuthRepository : IAuthenticationRepository
                 Email = firebaseUser.Email,
                 DisplayName = firebaseUser.DisplayName,
                 Id = firebaseUser.Uid,
-                FavoriteMovies = new List<int>()
+                FavoriteMovies = new List<int>(),
+                AvatarUri = firebaseUser.PhotoUrl,
+                LastSignInTimestamp = firebaseUser.UserMetaData.LastSignInTimestamp,
+                CreatedTimestamp = firebaseUser.UserMetaData.CreationTimestamp
             };
 
             var userRef = Firestore.Get().Collection("Users").Document(id);

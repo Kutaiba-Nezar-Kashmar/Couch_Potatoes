@@ -1,0 +1,57 @@
+name: Deploy webclient
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'src/Web/couch-potatoes-web-app/**'
+      - 'src/Web/couch-potatoes-web-app/src/**'
+      - 'src/Web/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.0
+
+      - name: Install dependencies
+        working-directory: src/Web/couch-potatoes-web-app/
+        run: npm ci
+
+      - name: Build static files
+        working-directory: src/Web/couch-potatoes-web-app/
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1.0.8
+        with:
+          path: src/Web/couch-potatoes-web-app/build
+          retention-days: 1
+
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action

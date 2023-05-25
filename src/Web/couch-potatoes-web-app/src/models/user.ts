@@ -1,4 +1,9 @@
 export default interface User {
-    name: string;
-    avatarUri: string;
+    displayName: string | null;
+    avatarUri: string | null;
+    email: string | null;
+    id: string;
+    createdTimestamp: Date | null;
+    lastSignInTimestamp: Date | null;
+    favoriteMovies?: number[];
 }
