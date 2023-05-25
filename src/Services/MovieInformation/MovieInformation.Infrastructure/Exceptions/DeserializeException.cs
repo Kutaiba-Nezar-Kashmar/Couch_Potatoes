@@ -1,14 +1,12 @@
 ﻿namespace MovieInformation.Infrastructure.Exceptions;
 
-public class DeserializeException: Exception
+public class DeserializeException : Exception
 {
-    public DeserializeException(): base()
+    public DeserializeException() : base()
     {
-        
     }
 
-    public DeserializeException(string msg): base(msg)
+    public DeserializeException(string msg) : base(msg)
     {
-        
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import routes from './routes';
@@ -23,11 +23,27 @@ initFavoriteMovieEmitter();
 initRemoveReviewEmitter();
 
 const App = () => {
+    const [backgroundImage, setBackgroundImage] = useState("/default-image.jpg");
+    const Background_Temp =
+        'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+    // Function to handle background image change
+    const handleBackgroundChange = () => {
+        setBackgroundImage(Background_Temp);
+    };
     return (
         <>
             <QueryClientProvider client={queryClient}>
                 <ChakraProvider resetCSS={true} theme={theme}>
-                    <RouterProvider router={router} />
+                    <div  style={{
+                        backgroundImage: `url(${backgroundImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        maxWidth: "100vw",
+                        minHeight: "100vh",
+                    }}>
+                        <RouterProvider router={router} />
+                    </div>
+
                 </ChakraProvider>
             </QueryClientProvider>
         </>

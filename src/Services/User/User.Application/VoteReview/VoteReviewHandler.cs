@@ -43,7 +43,7 @@ public class VoteReviewHandler : IRequestHandler<VoteReviewCommand, Vote>
 
             var reviews = await _repository.GetReviewsForMovie(request.movieId);
 
-            var reviewDoesNotExist = reviews.All(r => r.ReviewId != request.reviewId);
+            var reviewDoesNotExist = !reviews.Any() || reviews.All(r => r.ReviewId != request.reviewId);
             if (reviewDoesNotExist)
             {
                 throw new ReviewDoesNotExistException(request.reviewId, request.movieId);
@@ -75,7 +75,7 @@ public class VoteReviewHandler : IRequestHandler<VoteReviewCommand, Vote>
             await _repository.VoteReview(request.movieId, review, existingVote);
             return existingVote;
         }
-        catch (Exception e) when (e is not UserDoesNotExistException or ReviewDoesNotExistException)
+        catch (Exception e) when (e is not UserDoesNotExistException and not ReviewDoesNotExistException)
         {
             _logger.LogError(LogEvent.Application,
                 $"Failed to process {nameof(Handle)} in {nameof(VoteReviewHandler)}");

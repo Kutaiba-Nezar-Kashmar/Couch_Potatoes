@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import BasePage from '../components/BasePage';
 import {
     Box,
@@ -15,13 +15,13 @@ import {
     ModalContent,
     ModalCloseButton,
     ModalBody,
-    Image,
+    Image, Tabs, TabList, Tab, TabPanels, TabPanel, Heading, AspectRatio,
 } from '@chakra-ui/react';
 import Movie from '../models/movie';
 import BackgroundImageFull from '../components/BackgroundImageFull';
-import { getPosterImageUri } from '../services/images';
+import {getPosterImageUri} from '../services/images';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import {Carousel} from 'react-responsive-carousel';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -33,11 +33,11 @@ import {
 } from '../services/movie-credits-and-details';
 import MovieCredits from '../models/movie_credits';
 
-import { MovieDetailsHeaderInformationbox } from '../components/movie-details/MovieDetailsHeaderInformationbox';
-import { MovieDetailsRightInformationbox } from '../components/movie-details/MovieDetailsRightInformationbox';
-import { MovieDetailsBottomInformationbox } from '../components/movie-details/MovieDetailsBottomInformationbox';
-import { MovieDetailsCastComponent } from '../components/movie-details/MovieDetailsCastComponent';
-import { MovieDetailsReviewsComponent } from '../components/movie-details/MovieDetailsReviewsComponent';
+import {MovieDetailsHeaderInformationbox} from '../components/movie-details/MovieDetailsHeaderInformationbox';
+import {MovieDetailsRightInformationbox} from '../components/movie-details/MovieDetailsRightInformationbox';
+import {MovieDetailsBottomInformationbox} from '../components/movie-details/MovieDetailsBottomInformationbox';
+import {MovieDetailsCastComponent} from '../components/movie-details/MovieDetailsCastComponent';
+import {MovieDetailsReviewsComponent} from '../components/movie-details/MovieDetailsReviewsComponent';
 import MovieRecommendations from '../models/movie-Recommedations';
 import {
     UserCacheKeys,
@@ -45,18 +45,26 @@ import {
     getAuthenticatedUser,
     useGetAuthenticatedUser,
 } from '../services/user';
-import { useQueryClient } from 'react-query';
+import {useQueryClient} from 'react-query';
 import User from '../models/user';
-import { MovieDetailsRecommendedMoviesComponent } from '../components/movie-details/MovieDetailsRecommendedMoviesComponent';
-import { useGetReviewsForMovie } from '../services/review';
-import { Review } from '../models/review/review';
+import {
+    MovieDetailsRecommendedMoviesComponent
+} from '../components/movie-details/MovieDetailsRecommendedMoviesComponent';
+import {useGetReviewsForMovie} from '../services/review';
+import {Review} from '../models/review/review';
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation} from "swiper";
+import PersonMovieCreditsItem from "../components/person/PersonMovieCreditsItem";
 
 const MovieDetailsPage = () => {
-    const { movieId } = useParams();
+    const {movieId} = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [expandedImage, setExpandedImage] = useState('');
-    const Background_Temp =
+    const Empty_profilePic =
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    const Background_Temp =
+        'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+
     const handleImageClick = (imageUrl: string) => {
         setExpandedImage(imageUrl);
         setIsOpen(true);
@@ -85,7 +93,7 @@ const MovieDetailsPage = () => {
     );
     const [reviews, setReviews] = useState<Review[]>([]);
 
-    const { isLoading, isError, data, error } = useFetchMovieCreditsAndMovies(
+    const {isLoading, isError, data, error} = useFetchMovieCreditsAndMovies(
         Number(movieId)
     );
 
@@ -155,7 +163,7 @@ const MovieDetailsPage = () => {
 
     return (
         <BackgroundImageFull
-            imageUri={getPosterImageUri(movie?.backdropUri as string)}
+            imageUri={(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp))}
         >
             <BasePage>
                 <Grid
@@ -179,13 +187,14 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={6} rowSpan={1}>
                         <Stack
                             direction="row"
-                            divider={<StackDivider borderColor="gray.200" />}
+                            divider={<StackDivider borderColor="gray.200"/>}
                         >
                             <Box>
                                 <Text color={'white'} fontSize="lg">
-                                    {convertToHoursAndMinutes(
+                                    {movie?.runTime ? (convertToHoursAndMinutes(
                                         movie?.runTime as number
-                                    )}
+                                    )) : ("N/A")}
+
                                 </Text>
                             </Box>
                         </Stack>
@@ -200,12 +209,9 @@ const MovieDetailsPage = () => {
                                 stopOnHover={true}
                             >
                                 <Box
-                                    _hover={{ cursor: 'pointer' }}
+                                    _hover={{cursor: 'pointer'}}
                                     onClick={() =>
-                                        handleImageClick(
-                                            getPosterImageUri(
-                                                movie?.imageUri as string
-                                            )
+                                        handleImageClick(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp)
                                         )
                                     }
                                 >
@@ -216,18 +222,14 @@ const MovieDetailsPage = () => {
                                             height: 'auto',
                                             objectFit: 'contain',
                                         }}
-                                        src={getPosterImageUri(
-                                            movie?.imageUri as string
-                                        )}
+                                        src={(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp))}
                                     />
                                 </Box>
                                 <Box
-                                    _hover={{ cursor: 'pointer' }}
+                                    _hover={{cursor: 'pointer'}}
                                     onClick={() =>
                                         handleImageClick(
-                                            getPosterImageUri(
-                                                movie?.backdropUri as string
-                                            )
+                                            movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp)
                                         )
                                     }
                                 >
@@ -238,20 +240,20 @@ const MovieDetailsPage = () => {
                                             height: 'auto',
                                             objectFit: 'contain',
                                         }}
-                                        src={getPosterImageUri(
-                                            movie?.backdropUri as string
-                                        )}
+                                        src={(movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp))}
+
                                     />
                                 </Box>
+
                             </Carousel>
                             <Modal
                                 isOpen={isOpen}
                                 onClose={handleModalClose}
                                 size="6xl"
                             >
-                                <ModalOverlay />
+                                <ModalOverlay/>
                                 <ModalContent>
-                                    <ModalCloseButton />
+                                    <ModalCloseButton/>
                                     <ModalBody justifyContent="center">
                                         <Image
                                             src={expandedImage}
@@ -278,7 +280,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5} rowSpan={1}>
                         <MovieDetailsBottomInformationbox
                             movie={movie}
-                            movieCredits={movieCredits}
+                            movieCredits={movieCredits ?? emptyCreditsObject}
                             themeColor={themeColor}
                         />
                     </GridItem>
@@ -287,7 +289,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent
                             themeColor={themeColor}
-                            Background_Temp={Background_Temp}
+                            Background_Temp={Empty_profilePic}
                             movieCredits={movieCredits ?? emptyCreditsObject}
                         />
                     </GridItem>
@@ -295,9 +297,97 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsRecommendedMoviesComponent
                             themeColor={themeColor}
-                            Background_Temp={Background_Temp}
+                            Background_Temp={Empty_profilePic}
                             movieRecommendations={recommendedMovies}
                         />
+                    </GridItem>
+                    <GridItem colSpan={5}>
+                        <Tabs padding={"25px"} borderRadius={"lg"} bg={"white"}>
+                            <Stack direction={"row"}> <Flex alignItems={"center"}> <Heading size={"md"}>Media</Heading></Flex>
+                                <TabList>
+                                    <Tab><Text marginX={2}>Videos</Text> <Text color={"grey"}> 5</Text></Tab>
+                                    <Tab><Text marginX={2}>Posters</Text> <Text color={"grey"}> 16</Text></Tab>
+                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> 15</Text></Tab>
+                                </TabList></Stack>
+                            <TabPanels>
+                                <TabPanel>
+
+
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                        slidesPerView={3}
+                                        pagination={{clickable: true}}
+                                        spaceBetween={5}
+                                    >
+                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                            <SwiperSlide>
+                                                <Box mx="auto">
+                                                    <AspectRatio ratio={4 / 3}>
+                                                        <iframe
+                                                            src={"https://www.youtube.com/embed/QhBnZ6NPOY0"}
+                                                            title="Video Player"
+                                                            allowFullScreen
+                                                        />
+                                                    </AspectRatio>
+                                                </Box>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+
+
+                                </TabPanel>
+                                <TabPanel>
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                        slidesPerView={5}
+                                        pagination={{clickable: true}}
+                                        spaceBetween={5}
+                                    >
+                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                            <SwiperSlide
+                                                onClick={() =>
+                                                    handleImageClick(
+                                                        getPosterImageUri(
+                                                            movie?.imageUri as string
+                                                        )
+                                                    )
+                                                }
+                                            >
+                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </TabPanel>
+                                <TabPanel>
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                        slidesPerView={5}
+                                        pagination={{clickable: true}}
+                                        spaceBetween={5}
+                                    >
+                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                            <SwiperSlide
+                                                onClick={() =>
+                                                    handleImageClick(
+                                                        getPosterImageUri(
+                                                            movie?.imageUri as string
+                                                        )
+                                                    )
+                                                }
+                                            >
+                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
                     </GridItem>
 
                     {/*REVIEWS*/}

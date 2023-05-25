@@ -29,8 +29,19 @@ public class SearchController : ControllerBase
     {
         try
         {
-            var result = await _mediator.Send(new MultiSearchRequest(query));
-            return Ok(result);
+            if (!string.IsNullOrEmpty(query) &&
+                !string.IsNullOrWhiteSpace(query))
+            {
+                var result =
+                    await _mediator.Send(new MultiSearchRequest(query));
+                return Ok(result);
+            }
+
+            return Ok(new MultiSearchResponse
+            {
+                Movies = new List<MovieSearch>(),
+                People = new List<PersonSearch>()
+            });
         }
         catch (Exception e)
         {

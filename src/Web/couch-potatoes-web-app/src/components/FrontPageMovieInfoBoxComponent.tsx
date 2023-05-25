@@ -28,17 +28,11 @@ const FrontPageMovieInfoBoxComponent: FC<FrontPageMovieInfoBoxComponentProps> = 
                     {movie?.title}
                 </Text>
                 <Flex width="100%" justifyContent="center" alignItems="center">
-                    <HStack>
-                        {movie?.genres?.map((genre) => (
-                            <Text textColor="white" textTransform="uppercase"
-                                  fontSize={{base: 'md', md: 'lg', lg: 'xl'}}>{genre.name} </Text>
-                        ))}
 
-
-                    </HStack>
                 </Flex>
                 <Text textColor="white" fontSize={{base: 'lg', md: 'xl', lg: '2xl'}}>
-                    {new Date(movie?.releaseDate as string).toLocaleDateString()}
+                    {movie?.releaseDate ? ( new Date(movie?.releaseDate as string).toLocaleDateString()):("N/A")}
+
                 </Text>
                 <StarRatingComponent name="rating" value={movie?.tmdbScore || 0} starCount={10}/>
             </VStack></>
