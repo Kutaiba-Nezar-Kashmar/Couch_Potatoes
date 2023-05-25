@@ -37,7 +37,7 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                         `/Couch_Potatoes/movie/details/${movie.id}`
                                     )
                                 }
-                                          _hover={{cursor: "pointer"}}> {/*TODO: Need onClick event to movie page in cardbody*/}
+                                          _hover={{cursor: "pointer"}}>
                                     {(movie?.imageUri) ? (<Image
                                         src={getPosterImageUri(movie?.imageUri)}
                                         alt={"poster of movie" + movie.title}
