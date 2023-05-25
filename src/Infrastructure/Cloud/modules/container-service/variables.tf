@@ -32,3 +32,17 @@ variable "tmdb_api_key" {
   sensitive   = true
   description = "TMDB API Key. Only provide if the service needs it"
 }
+
+variable "gcp_service_account_key_json" {
+  type        = string
+  sensitive   = true
+  description = "Contents of the service account key JSON file. This is needed such that services that requires Firebase access can restore the file in production. This is more secure since we pass it by environment variable instead of baking it in the image itself"
+  default     = ""
+}
+
+variable "gcp_service_account_key_path" {
+  type        = string
+  sensitive   = false
+  description = "Allows for overwriting path to the GCP service account key in our services"
+  default     = "./service-account-key.json"
+}
