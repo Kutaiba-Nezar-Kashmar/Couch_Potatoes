@@ -23,4 +23,19 @@
       <ProjectReference Include="..\MovieInformation.Application\MovieInformation.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="GetCredits\ComponentTests\Fakes\MovieCreditsResponse.json" />
+      <Content Include="GetCredits\ComponentTests\Fakes\MovieCreditsResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetMovie\ComponentTests\Fakes\KeywordsResponse.json" />
+      <Content Include="GetMovie\ComponentTests\Fakes\KeywordsResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetMovie\ComponentTests\Fakes\ImagesResponse.json" />
+      <Content Include="GetMovie\ComponentTests\Fakes\ImagesResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

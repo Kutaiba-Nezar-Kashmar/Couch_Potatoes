@@ -1,14 +1,12 @@
 ﻿namespace MovieInformation.Infrastructure.Exceptions;
 
-public class HttpException: Exception
+public class HttpException : Exception
 {
-    public HttpException(string msg): base(msg)
+    public HttpException(string msg) : base(msg)
     {
-        
     }
 
-    public HttpException():base()
+    public HttpException() : base()
     {
-        
     }
 }

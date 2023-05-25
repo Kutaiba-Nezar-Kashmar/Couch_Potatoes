@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using MovieInformation.Application.GetMovieCollection.Exceptions;
 using MovieInformation.Application.GetMovieCollection.Repositories;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 
 namespace MovieInformation.Application.GetMovieCollection;
 
@@ -12,12 +14,17 @@ public record GetMovieCollectionRequest
     string Type
 ) : IRequest<MovieCollection>;
 
-public class GetMovieCollectionRequestHandler : IRequestHandler<GetMovieCollectionRequest, MovieCollection>
+public class GetMovieCollectionRequestHandler : IRequestHandler<
+    GetMovieCollectionRequest, MovieCollection>
 {
     private readonly IMovieCollectionRepository _movieCollectionRepository;
-    private readonly ILogger _logger;
+    private readonly ILogger<GetMovieCollectionRequestHandler> _logger;
 
-    public GetMovieCollectionRequestHandler(IMovieCollectionRepository movieCollectionRepository, ILogger<GetMovieCollectionRequestHandler>logger)
+    public GetMovieCollectionRequestHandler
+    (
+        IMovieCollectionRepository movieCollectionRepository,
+        ILogger<GetMovieCollectionRequestHandler> logger
+    )
     {
         _movieCollectionRepository = movieCollectionRepository;
         _logger = logger;
@@ -27,15 +34,24 @@ public class GetMovieCollectionRequestHandler : IRequestHandler<GetMovieCollecti
         CancellationToken cancellationToken)
     {
         List<Task<MovieCollectionPage>> getMoviesRequests = new();
-        for (int i = 0; i < request.NumberOfPages; i++)
+        for (var i = 0; i < request.NumberOfPages; i++)
         {
             try
             {
-                getMoviesRequests.Add(_movieCollectionRepository.GetMovieCollection(ResolvePage(request.Skip, i), request.Type));
+                _logger.LogInformation(
+                    "Handling get movie collection with request: {Request}",
+                    request);
+                getMoviesRequests.Add(
+                    _movieCollectionRepository.GetMovieCollection(
+                        ResolvePage(request.Skip, i), request.Type));
             }
             catch (Exception e)
             {
-                _logger.LogError($"{nameof(GetMovieCollectionRequestHandler)}: ${e.Message}");
+                _logger.LogError(
+                    "{MovieCollectionRequestHandlerName}: ${EMessage}",
+                    nameof(GetMovieCollectionRequestHandler), e.Message);
+                throw new FailedToGetMovieCollectionException(
+                    $"Failed to retrieve movie collection of type:${request.Type}");
             }
         }
 
@@ -44,5 +60,6 @@ public class GetMovieCollectionRequestHandler : IRequestHandler<GetMovieCollecti
             pages = await Task.WhenAll(getMoviesRequests)
         };
     }
-    private int ResolvePage(int skip, int page) => skip + page;
+
+    private static int ResolvePage(int skip, int page) => skip + page;
 }

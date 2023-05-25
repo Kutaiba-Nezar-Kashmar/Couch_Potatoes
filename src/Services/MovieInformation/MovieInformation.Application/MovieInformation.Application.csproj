@@ -16,8 +16,4 @@
       <ProjectReference Include="..\MovieInformation.Infrastructure\MovieInformation.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="GetRecommendedMovies\Exceptions" />
-    </ItemGroup>
-
 </Project>

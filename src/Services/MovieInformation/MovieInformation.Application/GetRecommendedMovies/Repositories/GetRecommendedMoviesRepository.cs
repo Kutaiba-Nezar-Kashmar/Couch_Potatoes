@@ -1,4 +1,7 @@
-﻿using MovieInformation.Domain.Models;
+﻿using Microsoft.Extensions.Logging;
+using MovieInformation.Application.GetRecommendedMovies.Exceptions;
+using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
@@ -7,36 +10,79 @@ namespace MovieInformation.Application.GetRecommendedMovies.Repositories;
 
 public class GetRecommendedMoviesRepository : IGetRecommendedMoviesRepository
 {
-    private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
-    private HttpClient _httpClient;
+    private readonly string _apiKey =
+        Environment.GetEnvironmentVariable("TMDB_API_KEY");
 
-    public GetRecommendedMoviesRepository(IHttpClientFactory httpClientFactory)
+    private readonly HttpClient _httpClient;
+    private ILogger<GetRecommendedMoviesRepository> _logger;
+
+    public GetRecommendedMoviesRepository
+    (
+        IHttpClientFactory httpClientFactory,
+        ILogger<GetRecommendedMoviesRepository> logger
+    )
     {
+        _logger = logger;
         _httpClient = httpClientFactory.CreateClient("HTTP_CLIENT");
     }
 
-    public async Task<MovieCollectionPage> GetRecommendedMovies(int page, int movieId)
+    public async Task<MovieCollectionPage> GetRecommendedMovies(int page,
+        int movieId)
     {
-        var res = await _httpClient.GetAsync($"{movieId}/recommendations?api_key={_apiKey}");
-
-        if (!res.IsSuccessStatusCode)
+        try
         {
-            throw new HttpException(
-                $"{nameof(GetRecommendedMovies)}: Failed to fetch recommended movies from movie with movieID: {movieId}, with status code: {res.StatusCode}");
+            _logger.LogInformation(
+                "Get recommended movies with movie id: {Id}", movieId);
+            var res =
+                await _httpClient.GetAsync(
+                    $"{movieId}/recommendations?api_key={_apiKey}");
+
+            ValidateHttpResponse(res);
+            var contentString = await res.Content.ReadAsStringAsync();
+            ValidateResponseContent(contentString);
+
+            var dto =
+                JsonDeserializer.Deserialize<GetMovieCollectionResponseDto>(
+                    contentString);
+            var mapper = new TmdbMovieCollectionToMovie();
+            var movies = dto?.Result
+                .Select(movieCollection => mapper.Map(movieCollection))
+                .ToList();
+
+            return new MovieCollectionPage
+            {
+                Page = page,
+                Movies = movies
+            };
         }
-
-        var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<GetMovieCollectionResponseDto>(contentString);
-        var mapper = new TmdbMovieCollectionToMovie();
-
-        var movies = dto?.Result
-            .Select(movieCollection => mapper.Map(movieCollection))
-            .ToList();
-
-        return new MovieCollectionPage
+        catch (Exception e)
         {
-            Page = page,
-            Movies = movies
-        };
+            _logger.LogCritical(
+                "Unable to get recommended movies with movie id: {Id}",
+                movieId);
+            throw new GetRecommendedMoviesException(
+                $"Cannot get recommended movies: {e.Message}", e);
+        }
+    }
+
+
+    private static void ValidateHttpResponse(
+        HttpResponseMessage responseMessage)
+    {
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new HttpException
+            (
+                $"Unsuccessful response, code: {responseMessage}"
+            );
+        }
+    }
+
+    private static void ValidateResponseContent(string content)
+    {
+        if (string.IsNullOrEmpty(content) || string.IsNullOrWhiteSpace(content))
+        {
+            throw new HttpResponseException("Response is either null or empty");
+        }
     }
 }
