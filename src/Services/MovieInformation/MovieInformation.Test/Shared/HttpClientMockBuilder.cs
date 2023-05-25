@@ -2,7 +2,7 @@
 using Moq;
 using Moq.Protected;
 
-namespace MovieInformation.Test;
+namespace MovieInformation.Test.Shared;
 
 public class HttpClientMockBuilder
 {

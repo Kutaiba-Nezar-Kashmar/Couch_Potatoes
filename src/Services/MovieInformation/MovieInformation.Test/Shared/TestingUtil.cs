@@ -1,6 +1,6 @@
 ﻿using Moq;
 
-namespace MovieInformation.Test;
+namespace MovieInformation.Test.Shared;
 
 public class TestingUtil
 {
