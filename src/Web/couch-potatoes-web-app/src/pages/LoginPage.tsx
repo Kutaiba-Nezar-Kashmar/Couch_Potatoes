@@ -39,15 +39,7 @@ const LoginPage: FC = () => {
                 {
                     provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                     requireDisplayName: true,
-                },
-                {
-                    provider: firebase.auth.GithubAuthProvider.PROVIDER_ID,
-                    requireDisplayName: true,
-                },
-                {
-                    provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-                    requireDisplayName: true,
-                },
+                }
             ],
             signInSuccessUrl: AUTHENTICATED_REDIRECT,
             callbacks: {
