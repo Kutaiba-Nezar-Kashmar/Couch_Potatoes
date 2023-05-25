@@ -155,14 +155,14 @@ const PersonDetailsPage = () => {
                         />
                         <br />
                         <PersonStatsInformation
-                            numberOfMovies={personStats?.numberOfMovies}
+                            numberOfMovies={personStats?.NumberOfMovies}
                             averageMoviesRatingsAsACast={
-                                personStats?.averageMoviesRatingsAsACast
+                                personStats?.AverageMoviesRatingsAsACast
                             }
                             averageMoviesRatingsAsACrew={
-                                personStats?.averageMoviesRatingsAsACrew
+                                personStats?.AverageMoviesRatingsAsACrew
                             }
-                            knownForGenre={personStats?.knownForGenre}
+                            knownForGenre={personStats?.KnownForGenre}
                         />
                         <br />
                         <Swiper

@@ -1,6 +1,6 @@
 export default interface PersonStats {
-    numberOfMovies?: number;
-    averageMoviesRatingsAsACast?: number;
-    averageMoviesRatingsAsACrew?: number;
-    knownForGenre?: string;
+    NumberOfMovies?: number;
+    AverageMoviesRatingsAsACast?: number;
+    AverageMoviesRatingsAsACrew?: number;
+    KnownForGenre?: string;
 }
