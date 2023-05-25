@@ -1,3 +1,7 @@
 */.idea
 .idea
 **/.idea
+
+*/service-account-key.json
+**/service-account-key.json
+service-account-key.json
