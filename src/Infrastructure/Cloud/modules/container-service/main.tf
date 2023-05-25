@@ -22,6 +22,16 @@ resource "google_cloud_run_v2_service" "service" {
         name  = "TMDB_API_KEY"
         value = var.tmdb_api_key
       }
+
+      env {
+        name  = "GCP_SERVICE_ACCOUNT_KEY_JSON"
+        value = var.gcp_service_account_key_json
+      }
+
+      env {
+        name  = "GCP_SERVICE_ACCOUNT_KEY"
+        value = var.gcp_service_account_key_path
+      }
       ports {
         container_port = var.port
       }

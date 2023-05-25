@@ -37,7 +37,7 @@ resource "google_storage_bucket" "default" {
 #       }
 #       env {
 #         name  = "GATEWAY_USER_SERVICE"
-#         value = module.movieinformation_service.service_url
+#         value = module.user_service.service_url
 #       }
 #       env {
 #         name  = "GATEWAY_PERSON_SERVICE"
@@ -80,15 +80,35 @@ resource "google_storage_bucket" "default" {
 
 # # END API GATEWAY ---------------------------------------------------------------
 
+# # SERVICES ---------------------------------------------------------------------------
 # variable "TMDB_API_KEY" {
 #   type      = string
 #   sensitive = true
 # }
+
+# variable "GCP_SERVICE_ACCOUNT_KEY_JSON" {
+#   type      = string
+#   sensitive = true
+# }
+
+
+# ## Movieinformation ----------------------------
 # module "movieinformation_service" {
 #   source        = "./modules/container-service"
 #   service_name  = "movie-information"
 #   image         = "docker.io/michaelbui293886/couch-potatoes-movieinformation"
-#   tmdb_api_key  = var.TMDB_API_KEY
+#   tmdb_api_key  = var.TMDB_API_KEY # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
 #   max_instances = 1
 #   port          = 80
+# }
+
+# ## User ----------------------------
+# module "user_service" {
+#   source                       = "./modules/container-service"
+#   service_name                 = "user"
+#   image                        = "docker.io/michaelbui293886/couch-potatoes-user"
+#   tmdb_api_key                 = var.TMDB_API_KEY
+#   gcp_service_account_key_json = var.GCP_SERVICE_ACCOUNT_KEY_JSON # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
+#   max_instances                = 1
+#   port                         = 80
 # }
