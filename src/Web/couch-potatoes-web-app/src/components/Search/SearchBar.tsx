@@ -78,7 +78,7 @@ export const SearchBar: FC<searchBarProperties> = ({width}) => {
                 </InputGroup>
                 <Box>
                     {searchTerm ? (
-                        <List  spacing={"1px"}  boxShadow="md" position={"absolute"}  bg={"grey"} width={[width/2,width]} height="300px"
+                        <List  spacing={"1px"}  boxShadow="md" position={"absolute"}  bg={"grey"} width={[width/2,width]} maxHeight="300px"
                                overflow="auto" zIndex="9999"  sx={{
                             "&::-webkit-scrollbar": scrollbarStyles,
                             "&::-webkit-scrollbar-thumb": hoverStyles,
@@ -106,6 +106,38 @@ export const SearchBar: FC<searchBarProperties> = ({width}) => {
                                     </Stack>
 
                                 </ListItem>
+
+                            ))}
+                            {searchResults?.people?.map((result) => (
+                                <ListItem padding={"2px"} bg={"white"} key={result.id} onClick={() =>
+                                    navigate(
+                                        `/Couch_Potatoes/person/${result.id}`
+                                    )
+                                }>
+                                    <Stack
+                                        direction={"row"} overflowX={"auto"} _hover={{cursor: "pointer"}}>
+                                        {(result?.profilePath) ? (<Image maxHeight={"80px"}
+                                                                        src={getPosterImageUri(result?.profilePath)}
+                                                                        alt={"poster of person" + result.name}
+                                                                        borderRadius='lg'
+                                        />) : (<Image maxHeight={"80px"}
+                                                      maxWidth={"53px"}
+                                                      src={Background_Temp}
+                                                      alt={"no poster of person" + result.name}
+                                                      borderRadius='lg'
+                                        />)}
+                                        <Flex alignItems={"center"}>
+                                            <Stack direction={"column"}>
+                                                <Text>{result.name}</Text>
+                                                <Text color={"grey"} fontSize={"sm"} fontStyle={"italic"}>Known for: {result.knownFor}</Text>
+                                            </Stack>
+
+                                        </Flex>
+
+                                    </Stack>
+
+                                </ListItem>
+
                             ))}
                         </List>) : null}
 
