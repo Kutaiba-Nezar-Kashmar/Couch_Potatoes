@@ -3,8 +3,8 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetCredits;
-using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Person;
+using MovieInformation.Infrastructure.ControllerDtos.Person;
 using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.API.Controllers;
@@ -32,14 +32,14 @@ public class MovieCreditsController : ControllerBase
 
     [HttpGet("{movieId:int}")]
     public async Task<ActionResult<PersonMovieCredits>> GetMovieCredits
-    ( //TODO: RETURNS DOMAIN MODEL
+    (
         [FromRoute] int movieId
     )
     {
         try
         {
             var dto = await _mediator.Send(new GetCreditsRequest(movieId));
-            return Ok(dto);
+            return Ok(_mapper.Map<PersonMovieCreditsDto>(dto));
         }
         catch (Exception e)
         {

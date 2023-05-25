@@ -36,6 +36,32 @@
       <Content Include="GetMovie\ComponentTests\Fakes\ImagesResponse.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="GetMovie\ComponentTests\Fakes\MovieResponse.json" />
+      <Content Include="GetMovie\ComponentTests\Fakes\MovieResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Compile Remove="GetMovie\ComponentTests\GetMovieVideosTest.cs" />
+      <None Remove="GetMovie\ComponentTests\Fakes\VideosResponse.json" />
+      <Content Include="GetMovie\ComponentTests\Fakes\VideosResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetMovieCollection\ComponentTests\Fakes\PopularMoviesResponse.json" />
+      <Content Include="GetMovieCollection\ComponentTests\Fakes\PopularMoviesResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetMovieCollection\ComponentTests\Fakes\LatestMoviesResponse.json" />
+      <None Remove="GetMovieCollection\ComponentTests\Fakes\TopRatedMoviesResponse.json" />
+      <Content Include="GetMovieCollection\ComponentTests\Fakes\TopRatedMoviesResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetMovieCollection\ComponentTests\Fakes\UpcomingMoviesResponse.json" />
+      <Content Include="GetMovieCollection\ComponentTests\Fakes\UpcomingMoviesResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="GetRecommendedMovies\ComponentTests\Fakes\RecommendedMovieResponse.json" />
+      <Content Include="GetRecommendedMovies\ComponentTests\Fakes\RecommendedMovieResponse.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
