@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetRecommendedMovies;
 using MovieInformation.Infrastructure.ResponseDtos;
+using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.API.Controllers;

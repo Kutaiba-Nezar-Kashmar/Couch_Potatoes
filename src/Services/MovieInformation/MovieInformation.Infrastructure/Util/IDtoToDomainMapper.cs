@@ -1,13 +1,15 @@
-﻿using MovieInformation.Domain.Models;
+﻿using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieVideos;
+using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
-using MovieInformation.Infrastructure.ResponseDtos;
+using MovieInformation.Infrastructure.ResponseDtos.MediaResponses;
+using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
+using MovieInformation.Infrastructure.ResponseDtos.PersonResponses;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
-using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 
 namespace MovieInformation.Infrastructure.Util;
 
@@ -54,18 +56,6 @@ public class
         {
             Id = from.Id,
             Name = from.Name
-        };
-    }
-}
-
-public class
-    TmdbImagesToImages : IDtoToDomainMapper<MovieImagesResponseDto, Image>
-{
-    public Image Map(MovieImagesResponseDto from)
-    {
-        return new Image
-        {
-            filePath = from.BackdropImages[0].ToString()
         };
     }
 }
@@ -191,23 +181,6 @@ public class TmdbImagesDtoToDomainMapper : IDtoToDomainMapper<
                 VoteAverage = p.VoteAverage,
                 VoteCount = p.VoteCount,
                 Width = p.Width
-            }).ToList()
-        };
-    }
-}
-
-public class DomainMovieImagesToControllerImagesDtoMapper :
-    IDtoToDomainMapper<MovieImagesResponse, ControllerMovieImagesDto>
-{
-    public ControllerMovieImagesDto Map(MovieImagesResponse from)
-    {
-        return new ControllerMovieImagesDto
-        {
-            Posters = from.Posters.Select(p => new MovieImageDto
-            {
-                Width = p.Width,
-                FilePath = p.FilePath,
-                Height = p.Height
             }).ToList()
         };
     }

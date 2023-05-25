@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetMovieCollection.Exceptions;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;

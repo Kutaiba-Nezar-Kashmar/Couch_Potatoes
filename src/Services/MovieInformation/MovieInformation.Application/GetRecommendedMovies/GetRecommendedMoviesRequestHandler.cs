@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetRecommendedMovies.Exceptions;
 using MovieInformation.Application.GetRecommendedMovies.Repositories;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 
 namespace MovieInformation.Application.GetRecommendedMovies;
 

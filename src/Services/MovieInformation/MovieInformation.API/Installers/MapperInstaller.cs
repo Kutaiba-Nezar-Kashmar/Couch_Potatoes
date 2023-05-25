@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
+using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 using MovieInformation.Infrastructure.TmbdDto.ImageDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieVideoDto;
 

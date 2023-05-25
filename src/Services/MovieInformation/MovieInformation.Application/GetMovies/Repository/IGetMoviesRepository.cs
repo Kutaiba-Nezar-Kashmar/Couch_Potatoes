@@ -1,4 +1,5 @@
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
 
 namespace MovieInformation.Application.GetMovies.Repository;

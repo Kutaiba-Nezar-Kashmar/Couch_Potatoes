@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetCredits;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.API.Controllers;

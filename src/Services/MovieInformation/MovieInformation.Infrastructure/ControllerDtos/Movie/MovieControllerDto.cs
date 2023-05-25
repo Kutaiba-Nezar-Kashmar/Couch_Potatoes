@@ -1,7 +1,7 @@
-﻿using MovieInformation.Domain.Models.MovieImages;
-using MovieInformation.Infrastructure.ControllerDtos.Images;
+﻿using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
+using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 
 namespace MovieInformation.Infrastructure.ControllerDtos.Movie;
 

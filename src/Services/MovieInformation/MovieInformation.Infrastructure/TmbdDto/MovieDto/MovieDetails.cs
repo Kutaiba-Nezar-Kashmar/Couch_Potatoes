@@ -72,35 +72,7 @@ public record MovieDetail
     int VoteCount
 );
 
-public record MovieImagesResponseDto
-(
-    [property: JsonPropertyName("id")] int id,
-    [property: JsonPropertyName("backdrops")]
-    List<BackdropImageResponseDto> BackdropImages,
-    [property: JsonPropertyName("logos")]
-    List<LogoResponseDto> Logos, 
-    [property: JsonPropertyName("posters")]
-    List<PosterResponseDto> Posters
-);
-
-public record PosterResponseDto
-    ();
-
-public record BackdropImageResponseDto
-(
-    [property: JsonPropertyName("aspect_ratio")] float aspectRatio,
-    [property: JsonPropertyName("height")] int height, 
-    [property: JsonPropertyName("iso_639_1")] string iso,
-    [property: JsonPropertyName("file_path")] string filePath,
-    [property: JsonPropertyName("vote_average")] float voteAverage,
-    [property: JsonPropertyName("vote_count")] int voteCount,
-    [property: JsonPropertyName("width")] int width
-);
-
-public record LogoResponseDto
-    ();
-
-    public record MovieDetailSpokenLanguage
+public record MovieDetailSpokenLanguage
 (
     [property: JsonPropertyName("iso_639_1")]
     string Iso6391,

@@ -4,7 +4,7 @@ using Moq;
 using MovieInformation.Application.GetCredits.Exceptions;
 using MovieInformation.Application.GetCredits.Repositories;
 using MovieInformation.Infrastructure.Exceptions;
-using MovieInformation.Infrastructure.ResponseDtos;
+using MovieInformation.Infrastructure.ResponseDtos.PersonResponses;
 using MovieInformation.Infrastructure.Util;
 using MovieInformation.Test.Shared;
 
@@ -44,8 +44,6 @@ public class GetCreditsRepositoryTest
 
         _getCreditsRepository =
             new GetCreditsRepository(factory.Object, _loggerMock.Object);
-        var response = JsonDeserializer
-            .Deserialize<GetPersonMovieCreditsResponseDto>(responseString);
         // Act
 
         // Assert

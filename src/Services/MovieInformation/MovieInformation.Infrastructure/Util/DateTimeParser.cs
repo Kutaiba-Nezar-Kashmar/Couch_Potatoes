@@ -7,8 +7,8 @@ public static class DateTimeParser
         if (string.IsNullOrEmpty(dateTimeAsString) ||
             string.IsNullOrWhiteSpace(dateTimeAsString)) return null;
 
-        DateTime dateTime;
-        if (DateTime.TryParse(dateTimeAsString, out dateTime)) return dateTime;
+        if (DateTime.TryParse(dateTimeAsString, out var dateTime))
+            return dateTime;
 
         return null;
     }

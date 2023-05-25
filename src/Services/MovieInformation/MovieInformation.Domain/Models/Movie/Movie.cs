@@ -1,7 +1,7 @@
 ﻿using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieVideos;
 
-namespace MovieInformation.Domain.Models;
+namespace MovieInformation.Domain.Models.Movie;
 
 public class Movie
 {
@@ -17,8 +17,7 @@ public class Movie
     public int RunTime { get; set; }
     public bool IsForKids { get; set; }
 
-    public string Status { get; set; } =
-        default!; // TODO: make into Enum and find out how to deal with white spaces
+    public string Status { get; set; } = default!;
 
     public string Homepage { get; set; } = default!;
     public string TrailerUri { get; set; } = default!;

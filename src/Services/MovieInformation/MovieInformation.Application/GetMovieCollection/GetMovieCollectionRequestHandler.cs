@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetMovieCollection.Exceptions;
 using MovieInformation.Application.GetMovieCollection.Repositories;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.Movie;
 
 namespace MovieInformation.Application.GetMovieCollection;
 
