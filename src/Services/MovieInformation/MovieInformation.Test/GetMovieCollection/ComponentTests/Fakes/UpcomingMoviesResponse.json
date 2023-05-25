@@ -1,0 +1,409 @@
+﻿{
+  "dates": {
+    "maximum": "2023-06-21",
+    "minimum": "2023-05-31"
+  },
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/eTvN54pd83TrSEOz6wbsXEJktCV.jpg",
+      "genre_ids": [
+        10752,
+        28,
+        53
+      ],
+      "id": 882569,
+      "original_language": "en",
+      "original_title": "Guy Ritchie's The Covenant",
+      "overview": "During the war in Afghanistan, a local interpreter risks his own life to carry an injured sergeant across miles of grueling terrain.",
+      "popularity": 1365.672,
+      "poster_path": "/aX0H63vho7rZ9Rm3I567Zf00Z1t.jpg",
+      "release_date": "2023-04-19",
+      "title": "Guy Ritchie's The Covenant",
+      "video": false,
+      "vote_average": 7.6,
+      "vote_count": 321
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/e7FzphKs5gzoghDotAEp2FeP46u.jpg",
+      "genre_ids": [
+        27,
+        35,
+        14
+      ],
+      "id": 649609,
+      "original_language": "en",
+      "original_title": "Renfield",
+      "overview": "Having grown sick and tired of his centuries as Dracula's lackey, Renfield finds a new lease on life — and maybe even redemption — when he falls for feisty, perennially angry traffic cop Rebecca Quincy.",
+      "popularity": 674.099,
+      "poster_path": "/p6yUjhvNGQpFZilKwOKbxQ1eHlo.jpg",
+      "release_date": "2023-04-07",
+      "title": "Renfield",
+      "video": false,
+      "vote_average": 7,
+      "vote_count": 470
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/h1gxz6U2HdDf0AMFXnehz0Muoup.jpg",
+      "genre_ids": [
+        35,
+        12,
+        10751
+      ],
+      "id": 643215,
+      "original_language": "fr",
+      "original_title": "Astérix & Obélix : L'Empire du Milieu",
+      "overview": "Gallic heroes and forever friends Asterix and Obelix journey to China to help Princess Sa See save the Empress and her land from a nefarious prince.",
+      "popularity": 327.906,
+      "poster_path": "/ifOqT5SmA4ANjmyEacLw3KAFKUd.jpg",
+      "release_date": "2023-02-01",
+      "title": "Asterix & Obelix: The Middle Kingdom",
+      "video": false,
+      "vote_average": 4.8,
+      "vote_count": 383
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/kgATFkG4SDyengNMmCuwmj7igWW.jpg",
+      "genre_ids": [
+        14,
+        28,
+        12
+      ],
+      "id": 455476,
+      "original_language": "en",
+      "original_title": "Knights of the Zodiac",
+      "overview": "When a headstrong street orphan, Seiya, in search of his abducted sister unwittingly taps into hidden powers, he discovers he might be the only person alive who can protect a reincarnated goddess, sent to watch over humanity. Can he let his past go and embrace his destiny to become a Knight of the Zodiac?",
+      "popularity": 292.303,
+      "poster_path": "/qW4crfED8mpNDadSmMdi7ZDzhXF.jpg",
+      "release_date": "2023-04-27",
+      "title": "Knights of the Zodiac",
+      "video": false,
+      "vote_average": 6.3,
+      "vote_count": 49
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/A077VsMIBBXNvlI5mohGnSiIrfI.jpg",
+      "genre_ids": [
+        878,
+        27,
+        35
+      ],
+      "id": 536554,
+      "original_language": "en",
+      "original_title": "M3GAN",
+      "overview": "A brilliant toy company roboticist uses artificial intelligence to develop M3GAN, a life-like doll programmed to emotionally bond with her newly orphaned niece. But when the doll's programming works too well, she becomes overprotective of her new friend with terrifying results.",
+      "popularity": 274.906,
+      "poster_path": "/d9nBoowhjiiYc4FBNtQkPY7c11H.jpg",
+      "release_date": "2022-12-28",
+      "title": "M3GAN",
+      "video": false,
+      "vote_average": 7.3,
+      "vote_count": 2638
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/u0Idv93k1EPYahn1QjJXexbT2g2.jpg",
+      "genre_ids": [
+        878,
+        28,
+        12
+      ],
+      "id": 298618,
+      "original_language": "en",
+      "original_title": "The Flash",
+      "overview": "When his attempt to save his family inadvertently alters the future, Barry Allen becomes trapped in a reality in which General Zod has returned and there are no Super Heroes to turn to. In order to save the world that he is in and return to the future that he knows, Barry's only hope is to race for his life. But will making the ultimate sacrifice be enough to reset the universe?",
+      "popularity": 253.24,
+      "poster_path": "/6QBJs1e2jWSJSMLVxpMnsfilEuM.jpg",
+      "release_date": "2023-06-14",
+      "title": "The Flash",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/rH3jY9JN9krUyE0Q3WLNtujMs8.jpg",
+      "genre_ids": [
+        28,
+        12,
+        878
+      ],
+      "id": 667538,
+      "original_language": "en",
+      "original_title": "Transformers: Rise of the Beasts",
+      "overview": "A '90s globetrotting adventure that introduces the Maximals, Predacons, and Terrorcons to the existing battle on earth between Autobots and Decepticons.",
+      "popularity": 242.808,
+      "poster_path": "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
+      "release_date": "2023-06-06",
+      "title": "Transformers: Rise of the Beasts",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1PRWW60yQparK1I8Soyy9Evf7Dv.jpg",
+      "genre_ids": [
+        16,
+        35,
+        10751,
+        18,
+        12
+      ],
+      "id": 869626,
+      "original_language": "en",
+      "original_title": "Marcel the Shell with Shoes On",
+      "overview": "Marcel is an adorable one-inch-tall shell who ekes out a colorful existence with his grandmother Connie and their pet lint, Alan. Once part of a sprawling community of shells, they now live alone as the sole survivors of a mysterious tragedy. But when a documentary filmmaker discovers them amongst the clutter of his Airbnb, the short film he posts online brings Marcel millions of passionate fans, as well as unprecedented dangers and a new hope at finding his long-lost family.",
+      "popularity": 230.606,
+      "poster_path": "/jaYmP4Ct8YLnxWAW2oYkUjeXtzm.jpg",
+      "release_date": "2022-06-24",
+      "title": "Marcel the Shell with Shoes On",
+      "video": false,
+      "vote_average": 7.8,
+      "vote_count": 274
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/jS4z8y70ESrZwmFJubqYuceFtnX.jpg",
+      "genre_ids": [
+        16,
+        28,
+        12,
+        878
+      ],
+      "id": 569094,
+      "original_language": "en",
+      "original_title": "Spider-Man: Across the Spider-Verse",
+      "overview": "After reuniting with Gwen Stacy, Miles Morales — Brooklyn's full-time, friendly neighborhood Spider-Man — is catapulted across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must redefine what it means to be a hero so he can save the people he loves most.",
+      "popularity": 269.868,
+      "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+      "release_date": "2023-05-31",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/T5xXoFqyc9jNXZIbH4Sw0jwWjw.jpg",
+      "genre_ids": [
+        28,
+        80,
+        53,
+        9648
+      ],
+      "id": 605886,
+      "original_language": "en",
+      "original_title": "To Catch a Killer",
+      "overview": "Baltimore. New Year's Eve. A talented but troubled police officer is recruited by the FBI's chief investigator to help profile and track down a mass murderer.",
+      "popularity": 270.354,
+      "poster_path": "/mFp3l4lZg1NSEsyxKrdi0rNK8r1.jpg",
+      "release_date": "2023-04-06",
+      "title": "To Catch a Killer",
+      "video": false,
+      "vote_average": 7,
+      "vote_count": 166
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/a4I481szRmycyreQTLrRe4f4YJe.jpg",
+      "genre_ids": [
+        80
+      ],
+      "id": 842544,
+      "original_language": "en",
+      "original_title": "Transfusion",
+      "overview": "Ryan Logan, a former Special Forces operative, is battling to cope with life after the loss of his wife.  He is thrusted into the criminal underworld to keep his only son from being taken from him.",
+      "popularity": 189.814,
+      "poster_path": "/bxh5xCCW9Ynfg6EZJWUkc1zqTnr.jpg",
+      "release_date": "2023-01-05",
+      "title": "Transfusion",
+      "video": false,
+      "vote_average": 6.3,
+      "vote_count": 165
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/bKWFetR4injOJXOGHeLuTD7wHI4.jpg",
+      "genre_ids": [
+        27,
+        53,
+        14
+      ],
+      "id": 994128,
+      "original_language": "es",
+      "original_title": "Viejos",
+      "overview": "An octogenarian named Manuel falls into a state of dementia after the sudden suicide of his wife, sparking a series of paranormal events that will put his family’s lives at risk.",
+      "popularity": 165.533,
+      "poster_path": "/88f35mGJOIE1nXgst5o4FvEDVzr.jpg",
+      "release_date": "2023-04-21",
+      "title": "The Elderly",
+      "video": false,
+      "vote_average": 7.1,
+      "vote_count": 15
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/wYYVBBK3O8sb7J4WxkRx1bI7Q8c.jpg",
+      "genre_ids": [
+        28,
+        53
+      ],
+      "id": 697843,
+      "original_language": "en",
+      "original_title": "Extraction 2",
+      "overview": "Tasked with extracting a family who is at the mercy of a Georgian gangster, Tyler Rake infiltrates one of the world's deadliest prisons in order to save them. But when the extraction gets hot, and the gangster dies in the heat of battle, his equally ruthless brother tracks down Rake and his team to Sydney, in order to get revenge.",
+      "popularity": 116.202,
+      "poster_path": "/4QAce3OERchPM4vzkpjhKnw6a2N.jpg",
+      "release_date": "2023-06-09",
+      "title": "Extraction 2",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/svd6fPPsloJKbS72PJJ7xJqTevZ.jpg",
+      "genre_ids": [
+        878,
+        53
+      ],
+      "id": 942199,
+      "original_language": "en",
+      "original_title": "Simulant",
+      "overview": "Faye attempts to replace her newly deceased husband, Evan, with an android simulant (SIM). Although SIM Evan appears like human Evan in every way, Faye does not feel the same love for SIM Evan as it does for her. SIM Evan tries to win Faye back while at the same time being on-the-run from a government agent chasing down SIMs who have become “conscious” and could potentially be a threat to humankind.",
+      "popularity": 96.656,
+      "poster_path": "/kmDJhZIq1xnu5ZiMOlb0nHJH1qb.jpg",
+      "release_date": "2023-03-29",
+      "title": "Simulant",
+      "video": false,
+      "vote_average": 6.3,
+      "vote_count": 54
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ztWbwSlQNduTUFomNP2GnTPduFm.jpg",
+      "genre_ids": [
+        10749,
+        18,
+        35
+      ],
+      "id": 758336,
+      "original_language": "en",
+      "original_title": "Love Again",
+      "overview": "Mira Ray, dealing with the loss of her fiancé, sends a series of romantic texts to his old cell phone number… not realizing the number was reassigned to Rob Burns' new work phone. A journalist, Rob is captivated by the honesty in the beautifully confessional texts. When he’s assigned to write a profile of megastar Céline Dion, he enlists her help in figuring out how to meet Mira in person and win her heart.",
+      "popularity": 96.715,
+      "poster_path": "/yGEiqgynu453hMHxOZYtZlisv95.jpg",
+      "release_date": "2023-05-04",
+      "title": "Love Again",
+      "video": false,
+      "vote_average": 6.1,
+      "vote_count": 27
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/igXrblWrU1uaC09VKyquHHSebr.jpg",
+      "genre_ids": [
+        28,
+        53
+      ],
+      "id": 717930,
+      "original_language": "en",
+      "original_title": "Kandahar",
+      "overview": "After his mission is exposed, an undercover CIA operative stuck deep in hostile territory in Afghanistan must fight his way out, alongside his Afghan translator, to an extraction point in Kandahar, all whilst avoiding elite enemy forces and foreign spies tasked with hunting them down.",
+      "popularity": 104.422,
+      "poster_path": "/lCanGgsqF4xD2WA5NF8PWeT3IXd.jpg",
+      "release_date": "2023-05-25",
+      "title": "Kandahar",
+      "video": false,
+      "vote_average": 6,
+      "vote_count": 3
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/7Yuf6j6N76SfqRWqT0I0ZUjICc2.jpg",
+      "genre_ids": [
+        16,
+        35,
+        10751,
+        14,
+        10749
+      ],
+      "id": 976573,
+      "original_language": "en",
+      "original_title": "Elemental",
+      "overview": "In a city where fire, water, land, & air residents live together, a fiery young woman & a go-with-the-flow guy will discover something elemental: How much they have in common.",
+      "popularity": 75.518,
+      "poster_path": "/8riWcADI1ekEiBguVB9vkilhiQm.jpg",
+      "release_date": "2023-06-14",
+      "title": "Elemental",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/8W89QHsRBsonf8PyWdqdfGnOowp.jpg",
+      "genre_ids": [
+        35
+      ],
+      "id": 829051,
+      "original_language": "en",
+      "original_title": "About My Father",
+      "overview": "Encouraged by his fiancée, Sebastian brings his immigrant, hairdresser father, Salvo, to a weekend get-together with Ellie's super-rich and exceedingly eccentric family.",
+      "popularity": 58.358,
+      "poster_path": "/gNn05j3NIZ0sCkara0PNU5dmkTn.jpg",
+      "release_date": "2023-05-25",
+      "title": "About My Father",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ddfGBZiyOhVCAOtffie7AiXVYiE.jpg",
+      "genre_ids": [
+        27
+      ],
+      "id": 949423,
+      "original_language": "en",
+      "original_title": "Pearl",
+      "overview": "Trapped on her family’s isolated farm, Pearl must tend to her ailing father under the bitter and overbearing watch of her devout mother. Lusting for a glamorous life like she’s seen in the movies, Pearl’s ambitions, temptations, and repressions collide.",
+      "popularity": 45.919,
+      "poster_path": "/ulBLIBqvdnf4H6JBt0OpMCU1ECn.jpg",
+      "release_date": "2022-09-16",
+      "title": "Pearl",
+      "video": false,
+      "vote_average": 7.4,
+      "vote_count": 720
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/dExUxMWt0UjS93waeCGYeDr1D7m.jpg",
+      "genre_ids": [
+        35,
+        18,
+        10749,
+        878
+      ],
+      "id": 747188,
+      "original_language": "en",
+      "original_title": "Asteroid City",
+      "overview": "Set in a fictional American desert town circa 1955, the itinerary of a Junior Stargazer/Space Cadet convention (organized to bring together students and parents from across the country for fellowship and scholarly competition) is spectacularly disrupted by world-changing events.",
+      "popularity": 54.973,
+      "poster_path": "/qdq40gRS8xKnpFt5V75t6lUHgpx.jpg",
+      "release_date": "2023-06-09",
+      "title": "Asteroid City",
+      "video": false,
+      "vote_average": 0,
+      "vote_count": 0
+    }
+  ],
+  "total_pages": 20,
+  "total_results": 389
+}

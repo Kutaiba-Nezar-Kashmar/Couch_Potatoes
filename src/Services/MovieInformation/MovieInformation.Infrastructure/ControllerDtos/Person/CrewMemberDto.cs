@@ -1,6 +1,6 @@
-﻿namespace MovieInformation.Domain.Models.Person;
+﻿namespace MovieInformation.Infrastructure.ControllerDtos.Person;
 
-public class CrewMember
+public class CrewMemberDto
 {
     public bool IsAdult { get; set; }
     public int Gender { get; set; }

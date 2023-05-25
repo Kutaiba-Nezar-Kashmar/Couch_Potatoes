@@ -1,6 +1,6 @@
-﻿namespace MovieInformation.Domain.Models.Person;
+﻿namespace MovieInformation.Infrastructure.ControllerDtos.Person;
 
-public class CrewMember
+public class CastMemberDto
 {
     public bool IsAdult { get; set; }
     public int Gender { get; set; }
@@ -10,7 +10,8 @@ public class CrewMember
     public string OriginalName { get; set; } = default!;
     public float Popularity { get; set; }
     public string ProfilePath { get; set; } = default!;
+    public int CastId { get; set; }
+    public string Character { get; set; } = default!;
     public string CreditId { get; set; } = default!;
-    public string Department { get; set; } = default!;
-    public string Job { get; set; } = default!;
+    public int Order { get; set; }
 }

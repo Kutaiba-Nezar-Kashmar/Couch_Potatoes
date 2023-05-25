@@ -3,8 +3,10 @@ using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieVideos;
+using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
+using MovieInformation.Infrastructure.ControllerDtos.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
@@ -26,6 +28,9 @@ public static class MapperInstaller
     {
         var mapper = new MapperConfiguration(config =>
         {
+            config.CreateMap<CastMember, CastMemberDto>();
+            config.CreateMap<CrewMember, CrewMemberDto>();
+            config.CreateMap<PersonMovieCredits, PersonMovieCreditsDto>();
             config.CreateMap<Genre, ReadGenreDto>().ReverseMap();
             config.CreateMap<Language, ReadLanguageDto>().ReverseMap();
             config.CreateMap<Keyword, ReadKeywordDto>().ReverseMap();

@@ -27,5 +27,6 @@ public class MovieControllerDto
     public IReadOnlyCollection<ReadLanguageDto> Languages { get; set; } = default!;
     public IReadOnlyCollection<ReadGenreDto> Genres { get; set; } = default!;
     public IReadOnlyCollection<MovieImageDto> Posters { get; set; } = default!;
+    public IReadOnlyCollection<MovieImageDto> Backdrops { get; set; } = default!;
     public IReadOnlyCollection<MovieVideoDto> Videos { get; set; } = default!;
 }
