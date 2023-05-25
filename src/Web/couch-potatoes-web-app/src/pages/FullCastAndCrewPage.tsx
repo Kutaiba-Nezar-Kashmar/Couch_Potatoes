@@ -106,7 +106,7 @@ const FullCastAndCrewPage = () => {
                         </Button>
                     </GridItem>
                     <GridItem colSpan={3} gap={4}>
-                        <Stack direction={'row'}>
+                        <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Cast </Heading>
                             <Heading color={'grey'}>
                                 ({movieCredits?.creditsAsCast.length}){' '}
@@ -141,6 +141,7 @@ const FullCastAndCrewPage = () => {
                                         ) : (
                                             <Image
                                                 height={'130px'}
+                                                maxWidth={"86px"}
                                                 src={Empty_Profile_Pic}
                                                 alt="No image available of actor"
                                                 borderRadius="lg"
@@ -167,7 +168,7 @@ const FullCastAndCrewPage = () => {
                     </GridItem>
 
                     <GridItem colSpan={3} gap={4}>
-                        <Stack direction={'row'}>
+                        <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Crew </Heading>
                             <Heading color={'grey'}>
                                 ({movieCredits?.creditsAsCrew.length}){' '}
@@ -204,6 +205,7 @@ const FullCastAndCrewPage = () => {
                                             <Image
                                                 height={'130px'}
                                                 src={Empty_Profile_Pic}
+                                                maxWidth={"86px"}
                                                 alt="No image available of actor"
                                                 borderRadius="lg"
                                             />
