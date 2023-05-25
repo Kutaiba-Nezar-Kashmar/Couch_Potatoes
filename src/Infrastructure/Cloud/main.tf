@@ -21,7 +21,8 @@ resource "google_storage_bucket" "default" {
 ## NOTE: (mibui 2023-05-24) For more info, read /src/Infrastructure/gateway-bootstrapper/README.md
 
 # output "gateway_url" {
-#   value = google_cloud_run_v2_service.gateway.uri
+#   value      = google_cloud_run_v2_service.gateway.uri
+#   depends_on = [google_cloud_run_v2_service.gateway]
 # }
 # resource "google_cloud_run_v2_service" "gateway" {
 #   name     = "couch-potatoes-api-gateway"
@@ -98,7 +99,7 @@ resource "google_storage_bucket" "default" {
 # ## Movieinformation ----------------------------
 # module "movieinformation_service" {
 #   source        = "./modules/container-service"
-#   service_name  = "movie-information"
+#   service_name  = "couch-potatoes-movie-information"
 #   image         = "docker.io/michaelbui293886/couch-potatoes-movieinformation"
 #   tmdb_api_key  = var.TMDB_API_KEY # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
 #   max_instances = 1
@@ -108,7 +109,7 @@ resource "google_storage_bucket" "default" {
 # ## User ----------------------------
 # module "user_service" {
 #   source                       = "./modules/container-service"
-#   service_name                 = "user"
+#   service_name                 = "couch-potatoes-user-service"
 #   image                        = "docker.io/michaelbui293886/couch-potatoes-user"
 #   tmdb_api_key                 = var.TMDB_API_KEY
 #   gcp_service_account_key_json = var.GCP_SERVICE_ACCOUNT_KEY_JSON # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
