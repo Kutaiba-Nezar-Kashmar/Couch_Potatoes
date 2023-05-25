@@ -305,9 +305,11 @@ const MovieDetailsPage = () => {
                         <Tabs padding={"25px"} borderRadius={"lg"} bg={"white"}>
                             <Stack direction={"row"}> <Flex alignItems={"center"}> <Heading size={"md"}>Media</Heading></Flex>
                                 <TabList>
-                                    <Tab><Text marginX={2}>Videos</Text> <Text color={"grey"}> 5</Text></Tab>
-                                    <Tab><Text marginX={2}>Posters</Text> <Text color={"grey"}> 16</Text></Tab>
-                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> 15</Text></Tab>
+                                    <Tab><Text marginX={2}>Videos</Text> <Text
+                                        color={"grey"}> {movie?.videos.length}</Text></Tab>
+                                    <Tab><Text marginX={2}>Posters</Text> <Text
+                                        color={"grey"}> {movie?.posters.length}</Text></Tab>
+                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> 0</Text></Tab>
                                 </TabList></Stack>
                             <TabPanels>
                                 <TabPanel>
@@ -321,13 +323,13 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                        {movie?.videos?.map((video) => (
                                             <SwiperSlide>
                                                 <Box mx="auto">
                                                     <AspectRatio ratio={4 / 3}>
                                                         <iframe
-                                                            src={"https://www.youtube.com/embed/QhBnZ6NPOY0"}
-                                                            title="Video Player"
+                                                            src={"https://www.youtube.com/embed/" + video.key}
+                                                            title={video.name}
                                                             allowFullScreen
                                                         />
                                                     </AspectRatio>
@@ -347,17 +349,17 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                        {movie?.posters.map((poster) => (
                                             <SwiperSlide
                                                 onClick={() =>
                                                     handleImageClick(
                                                         getPosterImageUri(
-                                                            movie?.imageUri as string
+                                                            poster?.filePath
                                                         )
                                                     )
                                                 }
                                             >
-                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                                <Image src={"https://image.tmdb.org/t/p/original/"+(poster.filePath)}/>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>

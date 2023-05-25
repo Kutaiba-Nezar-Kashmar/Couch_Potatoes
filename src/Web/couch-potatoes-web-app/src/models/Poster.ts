@@ -1,4 +1,4 @@
 export default interface Poster
 {
-    filepath:string
+    filePath:string
 }
