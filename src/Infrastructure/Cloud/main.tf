@@ -1,22 +1,6 @@
 # TODO: (mibui 2023-05-15) Setup GCS bucket for remote state and run terraform init to use the backend.
 # NOTE: (mibui 2023-05-18) Run 'gcloud auth application-default login' before trying to interact with our cloud
 
-# REMOTE STATE BACKEND  -------------------------------
-resource "google_storage_bucket" "default" {
-  name          = "couch-potatoes-sep6-bucket-tfstate"
-  force_destroy = false
-  location      = "EU"
-  storage_class = "STANDARD"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-  versioning {
-    enabled = true
-  }
-}
-# END REMOTE STATE BACKEND ------------------------------------
-
 # API GATEWAY ---------------------------------------------------
 ## NOTE: (mibui 2023-05-24) For more info, read /src/Infrastructure/gateway-bootstrapper/README.md
 
