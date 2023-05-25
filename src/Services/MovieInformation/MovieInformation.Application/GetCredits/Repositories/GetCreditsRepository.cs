@@ -11,7 +11,6 @@ public class GetCreditsRepository : IGetCreditsRepository
 {
     private readonly string _apiKey =
         Environment.GetEnvironmentVariable("TMDB_API_KEY");
-
     private readonly HttpClient _httpClient;
     private readonly ILogger<GetCreditsRepository> _logger;
 

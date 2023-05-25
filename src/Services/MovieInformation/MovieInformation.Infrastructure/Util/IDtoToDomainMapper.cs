@@ -1,7 +1,9 @@
 ﻿using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
+using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
@@ -255,7 +257,39 @@ public class
             IsForKids = from.IsForKids,
             Status = from.Status,
             TagLine = from.TagLine,
-            TrailerUri = from.TrailerUri
+            TrailerUri = from.TrailerUri,
+            Videos = from.Videos.Select(v => new MovieVideoDto
+            {
+                PublishedAt = v.PublishedAt,
+                Id = v.Id,
+                Key = v.Key,
+                Name = v.Name
+            }).ToList()
+        };
+    }
+}
+
+public class TmdbVideoToDomainMapper : IDtoToDomainMapper<TmdbVideosResponseDto,
+    MovieVideosResponse>
+{
+    public MovieVideosResponse Map(TmdbVideosResponseDto from)
+    {
+        return new MovieVideosResponse
+        {
+            Id = from.Id,
+            Results = from.Results.Select(r => new MovieVideo
+            {
+                Type = r.Type,
+                Id = r.Id,
+                Name = r.Name,
+                Key = r.Key,
+                Site = r.Site,
+                Size = r.Size,
+                IsOfficial = r.IsOfficial,
+                LangLower = r.LangLower,
+                LangUpper = r.LangUpper,
+                PublishedAt = DateTimeParser.ParseDateTime(r.PublishedAt)
+            }).ToList()
         };
     }
 }

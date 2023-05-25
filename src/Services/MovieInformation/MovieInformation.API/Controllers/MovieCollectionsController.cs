@@ -1,11 +1,8 @@
 ﻿using System.Net;
-using System.Text.Json.Nodes;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetMovieCollection;
-using MovieInformation.Domain.Models;
-using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.Util;
 
@@ -17,9 +14,14 @@ public class MovieCollectionsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly ILogger _logger;
+    private readonly ILogger<MovieCollectionsController> _logger;
 
-    public MovieCollectionsController(IMediator mediator, IMapper mapper, ILogger<MovieCollectionsController> logger)
+    public MovieCollectionsController
+    (
+        IMediator mediator,
+        IMapper mapper,
+        ILogger<MovieCollectionsController> logger
+    )
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -32,18 +34,21 @@ public class MovieCollectionsController : ControllerBase
         [FromRoute] string collectionType,
         [FromQuery] int skip,
         [FromQuery] int numberOfPages
-        )
+    )
     {
         try
         {
-            var dto = await _mediator.Send(new GetMovieCollectionRequest(skip, numberOfPages, collectionType));
+            var dto = await _mediator.Send(
+                new GetMovieCollectionRequest(skip, numberOfPages,
+                    collectionType));
             return Ok(_mapper.Map<ReadMovieCollectionDto>(dto));
         }
         catch (Exception e)
         {
-            _logger.LogCritical(0,e, e.Message);
-            
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), "Movie collection of type: "+collectionType+" Not found!");
+            _logger.LogCritical(0, e, e.Message);
+
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
+                "Movie collection of type: " + collectionType + " Not found!");
         }
     }
 }

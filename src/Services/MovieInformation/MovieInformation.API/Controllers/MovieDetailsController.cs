@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Net;
+﻿using System.Net;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,6 @@ using MovieInformation.Application.GetMovie;
 using MovieInformation.Application.GetMovies;
 using MovieInformation.Application.GetMovies.Exceptions;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.API.Controllers;
@@ -18,11 +16,15 @@ public class MovieDetailsController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    private readonly ILogger _logger;
+    private readonly ILogger<MovieDetailsController> _logger;
 
 
-    public MovieDetailsController(IMediator mediator, IMapper mapper,
-        ILogger<MovieDetailsController> logger)
+    public MovieDetailsController
+    (
+        IMediator mediator,
+        IMapper mapper,
+        ILogger<MovieDetailsController> logger
+    )
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -64,21 +66,23 @@ public class MovieDetailsController : ControllerBase
         try
         {
             var domainMovies = await _mediator.Send(new GetMoviesQuery(ids));
-            var mapper = new DomainToReadDetailedMovieDtoMapper();
-            var moviesAsDtos = domainMovies.Select(_mapper.Map<MovieControllerDto>).ToList();
+            var moviesAsDtos = domainMovies
+                .Select(_mapper.Map<MovieControllerDto>).ToList();
             return Ok(moviesAsDtos);
         }
         catch (Exception e) when (e is FailedToGetMoviesException)
         {
             _logger.LogError(2, e,
-                $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
+                "Failed to process {MoviesName} in {MovieDetailsControllerName}: {E}",
+                nameof(GetMovies), nameof(MovieDetailsController), e);
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
                 e.Message);
         }
         catch (Exception e)
         {
             _logger.LogError(2, e,
-                $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
+                "Failed to process {MoviesName} in {MovieDetailsControllerName}: {E}",
+                nameof(GetMovies), nameof(MovieDetailsController), e);
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
                 e.Message);
         }

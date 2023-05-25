@@ -1,5 +1,6 @@
 ﻿using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
+using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
 
 namespace MovieInformation.Infrastructure.ControllerDtos.Movie;
@@ -26,4 +27,5 @@ public class MovieControllerDto
     public IReadOnlyCollection<ReadLanguageDto> Languages { get; set; } = default!;
     public IReadOnlyCollection<ReadGenreDto> Genres { get; set; } = default!;
     public IReadOnlyCollection<MovieImageDto> Posters { get; set; } = default!;
+    public IReadOnlyCollection<MovieVideoDto> Videos { get; set; } = default!;
 }

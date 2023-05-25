@@ -7,4 +7,5 @@ public interface IGetMoviesRepository
 {
     Task<IReadOnlyCollection<Movie>> GetMovies(IReadOnlyCollection<int> movieIds);
     Task<MovieImagesResponse> GetMovieImages(int movieId);
+    Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(int movieId);
 }
