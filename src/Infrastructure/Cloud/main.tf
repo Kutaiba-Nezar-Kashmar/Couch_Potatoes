@@ -2,8 +2,6 @@
 # NOTE: (mibui 2023-05-18) Run 'gcloud auth application-default login' before trying to interact with our cloud
 
 # REMOTE STATE BACKEND  -------------------------------
-
-
 resource "google_storage_bucket" "default" {
   name          = "couch-potatoes-sep6-bucket-tfstate"
   force_destroy = false
@@ -18,9 +16,14 @@ resource "google_storage_bucket" "default" {
   }
 }
 # END REMOTE STATE BACKEND ------------------------------------
+
 # API GATEWAY ---------------------------------------------------
 ## NOTE: (mibui 2023-05-24) For more info, read /src/Infrastructure/gateway-bootstrapper/README.md
-# resource "google_cloud_run_v2_service" "service" {
+
+# output "gateway_url" {
+#   value = google_cloud_run_v2_service.gateway.uri
+# }
+# resource "google_cloud_run_v2_service" "gateway" {
 #   name     = "couch-potatoes-api-gateway"
 #   location = "europe-west1"
 #   ingress  = "INGRESS_TRAFFIC_ALL"
@@ -56,6 +59,7 @@ resource "google_storage_bucket" "default" {
 #       }
 #     }
 #   }
+
 # }
 
 # // NOTE: (mibui 2023-05-19) We are using a no auth policy since the API will exposed as public APIs
@@ -69,13 +73,12 @@ resource "google_storage_bucket" "default" {
 # }
 
 # resource "google_cloud_run_v2_service_iam_policy" "service_iam_policy" {
-#   name     = google_cloud_run_v2_service.service.name
-#   project  = google_cloud_run_v2_service.service.project
-#   location = google_cloud_run_v2_service.service.location
+#   name     = google_cloud_run_v2_service.gateway.name
+#   project  = google_cloud_run_v2_service.gateway.project
+#   location = google_cloud_run_v2_service.gateway.location
 
 #   policy_data = data.google_iam_policy.no_auth_policy.policy_data
 # }
-
 
 
 # # END API GATEWAY ---------------------------------------------------------------
