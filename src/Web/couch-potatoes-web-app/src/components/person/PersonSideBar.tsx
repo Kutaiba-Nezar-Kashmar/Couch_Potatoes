@@ -54,7 +54,7 @@ const PersonSideBar: FC<PersonProperties> =
                 <CardBody>
                     <Image src={uri} alt={alt} borderRadius='lg'
                            onClick={() =>
-                               handleImageClick(uri as string
+                               handleImageClick(uri!
                                )
                            }
                     />
