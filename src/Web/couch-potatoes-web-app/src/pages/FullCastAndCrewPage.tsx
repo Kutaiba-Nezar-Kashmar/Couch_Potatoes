@@ -88,7 +88,7 @@ const FullCastAndCrewPage = () => {
                         colSpan={6}
                     >
                         <Heading textTransform="uppercase" color={'white'}>
-                            Cast and crew for: {movie?.title}{' '}
+                            Cast and crew for: {movie?.title ? (movie?.title):("N/A")}
                         </Heading>
                     </GridItem>
                     <GridItem colSpan={6}>
@@ -109,7 +109,7 @@ const FullCastAndCrewPage = () => {
                         <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Cast </Heading>
                             <Heading color={'grey'}>
-                                ({movieCredits?.creditsAsCast.length}){' '}
+                                {movieCredits && movieCredits.creditsAsCast.length>0 ? ((movieCredits?.creditsAsCast.length)):("N/A")}
                             </Heading>
                         </Stack>
                         <Box borderRadius={'lg'} bg={'white'}>
@@ -171,7 +171,7 @@ const FullCastAndCrewPage = () => {
                         <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Crew </Heading>
                             <Heading color={'grey'}>
-                                ({movieCredits?.creditsAsCrew.length}){' '}
+                                {movieCredits && movieCredits.creditsAsCrew.length>0 ? ((movieCredits?.creditsAsCrew.length)):("N/A")}
                             </Heading>
                         </Stack>
 

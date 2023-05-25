@@ -13,7 +13,7 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 
 			<Card>
 				<CardHeader>
-					<Heading size='md'>Quick facts or something</Heading>
+					<Heading size='md'>Quick facts</Heading>
 				</CardHeader>
 
 				<CardBody>
@@ -23,7 +23,8 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 								Runtime
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								{movie?.runTime} minutes
+								{movie?.runTime===0 ?(movie.runTime + " minutes"):("N/A")}
+
 							</Text>
 						</Box>
 						<Box>
@@ -31,7 +32,7 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 								Release Date
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								{movie?.releaseDate.slice(0, 10)}
+								{movie?.releaseDate ?(movie.releaseDate.slice(0, 10)):("N/A")}
 							</Text>
 						</Box>
 						<Box>
@@ -39,7 +40,7 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 								kid friendly
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								{movie?.isForKids ? "Yes" : "No"}
+								{movie?.isForKids ? (movie?.isForKids ? "Yes" : "No"):("N/A")}
 							</Text>
 						</Box>
 						<Box>
@@ -47,30 +48,32 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 								status
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								{movie?.status}
+								{movie?.status ?(movie.status):("N/A")}
 							</Text>
 						</Box>
 						<Box>
 							<Heading size='xs' textTransform='uppercase'>
 								home page
 							</Heading>
-							<Link pt='2' fontSize='sm' href={movie?.homepage}
-								  color={themeColor}
+							{movie?.homepage ?(<Link pt='2' fontSize='sm' href={movie?.homepage}
+													 color={themeColor}
 
-								  _hover={{color: "blue.700"}}
-								  _focus={{outline: "none", boxShadow: "outline"}}
-								  _active={{color: "blue.700"}}
-								  target="_blank"
-								  rel="noopener noreferrer">
+													 _hover={{color: "blue.700"}}
+													 _focus={{outline: "none", boxShadow: "outline"}}
+													 _active={{color: "blue.700"}}
+													 target="_blank"
+													 rel="noopener noreferrer">
 								Link to homepage
-							</Link>
+							</Link>):("N/A")}
+
 						</Box>
 						<Box>
 							<Heading size='xs' textTransform='uppercase'>
 								Budget
 							</Heading>
 							<Text pt='2' fontSize='sm'>
-								${movie?.budget.toLocaleString()}
+								{movie?.budget===0 ?("$"+movie?.budget.toLocaleString()):("N/A")}
+
 							</Text>
 						</Box>
 						<Box>
@@ -79,31 +82,32 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
 							</Heading>
 							<Text pt='2' fontSize='sm'>
 
-								${movie?.revenue.toLocaleString()}
+								{movie?.revenue===0 ?("$"+movie?.revenue.toLocaleString()):("N/A")}
 							</Text>
 						</Box>
 						<Box>
 							<Heading size='xs' textTransform='uppercase'>
 								Keywords
 							</Heading>
-
-							{movie && movie?.keywords.map((keyword) => (
+							{movie?.keywords ?(movie && movie?.keywords.map((keyword) => (
 								<Button margin={0.5} colorScheme={themeColor} size='xs' key={keyword.id}
 										className="keyword-box">
 									{keyword.name}
 								</Button>
-							))}
+							))):("N/A")}
+
 						</Box>
 						<Box>
 							<Heading size='xs' textTransform='uppercase'>
 								spoken languages
 							</Heading>
-							{movie && movie?.languages.map((language) => (
+
+							{movie?.languages ?(movie && movie?.languages.map((language) => (
 								<Button margin={0.5} colorScheme={themeColor} size='xs' key={language.code}
 										className="keyword-box">
 									{language.name}
 								</Button>
-							))}
+							))):("N/A")}
 						</Box>
 					</Stack>
 				</CardBody>

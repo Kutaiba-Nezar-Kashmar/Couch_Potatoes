@@ -60,8 +60,11 @@ const MovieDetailsPage = () => {
     const {movieId} = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [expandedImage, setExpandedImage] = useState('');
-    const Background_Temp =
+    const Empty_profilePic =
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+    const Background_Temp =
+        'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+
     const handleImageClick = (imageUrl: string) => {
         setExpandedImage(imageUrl);
         setIsOpen(true);
@@ -160,7 +163,7 @@ const MovieDetailsPage = () => {
 
     return (
         <BackgroundImageFull
-            imageUri={getPosterImageUri(movie?.backdropUri as string)}
+            imageUri={(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp))}
         >
             <BasePage>
                 <Grid
@@ -188,9 +191,10 @@ const MovieDetailsPage = () => {
                         >
                             <Box>
                                 <Text color={'white'} fontSize="lg">
-                                    {convertToHoursAndMinutes(
+                                    {movie?.runTime ? (convertToHoursAndMinutes(
                                         movie?.runTime as number
-                                    )}
+                                    )) : ("N/A")}
+
                                 </Text>
                             </Box>
                         </Stack>
@@ -207,10 +211,7 @@ const MovieDetailsPage = () => {
                                 <Box
                                     _hover={{cursor: 'pointer'}}
                                     onClick={() =>
-                                        handleImageClick(
-                                            getPosterImageUri(
-                                                movie?.backdropUri as string
-                                            )
+                                        handleImageClick(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp)
                                         )
                                     }
                                 >
@@ -221,18 +222,14 @@ const MovieDetailsPage = () => {
                                             height: 'auto',
                                             objectFit: 'contain',
                                         }}
-                                        src={getPosterImageUri(
-                                            movie?.backdropUri as string
-                                        )}
+                                        src={(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp))}
                                     />
                                 </Box>
                                 <Box
                                     _hover={{cursor: 'pointer'}}
                                     onClick={() =>
                                         handleImageClick(
-                                            getPosterImageUri(
-                                                movie?.imageUri as string
-                                            )
+                                            movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp)
                                         )
                                     }
                                 >
@@ -243,9 +240,8 @@ const MovieDetailsPage = () => {
                                             height: 'auto',
                                             objectFit: 'contain',
                                         }}
-                                        src={getPosterImageUri(
-                                            movie?.imageUri as string
-                                        )}
+                                        src={(movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp))}
+
                                     />
                                 </Box>
 
@@ -284,7 +280,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5} rowSpan={1}>
                         <MovieDetailsBottomInformationbox
                             movie={movie}
-                            movieCredits={movieCredits}
+                            movieCredits={movieCredits ?? emptyCreditsObject}
                             themeColor={themeColor}
                         />
                     </GridItem>
@@ -293,7 +289,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsCastComponent
                             themeColor={themeColor}
-                            Background_Temp={Background_Temp}
+                            Background_Temp={Empty_profilePic}
                             movieCredits={movieCredits ?? emptyCreditsObject}
                         />
                     </GridItem>
@@ -301,7 +297,7 @@ const MovieDetailsPage = () => {
                     <GridItem colSpan={5}>
                         <MovieDetailsRecommendedMoviesComponent
                             themeColor={themeColor}
-                            Background_Temp={Background_Temp}
+                            Background_Temp={Empty_profilePic}
                             movieRecommendations={recommendedMovies}
                         />
                     </GridItem>

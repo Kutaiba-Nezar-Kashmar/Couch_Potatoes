@@ -46,7 +46,7 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                         "&::-webkit-scrollbar-thumb": hoverStyles,
                         "&::-webkit-scrollbar-thumb:hover": hoverStyles,
                     }}>
-                        {movieCredits &&
+                        {movieCredits && movieCredits?.creditsAsCast.length>0 ?(movieCredits &&
                             movieCredits?.creditsAsCast.slice(0,10).map((cast) => (
                                 <Card maxW="sm" minWidth={200} maxWidth={400}>
                                     <CardBody
@@ -89,7 +89,8 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                                         </Stack>
                                     </CardBody>
                                 </Card>
-                            ))}
+                            ))):("N/A")}
+
                     </Flex>
                 </CardBody>
             </Card>

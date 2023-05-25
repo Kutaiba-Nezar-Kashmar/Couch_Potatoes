@@ -43,7 +43,7 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                         "&::-webkit-scrollbar-thumb": hoverStyles,
                         "&::-webkit-scrollbar-thumb:hover": hoverStyles,
                     }} gap={2} overflowX="auto">
-                        {movieRecommendations && movieRecommendations?.collection.slice(0,15).map((movie) => (
+                        {movieRecommendations && movieRecommendations.collection.length>0 ? ( movieRecommendations && movieRecommendations?.collection.slice(0,15).map((movie) => (
                             <Card maxW='sm' minWidth={200} maxWidth={400}>
                                 <CardBody onClick={() =>
                                     navigate(
@@ -76,7 +76,8 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                     </Stack>
                                 </CardBody>
                             </Card>
-                        ))}
+                        ))):("N/A")}
+
                     </Flex>
 
 

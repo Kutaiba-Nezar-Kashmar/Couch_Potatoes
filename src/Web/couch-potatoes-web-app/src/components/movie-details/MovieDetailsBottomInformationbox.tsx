@@ -1,5 +1,5 @@
 import Movie from '../../models/movie';
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import {
     Box,
     Button,
@@ -13,7 +13,7 @@ import {
     Text,
 } from '@chakra-ui/react';
 import MovieCredits from '../../models/movie_credits';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export interface MovieDetailsComponentProps {
     movie: Movie | null;
@@ -28,7 +28,7 @@ export interface MovieDetailsCreditsComponentProps {
 
 export const MovieDetailsBottomInformationbox: FC<
     MovieDetailsCreditsComponentProps
-> = ({ movieCredits, movie, themeColor }) => {
+> = ({movieCredits, movie, themeColor}) => {
     const navigate = useNavigate();
     return (
         <>
@@ -37,7 +37,7 @@ export const MovieDetailsBottomInformationbox: FC<
                     <Heading size="md">Information</Heading>
                 </CardHeader>
                 <CardBody>
-                    <Stack divider={<StackDivider />} spacing="2">
+                    <Stack divider={<StackDivider/>} spacing="2">
                         <Box>
                             <Heading textTransform="uppercase" size="sm">
                                 Summary
@@ -54,7 +54,7 @@ export const MovieDetailsBottomInformationbox: FC<
                                         Director(s)
                                     </Heading>
                                     <Stack>
-                                        {movieCredits &&
+                                        {movieCredits && movieCredits?.creditsAsCrew?.length > 0 ? (movieCredits &&
                                             movieCredits?.creditsAsCrew
                                                 .filter(
                                                     (crew) =>
@@ -77,7 +77,8 @@ export const MovieDetailsBottomInformationbox: FC<
                                                         {' '}
                                                         {crew.name}
                                                     </Link>
-                                                ))}
+                                                ))) : (<Text>N/A</Text>)}
+
                                     </Stack>
                                 </Stack>
 
@@ -89,7 +90,7 @@ export const MovieDetailsBottomInformationbox: FC<
                                         Screenplay
                                     </Heading>
                                     <Stack>
-                                        {movieCredits &&
+                                        {movieCredits && movieCredits?.creditsAsCrew?.length>0 ?( movieCredits &&
                                             movieCredits?.creditsAsCrew
                                                 .filter(
                                                     (crew) =>
@@ -113,7 +114,8 @@ export const MovieDetailsBottomInformationbox: FC<
                                                         {' '}
                                                         {crew.name}
                                                     </Link>
-                                                ))}
+                                                ))):(<Text> N/A</Text>)}
+
                                     </Stack>
                                 </Stack>
                                 <Text
@@ -123,7 +125,7 @@ export const MovieDetailsBottomInformationbox: FC<
                                 >
                                     <Link
                                         color={themeColor}
-                                        _hover={{ color: 'grey' }}
+                                        _hover={{color: 'grey'}}
                                         onClick={() =>
                                             navigate(
                                                 `/Couch_Potatoes/movie/${movie?.id}/cast`
@@ -146,7 +148,7 @@ export const MovieDetailsBottomInformationbox: FC<
                             >
                                 Genres
                             </Heading>
-                            {movie &&
+                            {movie && movie?.genres.length>0 ?( movie &&
                                 movie?.genres.map((genre) => (
                                     <Button
                                         margin={0.5}
@@ -157,7 +159,8 @@ export const MovieDetailsBottomInformationbox: FC<
                                     >
                                         {genre.name}
                                     </Button>
-                                ))}
+                                ))):("N/A")}
+
                         </Box>
                     </Stack>
                 </CardBody>
