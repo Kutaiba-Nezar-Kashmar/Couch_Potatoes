@@ -23,7 +23,13 @@ public class GetMoviesHandler : IRequestHandler<GetMoviesQuery, IReadOnlyCollect
     {
         try
         {
-            return await _repository.GetMovies(request.movieIds);
+            var response = await _repository.GetMovies(request.movieIds);
+            foreach (var r in response)
+            {
+                r.Posters = (await _repository.GetMovieImages(r.Id)).Posters;
+            }
+
+            return response;
         }
         catch (Exception e)
         {

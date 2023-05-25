@@ -1,6 +1,9 @@
 using Microsoft.Extensions.Logging;
+using MovieInformation.Application.GetMovie.Exceptions;
 using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Infrastructure.Exceptions;
+using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.Util;
@@ -73,21 +76,54 @@ public class GetMoviesRepository: IGetMoviesRepository
        return dto!.keywords.Select(mapper.Map).ToList();
        
     }
-    
-    public async Task<IReadOnlyCollection<Image>> GetMovieImages(int movieId)
+    public async Task<MovieImagesResponse> GetMovieImages(int movieId)
     {
-        var res = await _httpClient.GetAsync($"{movieId}/images?api_key={_apiKey}");
-
-        if (!res.IsSuccessStatusCode)
+        try
         {
-            _logger.LogError($"{nameof(GetMovieKeywords)}: Failed to fetch images for movie: {movieId}, with status code: {res.StatusCode}");
-            throw new HttpException(
-                $"{nameof(GetMovieKeywords)}: Failed to fetch images for movie: {movieId}, with status code: {res.StatusCode}");
-        }
+            _logger.LogInformation(
+                "Get movie images with movie id: {Id}", movieId);
+            var res =
+                await _httpClient.GetAsync(
+                    $"{movieId}/images?api_key={_apiKey}");
 
-        var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<MovieImagesResponseDto>(contentString);
-        var mapper = new TmdbImagesToImages();
-        return new List<Image>();
+            ValidateHttpResponse(res);
+            var contentString = await res.Content.ReadAsStringAsync();
+            ValidateResponseContent(contentString);
+
+            var dto =
+                JsonDeserializer.Deserialize<TmdbImagesResponseDto>(
+                    contentString);
+            var mapper = new TmdbImagesDtoToDomainMapper();
+            var images = mapper.Map(dto!);
+            return images;
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical(
+                "Unable to get movie images with movie id: {Id}",
+                movieId);
+            throw new GetMovieImagesException(
+                $"Cannot get movie images: {e.Message}", e);
+        }
+    }
+
+    private static void ValidateHttpResponse(
+        HttpResponseMessage responseMessage)
+    {
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new HttpException
+            (
+                $"Unsuccessful response, code: {responseMessage}"
+            );
+        }
+    }
+
+    private static void ValidateResponseContent(string content)
+    {
+        if (string.IsNullOrEmpty(content) || string.IsNullOrWhiteSpace(content))
+        {
+            throw new HttpResponseException("Response is either null or empty");
+        }
     }
 }

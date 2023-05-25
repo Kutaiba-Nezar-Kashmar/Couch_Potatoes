@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetMovie;
 using MovieInformation.Application.GetMovies;
 using MovieInformation.Application.GetMovies.Exceptions;
+using MovieInformation.Infrastructure.ControllerDtos.Movie;
 using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.Util;
 
@@ -20,7 +21,8 @@ public class MovieDetailsController : ControllerBase
     private readonly ILogger _logger;
 
 
-    public MovieDetailsController(IMediator mediator, IMapper mapper, ILogger<MovieDetailsController> logger)
+    public MovieDetailsController(IMediator mediator, IMapper mapper,
+        ILogger<MovieDetailsController> logger)
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -29,7 +31,7 @@ public class MovieDetailsController : ControllerBase
 
 
     [HttpGet("{movieId:int}")]
-    public async Task<ActionResult<ReadDetailedMovieDto>> GetMovieDetails
+    public async Task<ActionResult<MovieControllerDto>> GetMovieDetails
     (
         [FromRoute] int movieId
     )
@@ -37,7 +39,8 @@ public class MovieDetailsController : ControllerBase
         try
         {
             var dto = await _mediator.Send(new GetMovieDetailsRequest(movieId));
-            return Ok(_mapper.Map<ReadDetailedMovieDto>(dto));
+            var mapper = new DomainToReadDetailedMovieDtoMapper();
+            return Ok(mapper.Map(dto));
         }
         catch (Exception e)
         {
@@ -49,8 +52,9 @@ public class MovieDetailsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyCollection<ReadDetailedMovieDto>>> GetMovies(
-        [FromQuery] IReadOnlyCollection<int> ids)
+    public async Task<ActionResult<IReadOnlyCollection<MovieControllerDto>>>
+        GetMovies(
+            [FromQuery] IReadOnlyCollection<int> ids)
     {
         if (ids == null || !ids.Any())
         {
@@ -60,18 +64,23 @@ public class MovieDetailsController : ControllerBase
         try
         {
             var domainMovies = await _mediator.Send(new GetMoviesQuery(ids));
-            var moviesAsDtos = domainMovies.Select(_mapper.Map<ReadDetailedMovieDto>).ToList();
+            var mapper = new DomainToReadDetailedMovieDtoMapper();
+            var moviesAsDtos = domainMovies.Select(_mapper.Map<MovieControllerDto>).ToList();
             return Ok(moviesAsDtos);
         }
         catch (Exception e) when (e is FailedToGetMoviesException)
         {
-            _logger.LogError(2, e, $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
+            _logger.LogError(2, e,
+                $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
+                e.Message);
         }
         catch (Exception e)
         {
-            _logger.LogError(2, e, $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
-            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
+            _logger.LogError(2, e,
+                $"Failed to process {nameof(GetMovies)} in {nameof(MovieDetailsController)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(),
+                e.Message);
         }
     }
 }

@@ -44,7 +44,7 @@ public class GetCreditsRepository : IGetCreditsRepository
                     contentString);
             var mapper = new TmdbPersonMovieCreditToDomainMapper();
 
-            var credits = mapper.Map(dto);
+            var credits = mapper.Map(dto!);
             return credits;
         }
         catch (Exception e)

@@ -8,38 +8,52 @@ namespace MovieInformation.Application.GetMovie;
 
 public record GetMovieDetailsRequest
 (
-    int movieId
+    int MovieId
 ) : IRequest<Movie>;
 
-public class GetMovieDetailsRequestHandler : IRequestHandler<GetMovieDetailsRequest, Movie>
+public class
+    GetMovieDetailsRequestHandler : IRequestHandler<GetMovieDetailsRequest,
+        Movie>
 {
     private readonly IGetMovieRepository _getMovieRepository;
     private readonly ILogger _logger;
 
-    public GetMovieDetailsRequestHandler(IGetMovieRepository getMovieRepository,
-        ILogger<GetMovieDetailsRequestHandler> logger)
+    public GetMovieDetailsRequestHandler
+    (
+        IGetMovieRepository getMovieRepository,
+        ILogger<GetMovieDetailsRequestHandler> logger
+    )
     {
         _getMovieRepository = getMovieRepository;
         _logger = logger;
     }
 
-    public async Task<Movie> Handle(GetMovieDetailsRequest request,
-        CancellationToken cancellationToken)
+    public async Task<Movie> Handle
+    (
+        GetMovieDetailsRequest request,
+        CancellationToken cancellationToken
+    )
     {
         try
         {
-            Movie getMovieRequest = await _getMovieRepository.GetMovie(request.movieId);
-            IReadOnlyCollection<Keyword> getMovieKeywords = await _getMovieRepository.GetMovieKeywords(request.movieId);
-            IReadOnlyCollection<Image> getMovieImages = await _getMovieRepository.GetMovieImages(request.movieId);
-            getMovieRequest.Backdrops = getMovieImages;
+            var getMovieRequest =
+                await _getMovieRepository.GetMovie(request.MovieId);
+            var getMovieKeywords =
+                await _getMovieRepository.GetMovieKeywords(request.MovieId);
+            var getMovieImages =
+                await _getMovieRepository.GetMovieImages(request.MovieId);
+            getMovieRequest.Backdrops = getMovieImages.Backdrops;
+            getMovieRequest.Logos = getMovieImages.Logos;
+            getMovieRequest.Posters = getMovieImages.Posters;
             getMovieRequest.Keywords = getMovieKeywords;
             return getMovieRequest;
         }
         catch (Exception e)
         {
-            _logger.LogError($"{nameof(GetMovieDetailsRequestHandler)}: ${e.Message}");
+            _logger.LogError("{MovieDetailsRequestHandlerName}: ${EMessage}",
+                nameof(GetMovieDetailsRequestHandler), e.Message);
             throw new FailedToGetMovieDetailsException(
-                $"Failed to retrieve movie details with movieId:${request.movieId}");
+                $"Failed to retrieve movie details with movieId:${request.MovieId}");
         }
     }
 }

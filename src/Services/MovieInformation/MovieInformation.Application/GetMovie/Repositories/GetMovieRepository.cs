@@ -1,22 +1,30 @@
-﻿using MovieInformation.Domain.Models;
+﻿using Microsoft.Extensions.Logging;
+using MovieInformation.Application.GetMovie.Exceptions;
+using MovieInformation.Domain.Models;
+using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Infrastructure.Exceptions;
 using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
-using MovieInformation.Infrastructure.TmbdDto.ResponseDto;
 using MovieInformation.Infrastructure.Util;
 
 namespace MovieInformation.Application.GetMovie.Repositories;
 
 public class GetMovieRepository : IGetMovieRepository
 {
-  
-    private string _apiKey = Environment.GetEnvironmentVariable("TMDB_API_KEY");
-    
-    private HttpClient _httpClient;
+    private readonly string _apiKey =
+        Environment.GetEnvironmentVariable("TMDB_API_KEY");
 
-    public GetMovieRepository(IHttpClientFactory httpClientFactory)
+    private readonly HttpClient _httpClient;
+    private readonly ILogger<GetMovieRepository> _logger;
+
+    public GetMovieRepository
+    (
+        IHttpClientFactory httpClientFactory,
+        ILogger<GetMovieRepository> logger
+    )
     {
+        _logger = logger;
         _httpClient = httpClientFactory.CreateClient("HTTP_CLIENT");
     }
 
@@ -40,9 +48,11 @@ public class GetMovieRepository : IGetMovieRepository
         return mappedMovie;
     }
 
-    public async Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(int movieId)
+    public async Task<IReadOnlyCollection<Keyword>> GetMovieKeywords(
+        int movieId)
     {
-        var res = await _httpClient.GetAsync($"{movieId}/keywords?api_key={_apiKey}");
+        var res =
+            await _httpClient.GetAsync($"{movieId}/keywords?api_key={_apiKey}");
 
         if (!res.IsSuccessStatusCode)
         {
@@ -51,34 +61,63 @@ public class GetMovieRepository : IGetMovieRepository
         }
 
         var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<KeywordsDetailsResponseDto>(contentString);
+        var dto =
+            JsonDeserializer.Deserialize<KeywordsDetailsResponseDto>(
+                contentString);
         var mapper = new TmdbKeywordsToKeywords();
 
-        
 
-       return dto!.keywords.Select(mapper.Map).ToList();
-       
+        return dto!.keywords.Select(mapper.Map).ToList();
     }
-    
-    public async Task<IReadOnlyCollection<Image>> GetMovieImages(int movieId)
+
+    public async Task<MovieImagesResponse> GetMovieImages(int movieId)
     {
-        var res = await _httpClient.GetAsync($"{movieId}/images?api_key={_apiKey}");
-
-        if (!res.IsSuccessStatusCode)
+        try
         {
-            throw new HttpException(
-                $"{nameof(GetMovieKeywords)}: Failed to fetch images for movie: {movieId}, with status code: {res.StatusCode}");
+            _logger.LogInformation(
+                "Get movie images with movie id: {Id}", movieId);
+            var res =
+                await _httpClient.GetAsync(
+                    $"{movieId}/images?api_key={_apiKey}");
+
+            ValidateHttpResponse(res);
+            var contentString = await res.Content.ReadAsStringAsync();
+            ValidateResponseContent(contentString);
+
+            var dto =
+                JsonDeserializer.Deserialize<TmdbImagesResponseDto>(
+                    contentString);
+            var mapper = new TmdbImagesDtoToDomainMapper();
+            var images = mapper.Map(dto!);
+            return images;
         }
-
-        var contentString = await res.Content.ReadAsStringAsync();
-        var dto = JsonDeserializer.Deserialize<MovieImagesResponseDto>(contentString);
-        var mapper = new TmdbImagesToImages();
-
-
-
-       // return dto.BackdropImages.Select(mapper.Map()).ToList();
-        return null;
+        catch (Exception e)
+        {
+            _logger.LogCritical(
+                "Unable to get movie images with movie id: {Id}",
+                movieId);
+            throw new GetMovieImagesException(
+                $"Cannot get movie images: {e.Message}", e);
+        }
     }
 
-  
+    private static void ValidateHttpResponse(
+        HttpResponseMessage responseMessage)
+    {
+        if (!responseMessage.IsSuccessStatusCode)
+        {
+            throw new HttpException
+            (
+                $"Unsuccessful response, code: {responseMessage}"
+            );
+        }
+    }
+
+    private static void ValidateResponseContent(string content)
+    {
+        if (string.IsNullOrEmpty(content) || string.IsNullOrWhiteSpace(content))
+        {
+            throw new HttpResponseException("Response is either null or empty");
+        }
+    }
 }
