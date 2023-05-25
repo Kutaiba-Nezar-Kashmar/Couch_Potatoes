@@ -15,7 +15,7 @@ import {
     ModalContent,
     ModalCloseButton,
     ModalBody,
-    Image,
+    Image, Tabs, TabList, Tab, TabPanels, TabPanel, Heading,
 } from '@chakra-ui/react';
 import Movie from '../models/movie';
 import BackgroundImageFull from '../components/BackgroundImageFull';
@@ -50,6 +50,9 @@ import User from '../models/user';
 import { MovieDetailsRecommendedMoviesComponent } from '../components/movie-details/MovieDetailsRecommendedMoviesComponent';
 import { useGetReviewsForMovie } from '../services/review';
 import { Review } from '../models/review/review';
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Navigation} from "swiper";
+import PersonMovieCreditsItem from "../components/person/PersonMovieCreditsItem";
 
 const MovieDetailsPage = () => {
     const { movieId } = useParams();
@@ -298,6 +301,65 @@ const MovieDetailsPage = () => {
                             Background_Temp={Background_Temp}
                             movieRecommendations={recommendedMovies}
                         />
+                    </GridItem>
+                    <GridItem colSpan={5}>
+                        <Tabs padding={"25px"} borderRadius={"lg"} bg={"white"}>
+                            <Stack direction={"row"}> <Flex alignItems={"center"}> <Heading size={"md"}>Media</Heading></Flex>
+                                <TabList>
+                                    <Tab><Text marginX={2}>Videos</Text>   <Text color={"grey"}> 5</Text></Tab>
+                                    <Tab><Text marginX={2}>Posters</Text>  <Text color={"grey"}> 16</Text></Tab>
+                                    <Tab><Text marginX={2}>Backdrops</Text>  <Text color={"grey"}> 15</Text></Tab>
+                                </TabList></Stack>
+                            <TabPanels>
+                                <TabPanel>
+                                    <p>one!</p>
+                                </TabPanel>
+                                <TabPanel>
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                        slidesPerView={5}
+                                        pagination={{ clickable: true }}
+                                        spaceBetween={2}
+                                    >
+                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                            <SwiperSlide
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/Couch_Potatoes/`
+                                                    )
+                                                }
+                                            >
+                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </TabPanel>
+                                <TabPanel>
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                        slidesPerView={5}
+                                        pagination={{ clickable: true }}
+                                        spaceBetween={2}
+                                    >
+                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                            <SwiperSlide
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/Couch_Potatoes/`
+                                                    )
+                                                }
+                                            >
+                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                </TabPanel>
+                            </TabPanels>
+                        </Tabs>
                     </GridItem>
 
                     {/*REVIEWS*/}
