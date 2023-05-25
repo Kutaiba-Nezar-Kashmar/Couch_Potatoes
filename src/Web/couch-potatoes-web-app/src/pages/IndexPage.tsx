@@ -33,6 +33,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import {sliceNumber} from "../util/numberutil";
+import {SearchBar} from "../components/Search/SearchBar";
 
 
 const IndexPage = () => {
@@ -105,14 +106,7 @@ const IndexPage = () => {
                                         </Text>
                                     </Flex>
                                     {/* SEARCH */}
-                                    <InputGroup width={{base: '300px', md: '450px', lg: '600px'}}>
-                                        <InputLeftElement
-                                            pointerEvents="none"
-                                            children={<SearchIcon color="gray.300"/>}
-                                        />
-                                        <Input bg="white" type="text" placeholder="Search"/>
-                                    </InputGroup>
-
+                                    <SearchBar width={600}/>
                                 </Stack>
 
                             </Flex>

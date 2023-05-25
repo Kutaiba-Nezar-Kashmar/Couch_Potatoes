@@ -1,4 +1,4 @@
-import { SearchIcon } from '@chakra-ui/icons';
+import {SearchIcon} from '@chakra-ui/icons';
 import {
     Avatar,
     Button,
@@ -11,15 +11,16 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import User from '../models/user';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {
     navBarHeightInRem,
     navBarHPaddingInRem,
     navBarVPaddingInRem,
     pageHPaddingInRem,
 } from './settings/page-settings';
+import {SearchBar} from "./Search/SearchBar";
 
 interface NavbarProps {
     logoUri?: string;
@@ -27,7 +28,7 @@ interface NavbarProps {
     user: User | null;
 }
 
-const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
+const Navbar: FC<NavbarProps> = ({title, logoUri, user}) => {
     const navigate = useNavigate();
     const gotoProfile = () => {
         navigate(`/Couch_Potatoes/profile/${user?.id}`);
@@ -52,36 +53,27 @@ const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
                     </Heading>
                 </Stack>
                 <Stack direction="row">
-                    <InputGroup>
-                        <InputLeftElement
-                            pointerEvents="none"
-                            children={<SearchIcon color="gray.300" />}
+                  <SearchBar width={300}/>
+                    {user ? ( // if user then render avatar && the and operator is short for if user exists.
+                        <Avatar
+                            marginLeft="1rem"
+                            name={user.displayName ?? ''}
+                            src={user.avatarUri ?? ''}
+                            size="sm"
+                            cursor="pointer"
+                            onClick={gotoProfile}
                         />
-                        <Input
-                            type="text"
-                            placeholder="Search"
-                            backgroundColor="white"
-                        />
-                        {user ? ( // if user then render avatar && the and operator is short for if user exists.
-                            <Avatar
-                                marginLeft="1rem"
-                                name={user.displayName ?? ''}
-                                src={user.avatarUri ?? ''}
-                                size="sm"
-                                cursor="pointer"
-                                onClick={gotoProfile}
-                            />
-                        ) : (
-                            <Button
-                                marginLeft="1rem"
-                                onClick={() =>
-                                    navigate('/Couch_Potatoes/login')
-                                }
-                            >
-                                Login
-                            </Button>
-                        )}
-                    </InputGroup>
+                    ) : (
+                        <Button
+                            marginLeft="1rem"
+                            onClick={() =>
+                                navigate('/Couch_Potatoes/login')
+                            }
+                        >
+                            Login
+                        </Button>
+                    )}
+
                 </Stack>
             </Flex>
         </nav>

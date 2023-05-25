@@ -11,8 +11,9 @@ import {
     Spacer,
     Stack,
     Card,
-    CardBody
+    CardBody, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody
 } from "@chakra-ui/react";
+import {getPosterImageUri} from "../../services/images";
 
 interface PersonProperties {
     uri?: string;
@@ -34,10 +35,29 @@ const PersonSideBar: FC<PersonProperties> =
          placeOfBirth,
          aliases
      }) => {
+        const [isOpen, setIsOpen] = useState(false);
+        const [expandedImage, setExpandedImage] = useState('');
+
+        const handleImageClick = (imageUrl: string) => {
+            setExpandedImage(imageUrl);
+            setIsOpen(true);
+        };
+
+        const handleModalClose = () => {
+            setExpandedImage('');
+            setIsOpen(false);
+        };
+
+
         return (
             <Card backgroundColor="transparent">
                 <CardBody>
-                    <Image src={uri} alt={alt} borderRadius='lg'/>
+                    <Image src={uri} alt={alt} borderRadius='lg'
+                           onClick={() =>
+                               handleImageClick(uri!
+                               )
+                           }
+                    />
                     <Stack divider={<StackDivider/>} spacing='4' paddingTop={4}>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Know For</Heading>
@@ -61,7 +81,26 @@ const PersonSideBar: FC<PersonProperties> =
                         </Box>
                     </Stack>
                 </CardBody>
+                <Modal
+                    isOpen={isOpen}
+                    onClose={handleModalClose}
+                    size="6xl"
+                >
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalCloseButton />
+                        <ModalBody justifyContent="center">
+                            <Image
+                                src={expandedImage}
+                                alt="Expanded Image"
+                                mx="auto"
+                                maxHeight={750}
+                            />
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
             </Card>
+
         )
     }
 export default PersonSideBar;
