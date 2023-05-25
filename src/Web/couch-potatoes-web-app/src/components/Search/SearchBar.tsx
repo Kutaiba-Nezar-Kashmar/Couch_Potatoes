@@ -77,7 +77,7 @@ export const SearchBar: FC<searchBarProperties> = ({width}) => {
                            placeholder="Search"/>
                 </InputGroup>
                 <Box>
-                    {searchTerm ? (
+                    {searchTerm && (
                         <List  spacing={"1px"}  boxShadow="md" position={"absolute"}  bg={"grey"} width={[width/2,width]} maxHeight="300px"
                                overflow="auto" zIndex="9999"  sx={{
                             "&::-webkit-scrollbar": scrollbarStyles,
@@ -139,7 +139,7 @@ export const SearchBar: FC<searchBarProperties> = ({width}) => {
                                 </ListItem>
 
                             ))}
-                        </List>) : null}
+                        </List>)}
 
                 </Box>
             </VStack>
