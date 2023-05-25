@@ -87,15 +87,15 @@ export const MovieDetailsBottomInformationbox: FC<
                                         textTransform="uppercase"
                                         size="sm"
                                     >
-                                        Screenplay
+                                        Producer(s)
                                     </Heading>
                                     <Stack>
-                                        {movieCredits && movieCredits?.creditsAsCrew?.length>0 ?( movieCredits &&
+                                        {movieCredits && movieCredits?.creditsAsCrew?.filter(c=>c.job==='Producer').length>0 ?( movieCredits &&
                                             movieCredits?.creditsAsCrew
                                                 .filter(
                                                     (crew) =>
                                                         crew.job ===
-                                                        'Screenplay'
+                                                        'Producer'
                                                 )
                                                 .map((crew) => (
                                                     <Link
