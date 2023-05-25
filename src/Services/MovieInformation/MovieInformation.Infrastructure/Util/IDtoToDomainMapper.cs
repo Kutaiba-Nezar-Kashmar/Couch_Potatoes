@@ -242,7 +242,8 @@ public class
                 PublishedAt = v.PublishedAt,
                 Id = v.Id,
                 Key = v.Key,
-                Name = v.Name
+                Name = v.Name,
+                Type = v.Type
             }).ToList()
         };
     }
