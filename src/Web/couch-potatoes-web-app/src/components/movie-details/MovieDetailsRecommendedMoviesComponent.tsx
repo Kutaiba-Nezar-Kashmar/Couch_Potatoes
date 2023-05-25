@@ -21,6 +21,15 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                                                                                           themeColor
                                                                                                       }) => {
     const navigate = useNavigate();
+    const scrollbarStyles = {
+        width: "8px",
+        backgroundColor: "white",
+        borderRadius: "4px",
+    };
+
+    const hoverStyles = {
+        backgroundColor: "darkgray",
+    };
     return (
         <>
 
@@ -29,8 +38,12 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                     <Heading size='md'>Recommended Movies</Heading>
                 </CardHeader>
                 <CardBody>
-                    <Flex gap={2} overflowX="auto">
-                        {movieRecommendations && movieRecommendations?.collection.map((movie) => (
+                    <Flex sx={{
+                        "&::-webkit-scrollbar": scrollbarStyles,
+                        "&::-webkit-scrollbar-thumb": hoverStyles,
+                        "&::-webkit-scrollbar-thumb:hover": hoverStyles,
+                    }} gap={2} overflowX="auto">
+                        {movieRecommendations && movieRecommendations.collection.length>0 ? ( movieRecommendations && movieRecommendations?.collection.slice(0,15).map((movie) => (
                             <Card maxW='sm' minWidth={200} maxWidth={400}>
                                 <CardBody onClick={() =>
                                     navigate(
@@ -63,7 +76,8 @@ export const MovieDetailsRecommendedMoviesComponent: FC<MovieDetailsRecommendMov
                                     </Stack>
                                 </CardBody>
                             </Card>
-                        ))}
+                        ))):("N/A")}
+
                     </Flex>
 
 

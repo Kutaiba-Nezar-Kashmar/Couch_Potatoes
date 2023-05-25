@@ -9,15 +9,15 @@ import {
     Tooltip,
     useToast,
 } from '@chakra-ui/react';
-import React, { FC, useEffect, useState } from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import starIcon from '../../assets/iconstar.png';
-import { sliceNumber } from '../../util/numberutil';
-import { AddIcon } from '@chakra-ui/icons';
+import {sliceNumber} from '../../util/numberutil';
+import {AddIcon} from '@chakra-ui/icons';
 import Movie from '../../models/movie';
 import User from '../../models/user';
-import { useMutation, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
-import { UserCacheKeys, addFavoriteMovie } from '../../services/user';
+import {useMutation, useQueryClient} from 'react-query';
+import {useNavigate} from 'react-router-dom';
+import {UserCacheKeys, addFavoriteMovie} from '../../services/user';
 
 export interface MovieDetailsHeaderComponentProps {
     movie: Movie | null;
@@ -27,7 +27,7 @@ export interface MovieDetailsHeaderComponentProps {
 
 export const MovieDetailsHeaderInformationbox: FC<
     MovieDetailsHeaderComponentProps
-> = ({ movie, user }) => {
+> = ({movie, user}) => {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const navigate = useNavigate();
@@ -76,7 +76,7 @@ export const MovieDetailsHeaderInformationbox: FC<
         } else {
             setIsFavorite(
                 user.favoriteMovies?.find((movieId) => movieId == movie.id) !=
-                    undefined
+                undefined
                     ? true
                     : false
             );
@@ -89,18 +89,19 @@ export const MovieDetailsHeaderInformationbox: FC<
             <Stack direction="row" justify="space-between">
                 <Stack
                     direction="column"
-                    divider={<StackDivider borderColor="gray.200" />}
+                    divider={<StackDivider borderColor="gray.200"/>}
                 >
                     <Stack direction="row">
                         <Box>
                             <Text color={'white'} fontSize="3xl">
-                                {movie?.title}
+                                {movie?.title ? (movie?.title) : ("N/A")}
                             </Text>
                         </Box>
 
                         <Box>
                             <Text color={'gray'} fontSize="3xl">
-                                ({movie?.releaseDate.slice(0, 4)})
+                                {movie?.releaseDate ? ((movie?.releaseDate.slice(0, 4))) : ("N/A")}
+
                             </Text>
                         </Box>
 
@@ -119,7 +120,7 @@ export const MovieDetailsHeaderInformationbox: FC<
                                             movie &&
                                             addMovieToFavorite(movie.id)
                                         }
-                                        _hover={{ color: 'yellow' }}
+                                        _hover={{color: 'yellow'}}
                                     />
                                 </Tooltip>
                             </Flex>
@@ -128,14 +129,14 @@ export const MovieDetailsHeaderInformationbox: FC<
 
                     <Box>
                         <Text fontStyle="italic" color={'white'} fontSize="2l">
-                            {movie?.tagLine}
+                            {movie?.tagLine ? (movie?.tagLine):("N/A")}
                         </Text>
                     </Box>
                 </Stack>
 
                 <Box>
                     <Stack direction="row">
-                        <Image src={starIcon} maxHeight={8} />
+                        <Image src={starIcon} maxHeight={8}/>
                         <Text color={'white'} fontSize="2xl">
                             {sliceNumber(Number(movie?.tmdbScore), 1)}/10
                             {/* YEAR AND RUNTIME */}
@@ -143,7 +144,7 @@ export const MovieDetailsHeaderInformationbox: FC<
                     </Stack>
 
                     <Text color={'white'} fontSize="1xl" align="end">
-                        Vote#: {movie?.tmdbVoteCount}
+                        Vote#: {movie?.tmdbVoteCount ? (movie?.tmdbVoteCount):("N/A")}
                     </Text>
                 </Box>
             </Stack>

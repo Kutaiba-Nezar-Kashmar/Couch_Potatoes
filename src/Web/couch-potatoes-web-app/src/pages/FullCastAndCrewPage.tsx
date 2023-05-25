@@ -88,7 +88,7 @@ const FullCastAndCrewPage = () => {
                         colSpan={6}
                     >
                         <Heading textTransform="uppercase" color={'white'}>
-                            Cast and crew for: {movie?.title}{' '}
+                            Cast and crew for: {movie?.title ? (movie?.title):("N/A")}
                         </Heading>
                     </GridItem>
                     <GridItem colSpan={6}>
@@ -106,10 +106,10 @@ const FullCastAndCrewPage = () => {
                         </Button>
                     </GridItem>
                     <GridItem colSpan={3} gap={4}>
-                        <Stack direction={'row'}>
+                        <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Cast </Heading>
                             <Heading color={'grey'}>
-                                ({movieCredits?.creditsAsCast.length}){' '}
+                                {movieCredits && movieCredits.creditsAsCast.length>0 ? ((movieCredits?.creditsAsCast.length)):("N/A")}
                             </Heading>
                         </Stack>
                         <Box borderRadius={'lg'} bg={'white'}>
@@ -141,6 +141,7 @@ const FullCastAndCrewPage = () => {
                                         ) : (
                                             <Image
                                                 height={'130px'}
+                                                maxWidth={"86px"}
                                                 src={Empty_Profile_Pic}
                                                 alt="No image available of actor"
                                                 borderRadius="lg"
@@ -167,10 +168,10 @@ const FullCastAndCrewPage = () => {
                     </GridItem>
 
                     <GridItem colSpan={3} gap={4}>
-                        <Stack direction={'row'}>
+                        <Stack direction={'row'} marginBottom={5}>
                             <Heading color={'white'}>Crew </Heading>
                             <Heading color={'grey'}>
-                                ({movieCredits?.creditsAsCrew.length}){' '}
+                                {movieCredits && movieCredits.creditsAsCrew.length>0 ? ((movieCredits?.creditsAsCrew.length)):("N/A")}
                             </Heading>
                         </Stack>
 
@@ -204,6 +205,7 @@ const FullCastAndCrewPage = () => {
                                             <Image
                                                 height={'130px'}
                                                 src={Empty_Profile_Pic}
+                                                maxWidth={"86px"}
                                                 alt="No image available of actor"
                                                 borderRadius="lg"
                                             />

@@ -20,7 +20,7 @@ const PersonCreditsFilterBar: FC<PersonCreditsFilterProperties> = ({
     return (
         <Grid templateColumns='repeat(3, 1fr)' gap={6}>
             <GridItem colSpan={2}>
-                <Heading color="white" as='h4' size='md'>Credits</Heading>
+                <Heading color="white" as='h4'>Credits</Heading>
             </GridItem>
             <GridItem colSpan={1}>
                 <HStack spacing={2}>

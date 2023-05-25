@@ -25,7 +25,15 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
     Background_Temp,
     themeColor,
 }) => {
-    const navigate = useNavigate();
+    const navigate = useNavigate();const scrollbarStyles = {
+        width: "8px",
+        backgroundColor: "white",
+        borderRadius: "4px",
+    };
+
+    const hoverStyles = {
+        backgroundColor: "darkgray",
+    };
     return (
         <>
             <Card>
@@ -33,9 +41,13 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                     <Heading size="md">Cast</Heading>
                 </CardHeader>
                 <CardBody>
-                    <Flex gap={2} overflowX="auto">
-                        {movieCredits &&
-                            movieCredits?.creditsAsCast.map((cast) => (
+                    <Flex gap={2} overflowX="auto"  sx={{
+                        "&::-webkit-scrollbar": scrollbarStyles,
+                        "&::-webkit-scrollbar-thumb": hoverStyles,
+                        "&::-webkit-scrollbar-thumb:hover": hoverStyles,
+                    }}>
+                        {movieCredits && movieCredits?.creditsAsCast.length>0 ?(movieCredits &&
+                            movieCredits?.creditsAsCast.slice(0,10).map((cast) => (
                                 <Card maxW="sm" minWidth={200} maxWidth={400}>
                                     <CardBody
                                         _hover={{ cursor: 'pointer' }}
@@ -77,7 +89,8 @@ export const MovieDetailsCastComponent: FC<MovieDetailsCastComponentProps> = ({
                                         </Stack>
                                     </CardBody>
                                 </Card>
-                            ))}
+                            ))):("N/A")}
+
                     </Flex>
                 </CardBody>
             </Card>
