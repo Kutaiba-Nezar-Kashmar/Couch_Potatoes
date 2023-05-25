@@ -39,8 +39,7 @@ const Background_Temp =
 
 const PersonDetailsPage = () => {
     const navigate = useNavigate();
-    const [isOpen, setIsOpen] = useState(false);
-    const [expandedImage, setExpandedImage] = useState('');
+
     const { personId } = useParams();
     const {
         isLoading,
@@ -48,24 +47,16 @@ const PersonDetailsPage = () => {
         data: personData,
         error,
     } = useFetchPersonDetailsAndCredits({ personId: Number(personId) });
+    const [selectedOption, setSelectedOption] = useState<string | null>('All');
     const [person, setPerson] = useState<PersonDetails | null>(null);
     const [movieCredits, setMovieCredits] = useState<PersonMovieCredits | null>(
         null
     );
     const [personStats, setPersonStats] = useState<PersonStats | null>(null);
-    const [selectedOption, setSelectedOption] = useState<string | null>('All');
-    const handleImageClick = (imageUrl: string) => {
-        setExpandedImage(imageUrl);
-        setIsOpen(true);
-    };
-
-    const handleModalClose = () => {
-        setExpandedImage('');
-        setIsOpen(false);
-    };
     const handleSelectOption = (selectedOption: string) => {
         setSelectedOption(selectedOption);
     };
+
 
     useEffect(() => {
         if (!isLoading) {
@@ -110,11 +101,7 @@ const PersonDetailsPage = () => {
                 <Grid templateColumns="repeat(4, 1fr)" gap={4} paddingTop={5}>
                     <GridItem
                         colSpan={1}
-                        onClick={() =>
-                            handleImageClick(
-                                getPosterImageUri(person?.profilePath as string)
-                            )
-                        }
+
                     >
                         <PersonSideBar
                             uri={
@@ -129,24 +116,7 @@ const PersonDetailsPage = () => {
                             placeOfBirth={person?.placeOfBirth}
                             aliases={person?.aliases}
                         />
-                        <Modal
-                            isOpen={isOpen}
-                            onClose={handleModalClose}
-                            size="6xl"
-                        >
-                            <ModalOverlay />
-                            <ModalContent>
-                                <ModalCloseButton />
-                                <ModalBody justifyContent="center">
-                                    <Image
-                                        src={expandedImage}
-                                        alt="Expanded Image"
-                                        mx="auto"
-                                        maxHeight={750}
-                                    />
-                                </ModalBody>
-                            </ModalContent>
-                        </Modal>
+
                     </GridItem>
                     <GridItem colSpan={3}>
                         <PersonBiography
