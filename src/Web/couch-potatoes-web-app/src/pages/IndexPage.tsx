@@ -106,7 +106,7 @@ const IndexPage = () => {
                                         </Text>
                                     </Flex>
                                     {/* SEARCH */}
-                                    <SearchBar/>
+                                    <SearchBar width={600}/>
                                 </Stack>
 
                             </Flex>
