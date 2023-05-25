@@ -1,0 +1,1 @@
+Notice that flows for each service is basically the same, but we still keep them separated, due to microservice architecture. We want to allow independent development on services, which requires separate flows.
