@@ -139,7 +139,7 @@ public class TmdbPersonMovieCreditToDomainMapper : IDtoToDomainMapper<
                 ProfilePath = c.ProfilePath,
                 CreditId = c.CreditId,
                 Department = c.Department,
-                job = c.Job
+                Job = c.Job
             }).ToList()
         };
     }
@@ -217,6 +217,12 @@ public class
                 Height = p.Height,
                 FilePath = p.FilePath,
                 Width = p.Width
+            }).ToList(),
+            Backdrops = from.Backdrops.Select(b => new MovieImageDto
+            {
+                Height = b.Height,
+                FilePath = b.FilePath,
+                Width = b.Width
             }).ToList(),
             Languages = from.Languages.Select(l => new ReadLanguageDto
             {

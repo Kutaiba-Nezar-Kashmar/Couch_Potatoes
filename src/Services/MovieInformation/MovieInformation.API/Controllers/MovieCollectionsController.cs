@@ -3,7 +3,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MovieInformation.Application.GetMovieCollection;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 using MovieInformation.Infrastructure.Util;
 

@@ -3,14 +3,13 @@ using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetCredits.Repositories;
 using MovieInformation.Application.GetMovie;
 using MovieInformation.Application.GetMovie.Exceptions;
-using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Person;
 
 namespace MovieInformation.Application.GetCredits;
 
 public record GetCreditsRequest
 (
-    int movieId
+    int MovieId
 ) : IRequest<PersonMovieCredits>;
 
 public class
@@ -18,7 +17,7 @@ public class
         PersonMovieCredits>
 {
     private readonly IGetCreditsRepository _getCreditsRepository;
-    private readonly ILogger _logger;
+    private readonly ILogger<GetCreditsRequestHandler> _logger;
 
     public GetCreditsRequestHandler(IGetCreditsRepository getCreditsRepository,
         ILogger<GetCreditsRequestHandler> logger)
@@ -32,8 +31,8 @@ public class
     {
         try
         {
-            PersonMovieCredits getCreditsRequest =
-                await _getCreditsRepository.GetMovieCredits(request.movieId);
+            var getCreditsRequest =
+                await _getCreditsRepository.GetMovieCredits(request.MovieId);
 
             return getCreditsRequest;
         }
@@ -42,7 +41,7 @@ public class
             _logger.LogError("{MovieDetailsRequestHandlerName}: ${EMessage}",
                 nameof(GetMovieDetailsRequestHandler), e.Message);
             throw new FailedToGetMovieDetailsException(
-                $"Failed to retrieve movie credits with movieId:${request.movieId}");
+                $"Failed to retrieve movie credits with movieId:${request.MovieId}");
         }
     }
 }

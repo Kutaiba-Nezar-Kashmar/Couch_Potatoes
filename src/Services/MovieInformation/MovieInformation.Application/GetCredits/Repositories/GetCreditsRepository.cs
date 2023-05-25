@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetCredits.Exceptions;
-using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.Exceptions;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.PersonResponses;
 using MovieInformation.Infrastructure.Util;
 
