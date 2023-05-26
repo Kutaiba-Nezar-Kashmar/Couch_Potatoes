@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Review } from '../../models/review/review';
 import {
     Box,
@@ -27,22 +27,15 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
         return xs.length / 1000 + 'k';
     };
 
-    const getTotalVotes = (reviewList: Review[]) => {
-        return reviewList.flatMap((review) => review.votes).length;
-    };
-
-    const getAllUpvotes = (reviewList: Review[]) => {
-        return reviewList
+    const getAverageUpvotes = () => {
+        const total = reviews.flatMap((review) => review.votes).length;
+        const upvotes = reviews
             .flatMap((review) => review.votes)
             .filter((review) => review.direction == 'Up').length;
-    };
 
-    const getAverageUpvotes = () => {
-        const averageUpvotes = Number(
-            sliceNumber(getAllUpvotes(reviews) / getTotalVotes(reviews), 1)
-        );
+        const averageUpvotes = upvotes / total;
 
-        if (!isNaN(averageUpvotes)) {
+        if (isNaN(averageUpvotes)) {
             return 0;
         }
 
@@ -120,10 +113,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {sliceNumber(
-                        isNaN(getAverageUpvotes()) ? 0 : getAverageUpvotes(),
-                        1
-                    )}
+                    {getAverageUpvotes()}
                 </Heading>
             </Flex>
         </Flex>
