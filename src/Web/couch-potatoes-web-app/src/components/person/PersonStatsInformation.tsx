@@ -39,7 +39,7 @@ const PersonStatsInformation: FC<Stats> = ({
                         <HStack spacing={2}>
                             <StarIcon color='yellow'/>
 
-                            {averageMoviesRatingsAsACast!==0 ? (<Text color="white">{sliceNumber(averageMoviesRatingsAsACast ?? 0, 1)}</Text>) : (<Text color="white">N/A</Text>)}
+                            {averageMoviesRatingsAsACast ? (<Text color="white">{sliceNumber(averageMoviesRatingsAsACast ?? 0, 1)}</Text>) : (<Text color="white">N/A</Text>)}
                         </HStack>
                     </VStack>
                 </GridItem>
