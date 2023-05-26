@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using MovieInformation.Application.GetMovie.Exceptions;
 using MovieInformation.Application.GetMovies.Exceptions;
-using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Infrastructure.Exceptions;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.MediaResponses;
+using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 using MovieInformation.Infrastructure.TmbdDto.KeywordsDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieDto;
 using MovieInformation.Infrastructure.Util;
@@ -16,7 +16,7 @@ namespace MovieInformation.Application.GetMovie.Repositories;
 
 public class GetMovieRepository : IGetMovieRepository
 {
-    private readonly string _apiKey =
+    private readonly string _apiKey = 
         Environment.GetEnvironmentVariable("TMDB_API_KEY");
 
     private readonly HttpClient _httpClient;
@@ -148,6 +148,37 @@ public class GetMovieRepository : IGetMovieRepository
                 movieId);
             throw new GetMovieImagesException(
                 $"Cannot get movie videos: {e.Message}", e);
+        }
+    }
+
+    public async Task<MovieReleaseDateResponse> GetMovieReleaseDates(
+        int movieId)
+    {
+        try
+        {
+            _logger.LogInformation(
+                "Get movie release dates with movie id: {Id}", movieId);
+            var response =
+                await _httpClient.GetAsync(
+                    $"{movieId}/release_dates?api_key={_apiKey}");
+            ValidateHttpResponse(response);
+            var contentString = await response.Content.ReadAsStringAsync();
+            ValidateResponseContent(contentString);
+
+            var dto =
+                JsonDeserializer.Deserialize<TmdbMovieReleaseDatesResponseDto>(
+                    contentString);
+            var mapper = new TmdbMovieReleaseDateToDomainMapper();
+            var results = mapper.Map(dto!);
+            return results;
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical(
+                "Unable to get movie release dates with movie id: {Id}",
+                movieId);
+            throw new GetMovieReleaseDatesException(
+                $"Cannot get movie release dates: {e.Message}", e);
         }
     }
 

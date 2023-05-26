@@ -1,9 +1,13 @@
 ﻿using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Domain.Models.Person;
+using MovieInformation.Domain.Models.ProductionCompanie;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.ProductionCompanies;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos.MediaResponses;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
@@ -99,7 +103,15 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             {
                 Id = g.Id,
                 Name = g.Name
-            }).ToList()
+            }).ToList(),
+            ProductionCompanies = from.ProductionCompanies.Select(p =>
+                new MovieProductionCompany
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    LogoPath = p.LogoPath,
+                    OriginCountry = p.OriginCountry
+                }).ToList()
         };
     }
 }
@@ -216,13 +228,15 @@ public class
             {
                 Height = p.Height,
                 FilePath = p.FilePath,
-                Width = p.Width
+                Width = p.Width,
+                Lang = p.Lang
             }).ToList(),
             Backdrops = from.Backdrops.Select(b => new MovieImageDto
             {
                 Height = b.Height,
                 FilePath = b.FilePath,
-                Width = b.Width
+                Width = b.Width,
+                Lang = b.Lang
             }).ToList(),
             Languages = from.Languages.Select(l => new ReadLanguageDto
             {
@@ -243,8 +257,31 @@ public class
                 Id = v.Id,
                 Key = v.Key,
                 Name = v.Name,
-                Type = v.Type
-            }).ToList()
+                Type = v.Type,
+                LangLower = v.LangLower,
+                LangUpper = v.LangUpper
+            }).ToList(),
+            ReleaseDates = from.ReleaseDates.Select(r =>
+                new MovieReleaseDatesDto
+                {
+                    Lang = r.Lang,
+                    ReleaseDatesDetails = r.ReleaseDatesDetails.Select(d =>
+                        new MovieReleaseDateDetailsDto
+                        {
+                            Note = d.Note,
+                            Type = d.Type,
+                            ReleaseDate = d.ReleaseDate,
+                            Certification = d.Certification
+                        }).ToList()
+                }).ToList(),
+            ProductionCompanies = from.ProductionCompanies.Select(p =>
+                new ProductionCompaniesDto
+                {
+                    Name = p.Name,
+                    LogoPath = p.LogoPath,
+                    OriginCountry = p.OriginCountry,
+                    Id = p.Id
+                }).ToList()
         };
     }
 }
@@ -269,6 +306,33 @@ public class TmdbVideoToDomainMapper : IDtoToDomainMapper<TmdbVideosResponseDto,
                 LangLower = r.LangLower,
                 LangUpper = r.LangUpper,
                 PublishedAt = DateTimeParser.ParseDateTime(r.PublishedAt)
+            }).ToList()
+        };
+    }
+}
+
+public class TmdbMovieReleaseDateToDomainMapper : IDtoToDomainMapper<
+    TmdbMovieReleaseDatesResponseDto, MovieReleaseDateResponse>
+{
+    public MovieReleaseDateResponse Map(TmdbMovieReleaseDatesResponseDto from)
+    {
+        return new MovieReleaseDateResponse
+        {
+            Id = from.Id,
+            Results = from.Results.Select(r => new MovieReleaseDate
+            {
+                Lang = r.Lang,
+                ReleaseDatesDetails = r.ReleaseDatesDetails.Select(d =>
+                    new MovieReleaseDatesDetails
+                    {
+                        Type = d.Type,
+                        Lang = d.Lang,
+                        ReleaseDate =
+                            DateTimeParser.ParseDateTime(d.ReleaseDate),
+                        Certification = d.Certification,
+                        Descriptors = d.Descriptors,
+                        Note = d.Note
+                    }).ToList()
             }).ToList()
         };
     }
