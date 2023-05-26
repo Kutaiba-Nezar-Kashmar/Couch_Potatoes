@@ -38,7 +38,30 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
     };
 
     const getAverageUpvotes = () => {
-        return getAllUpvotes(reviews) / getTotalVotes(reviews);
+        const averageUpvotes = Number(
+            sliceNumber(getAllUpvotes(reviews) / getTotalVotes(reviews), 1)
+        );
+
+        if (!isNaN(averageUpvotes)) {
+            return 0;
+        }
+
+        return averageUpvotes;
+    };
+
+    const getAverageRating = () => {
+        const avgRating = Number(
+            sliceNumber(
+                reviews.reduce((a, b) => a + b.rating, 0) / reviews.length,
+                1
+            )
+        );
+
+        if (isNaN(avgRating)) {
+            return 0;
+        }
+
+        return avgRating;
     };
 
     return (
@@ -77,11 +100,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {sliceNumber(
-                        reviews.reduce((a, b) => a + b.rating, 0) /
-                            reviews.length,
-                        1
-                    )}
+                    {getAverageRating()}
                 </Heading>
             </Flex>
             <Box height="100px" marginX="6rem">
