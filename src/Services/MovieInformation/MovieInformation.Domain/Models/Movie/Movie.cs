@@ -1,6 +1,7 @@
 ﻿using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
+using MovieInformation.Domain.Models.ProductionCompanie;
 
 namespace MovieInformation.Domain.Models.Movie;
 
@@ -34,4 +35,10 @@ public class Movie
 
     public IReadOnlyCollection<MovieReleaseDate> ReleaseDates { get; set; } =
         default!;
+
+    public IReadOnlyCollection<MovieProductionCompany> ProductionCompanies
+    {
+        get;
+        set;
+    } = default!;
 }

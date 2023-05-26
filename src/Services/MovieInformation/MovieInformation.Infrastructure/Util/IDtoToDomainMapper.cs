@@ -3,9 +3,11 @@ using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Domain.Models.Person;
+using MovieInformation.Domain.Models.ProductionCompanie;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
 using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.ProductionCompanies;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos.MediaResponses;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
@@ -101,7 +103,15 @@ public class TmdbMovieToMovie : IDtoToDomainMapper<MovieDetail, Movie>
             {
                 Id = g.Id,
                 Name = g.Name
-            }).ToList()
+            }).ToList(),
+            ProductionCompanies = from.ProductionCompanies.Select(p =>
+                new MovieProductionCompany
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    LogoPath = p.LogoPath,
+                    OriginCountry = p.OriginCountry
+                }).ToList()
         };
     }
 }
@@ -259,6 +269,14 @@ public class
                             ReleaseDate = d.ReleaseDate,
                             Certification = d.Certification
                         }).ToList()
+                }).ToList(),
+            ProductionCompanies = from.ProductionCompanies.Select(p =>
+                new ProductionCompaniesDto
+                {
+                    Name = p.Name,
+                    LogoPath = p.LogoPath,
+                    OriginCountry = p.OriginCountry,
+                    Id = p.Id
                 }).ToList()
         };
     }

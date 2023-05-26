@@ -1,5 +1,6 @@
 ﻿using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.ProductionCompanies;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 
@@ -39,5 +40,7 @@ public class MovieControllerDto
     public IReadOnlyCollection<MovieVideoDto> Videos { get; set; } = default!;
 
     public IReadOnlyCollection<MovieReleaseDatesDto> ReleaseDates { get; set; } =
+        default!;
+    public IReadOnlyCollection<ProductionCompaniesDto> ProductionCompanies { get; set; } =
         default!;
 }

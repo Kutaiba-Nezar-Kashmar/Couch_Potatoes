@@ -8,6 +8,7 @@ using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
 using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.ProductionCompanies;
 using MovieInformation.Infrastructure.ControllerDtos.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos;
@@ -79,15 +80,26 @@ public static class MapperInstaller
                         src.ReleaseDates.Select(r => new MovieReleaseDatesDto()
                         {
                             Lang = r.Lang,
-                            ReleaseDatesDetails = r.ReleaseDatesDetails.Select(d =>
-                                new MovieReleaseDateDetailsDto
-                                {
-                                    ReleaseDate = d.ReleaseDate,
-                                    Type = d.Type,
-                                    Certification = d.Certification,
-                                    Note = d.Note
-                                }).ToList()
-                        }).ToList()));
+                            ReleaseDatesDetails = r.ReleaseDatesDetails.Select(
+                                d =>
+                                    new MovieReleaseDateDetailsDto
+                                    {
+                                        ReleaseDate = d.ReleaseDate,
+                                        Type = d.Type,
+                                        Certification = d.Certification,
+                                        Note = d.Note
+                                    }).ToList()
+                        }).ToList()))
+                .ForMember(destination => destination.ProductionCompanies,
+                    opt => opt.MapFrom(src =>
+                        src.ProductionCompanies.Select(p =>
+                            new ProductionCompaniesDto()
+                            {
+                                Id = p.Id,
+                                Name = p.Name,
+                                LogoPath = p.LogoPath,
+                                OriginCountry = p.OriginCountry
+                            }).ToList()));
             config.CreateMap<TmdbVideoDto, MovieVideo>();
             config.CreateMap<MovieVideo, MovieVideoDto>();
             config.CreateMap<MovieImage, MovieImageDto>();
