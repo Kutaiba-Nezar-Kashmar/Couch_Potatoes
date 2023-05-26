@@ -37,6 +37,10 @@ export async function getMovies(movieIds: number[]): Promise<Movie[]> {
     const config = await getConfig();
     const queryParams = movieIds.map((id) => `ids=${id}`).join('&');
 
+    if (movieIds.length === 0) {
+        return [];
+    }
+
     const response = await fetch(
         `${config.baseUrl}/movie-details?${queryParams}`
     );

@@ -14,6 +14,8 @@ import {
     domainUserFromFirebaseUser,
     getAuthenticatedUser,
 } from '../services/user';
+import BackgroundImageFull from '../components/BackgroundImageFull';
+import { getDarkGrayBackground } from '../util/themeutil';
 
 const LoginPage: FC = () => {
     const navigate = useNavigate();
@@ -36,18 +38,6 @@ const LoginPage: FC = () => {
                     provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     requireDisplayName: true,
                 },
-                {
-                    provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                    scopes: [
-                        'https://www.googleapis.com/auth/userinfo.email',
-                        'https://www.googleapis.com/auth/userinfo.profile',
-                        'https://www.googleapis.com/auth/plus.me',
-                    ],
-                    customParameters: {
-                        prompt: 'consent',
-                    },
-                    requireDisplayName: true,
-                },
             ],
             callbacks: {
                 signInSuccessWithAuthResult: (authResult, redirectUrl) => {
@@ -58,7 +48,7 @@ const LoginPage: FC = () => {
                             'currentUser',
                             JSON.stringify(currentUser)
                         );
-                        console.log('HERE');
+
                         navigate(AUTHENTICATED_REDIRECT);
                         return true;
                     }
@@ -74,23 +64,29 @@ const LoginPage: FC = () => {
     }, []);
 
     return (
-        <BasePage>
-            <Flex
-                overflowY="hidden"
-                width="100%"
-                height={`calc(90vh - ${
-                    navBarHeightInRem + pageVPaddingInRem
-                }rem)`}
-                justify="center"
-                alignItems="center"
-                flexDirection="column"
-            >
-                <Heading size={{ base: 'md', lg: 'lg' }}>
-                    Couch Potatoes
-                </Heading>
-                <div id="firebase-auth-container"></div>
-            </Flex>
-        </BasePage>
+        <BackgroundImageFull imageUri={getDarkGrayBackground()}>
+            <BasePage>
+                <Flex
+                    overflowY="hidden"
+                    width="100%"
+                    height={`calc(90vh - ${
+                        navBarHeightInRem + pageVPaddingInRem
+                    }rem)`}
+                    justify="center"
+                    alignItems="center"
+                    flexDirection="column"
+                >
+                    <Heading
+                        size={{ base: 'md', lg: 'lg' }}
+                        marginBottom="1rem"
+                        color="white"
+                    >
+                        Couch Potatoes
+                    </Heading>
+                    <div id="firebase-auth-container"></div>
+                </Flex>
+            </BasePage>
+        </BackgroundImageFull>
     );
 };
 
