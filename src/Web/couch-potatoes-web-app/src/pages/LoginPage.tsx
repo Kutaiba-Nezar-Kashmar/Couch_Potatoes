@@ -36,18 +36,6 @@ const LoginPage: FC = () => {
                     provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
                     requireDisplayName: true,
                 },
-                {
-                    provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-                    scopes: [
-                        'https://www.googleapis.com/auth/userinfo.email',
-                        'https://www.googleapis.com/auth/userinfo.profile',
-                        'https://www.googleapis.com/auth/plus.me',
-                    ],
-                    customParameters: {
-                        prompt: 'consent',
-                    },
-                    requireDisplayName: true,
-                },
             ],
             callbacks: {
                 signInSuccessWithAuthResult: (authResult, redirectUrl) => {
