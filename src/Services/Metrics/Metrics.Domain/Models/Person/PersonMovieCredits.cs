@@ -2,6 +2,6 @@
 
 public class PersonMovieCredits
 {
-    public IReadOnlyCollection<Cast> CreditsAsCast { get; set; }
-    public IReadOnlyCollection<Crew> CreditsAsCrew { get; set; }
+    public IReadOnlyCollection<Cast> CreditsAsCast { get; set; } = default!;
+    public IReadOnlyCollection<Crew> CreditsAsCrew { get; set; } = default!;
 }

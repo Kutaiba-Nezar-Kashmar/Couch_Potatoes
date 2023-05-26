@@ -15,7 +15,7 @@ public class
     private readonly IFetchPersonDetailsRepository
         _fetchPersonDetailsRepository;
 
-    private ILogger<FetchPersonDetailsHandler> _logger;
+    private readonly ILogger<FetchPersonDetailsHandler> _logger;
 
     public FetchPersonDetailsHandler
     (

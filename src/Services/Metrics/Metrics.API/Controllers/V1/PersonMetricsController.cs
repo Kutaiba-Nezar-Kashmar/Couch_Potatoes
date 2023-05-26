@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using MediatR;
-using Metrics.API.Controllers.V1.Dto;
 using Metrics.Application.PersonMetrics;
+using Metrics.Infrastructure.ControllerDtos;
+using Metrics.Infrastructure.Util.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Metrics.API.Controllers.V1;
@@ -31,19 +32,13 @@ public class PersonMetricsController : ControllerBase
         {
             var stats =
                 await _mediator.Send(new PersonMetricHandlerRequest(personId));
-            var dto = new PersonStatisticsDto
-            {
-                NumberOfMovies = stats.NumberOfMovies,
-                AverageMoviesRatingsAsACast = stats.AverageMoviesRatingsAsACast,
-                AverageMoviesRatingsAsACrew = stats.AverageMoviesRatingsAsACrew,
-                KnownForGenre = stats.KnownForGenre
-            };
-            return Ok(dto);
+            var mapper = new DomainToPersonStatisticsDtoMapper();
+            return Ok(mapper.Map(stats));
         }
         catch (Exception e)
         {
             _logger.LogCritical(
-                "Failed to Retrieve statistics with error: {message}",
+                "Failed to Retrieve statistics with error: {Message}",
                 e.Message);
             return StatusCode((int) HttpStatusCode.InternalServerError,
                 "Failed to get statistics");
