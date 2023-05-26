@@ -34,8 +34,8 @@ import {
 import MovieCredits from '../models/movie_credits';
 
 import {MovieDetailsHeaderInformationbox} from '../components/movie-details/MovieDetailsHeaderInformationbox';
-import {MovieDetailsRightInformationbox} from '../components/movie-details/MovieDetailsRightInformationbox';
-import {MovieDetailsBottomInformationbox} from '../components/movie-details/MovieDetailsBottomInformationbox';
+import {MovieDetailsRightInformationBox} from '../components/movie-details/MovieDetailsRightInformationBox';
+import {MovieDetailsBottomInformationBox} from '../components/movie-details/MovieDetailsBottomInformationBox';
 import {MovieDetailsCastComponent} from '../components/movie-details/MovieDetailsCastComponent';
 import {MovieDetailsReviewsComponent} from '../components/movie-details/MovieDetailsReviewsComponent';
 import MovieRecommendations from '../models/movie-Recommedations';
@@ -208,42 +208,29 @@ const MovieDetailsPage = () => {
                                 interval={3000}
                                 stopOnHover={true}
                             >
-                                <Box
-                                    _hover={{cursor: 'pointer'}}
-                                    onClick={() =>
-                                        handleImageClick(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp)
-                                        )
-                                    }
-                                >
-                                    <img
-                                        style={{
-                                            width: '100%',
-                                            maxHeight: '500px',
-                                            height: 'auto',
-                                            objectFit: 'contain',
-                                        }}
-                                        src={(movie?.backdropUri ? (getPosterImageUri(movie?.backdropUri as string)) : (Background_Temp))}
-                                    />
-                                </Box>
-                                <Box
-                                    _hover={{cursor: 'pointer'}}
-                                    onClick={() =>
-                                        handleImageClick(
-                                            movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp)
-                                        )
-                                    }
-                                >
-                                    <img
-                                        style={{
-                                            width: '100%',
-                                            maxHeight: '500px',
-                                            height: 'auto',
-                                            objectFit: 'contain',
-                                        }}
-                                        src={(movie?.imageUri ? (getPosterImageUri(movie?.imageUri as string)) : (Background_Temp))}
+                                {/*{movie?.videos.filter(v =>v.type==="Trailer").map((video) =>(*/}
+                                {/*    // <Box> hey</Box>*/}
+                                {/*// ))}*/}
+                                {/*TODO: FIIIx*/}
+                                {movie?.posters?.slice(0,10).map((poster) => ( <Box
+                                        _hover={{cursor: 'pointer'}}
+                                        onClick={() =>
+                                            handleImageClick(poster.filePath ? (getPosterImageUri(poster?.filePath!)) : (Background_Temp)
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            style={{
+                                                width: '100%',
+                                                maxHeight: '500px',
+                                                height: 'auto',
+                                                objectFit: 'contain',
+                                            }}
+                                            src={(movie?.backdropUri ? (getPosterImageUri(poster?.filePath!)) : (Background_Temp))}
+                                        />
+                                    </Box>))}
 
-                                    />
-                                </Box>
+
 
                             </Carousel>
                             <Modal
@@ -269,7 +256,7 @@ const MovieDetailsPage = () => {
 
                     {/* INFORMATIONBAR RIGHT */}
                     <GridItem rowSpan={6} colSpan={1}>
-                        <MovieDetailsRightInformationbox
+                        <MovieDetailsRightInformationBox
                             movie={movie}
                             themeColor={themeColor}
                         />
@@ -278,7 +265,7 @@ const MovieDetailsPage = () => {
                     {/* INFORMATIONBAR BOTTOM */}
 
                     <GridItem colSpan={5} rowSpan={1}>
-                        <MovieDetailsBottomInformationbox
+                        <MovieDetailsBottomInformationBox
                             movie={movie}
                             movieCredits={movieCredits ?? emptyCreditsObject}
                             themeColor={themeColor}
@@ -305,9 +292,11 @@ const MovieDetailsPage = () => {
                         <Tabs padding={"25px"} borderRadius={"lg"} bg={"white"}>
                             <Stack direction={"row"}> <Flex alignItems={"center"}> <Heading size={"md"}>Media</Heading></Flex>
                                 <TabList>
-                                    <Tab><Text marginX={2}>Videos</Text> <Text color={"grey"}> 5</Text></Tab>
-                                    <Tab><Text marginX={2}>Posters</Text> <Text color={"grey"}> 16</Text></Tab>
-                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> 15</Text></Tab>
+                                    <Tab><Text marginX={2}>Videos</Text> <Text
+                                        color={"grey"}> {movie?.videos.length}</Text></Tab>
+                                    <Tab><Text marginX={2}>Posters</Text> <Text
+                                        color={"grey"}> {movie?.posters.length}</Text></Tab>
+                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> {movie?.backdrops.length}</Text></Tab>
                                 </TabList></Stack>
                             <TabPanels>
                                 <TabPanel>
@@ -321,13 +310,13 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                        {movie?.videos?.map((video) => (
                                             <SwiperSlide>
                                                 <Box mx="auto">
                                                     <AspectRatio ratio={4 / 3}>
                                                         <iframe
-                                                            src={"https://www.youtube.com/embed/QhBnZ6NPOY0"}
-                                                            title="Video Player"
+                                                            src={"https://www.youtube.com/embed/" + video.key}
+                                                            title={video.name}
                                                             allowFullScreen
                                                         />
                                                     </AspectRatio>
@@ -347,17 +336,17 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                        {movie?.posters.map((poster) => (
                                             <SwiperSlide
                                                 onClick={() =>
                                                     handleImageClick(
                                                         getPosterImageUri(
-                                                            movie?.imageUri as string
+                                                            poster?.filePath
                                                         )
                                                     )
                                                 }
                                             >
-                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                                <Image src={"https://image.tmdb.org/t/p/original/"+(poster.filePath)}/>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>
@@ -367,21 +356,21 @@ const MovieDetailsPage = () => {
                                         navigation={true}
                                         modules={[Navigation]}
                                         className="mySwiper"
-                                        slidesPerView={5}
+                                        slidesPerView={4}
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movieCredits?.creditsAsCast?.map((c) => (
+                                        {movie?.backdrops?.map((backdrop) => (
                                             <SwiperSlide
                                                 onClick={() =>
                                                     handleImageClick(
                                                         getPosterImageUri(
-                                                            movie?.imageUri as string
+                                                            backdrop?.filePath!
                                                         )
                                                     )
                                                 }
                                             >
-                                                <Image src={getPosterImageUri(movie?.imageUri as string)}></Image>
+                                                <Image  src={getPosterImageUri(backdrop?.filePath!)}></Image>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>

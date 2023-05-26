@@ -15,10 +15,6 @@ import {
 import MovieCredits from '../../models/movie_credits';
 import {useNavigate} from 'react-router-dom';
 
-export interface MovieDetailsComponentProps {
-    movie: Movie | null;
-    themeColor: string;
-}
 
 export interface MovieDetailsCreditsComponentProps {
     movieCredits: MovieCredits | null;
@@ -26,7 +22,7 @@ export interface MovieDetailsCreditsComponentProps {
     themeColor: string;
 }
 
-export const MovieDetailsBottomInformationbox: FC<
+export const MovieDetailsBottomInformationBox: FC<
     MovieDetailsCreditsComponentProps
 > = ({movieCredits, movie, themeColor}) => {
     const navigate = useNavigate();

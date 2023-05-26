@@ -1,7 +1,8 @@
-import {SearchIcon} from '@chakra-ui/icons';
+import { LockIcon, SearchIcon } from '@chakra-ui/icons';
 import {
     Avatar,
     Button,
+    Card,
     Flex,
     Heading,
     Image,
@@ -10,17 +11,19 @@ import {
     InputLeftElement,
     Stack,
     Text,
+    Tooltip,
 } from '@chakra-ui/react';
-import React, {FC} from 'react';
+import React, { FC, useState } from 'react';
 import User from '../models/user';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
     navBarHeightInRem,
     navBarHPaddingInRem,
     navBarVPaddingInRem,
     pageHPaddingInRem,
 } from './settings/page-settings';
-import {SearchBar} from "./Search/SearchBar";
+import { SearchBar } from './Search/SearchBar';
+import { signUserOut } from '../services/user';
 
 interface NavbarProps {
     logoUri?: string;
@@ -28,7 +31,9 @@ interface NavbarProps {
     user: User | null;
 }
 
-const Navbar: FC<NavbarProps> = ({title, logoUri, user}) => {
+const Navbar: FC<NavbarProps> = ({ title, logoUri, user }) => {
+    const [displayActions, setDisplayActions] = useState(true);
+
     const navigate = useNavigate();
     const gotoProfile = () => {
         navigate(`/Couch_Potatoes/profile/${user?.id}`);
@@ -52,8 +57,8 @@ const Navbar: FC<NavbarProps> = ({title, logoUri, user}) => {
                         {title.toUpperCase()}
                     </Heading>
                 </Stack>
-                <Stack direction="row">
-                  <SearchBar width={300}/>
+                <Flex direction="row">
+                    <SearchBar width={300} />
                     {user ? ( // if user then render avatar && the and operator is short for if user exists.
                         <Avatar
                             marginLeft="1rem"
@@ -65,16 +70,40 @@ const Navbar: FC<NavbarProps> = ({title, logoUri, user}) => {
                         />
                     ) : (
                         <Button
-                            marginLeft="1rem"
-                            onClick={() =>
-                                navigate('/Couch_Potatoes/login')
-                            }
+                            marginLeft="2rem"
+                            marginTop="0.3rem"
+                            size="sm"
+                            onClick={() => navigate('/Couch_Potatoes/login')}
                         >
                             Login
                         </Button>
                     )}
-
-                </Stack>
+                    {user && (
+                        <Flex
+                            direction="column"
+                            justify="space-around"
+                            marginLeft="1rem"
+                            height="100%"
+                        >
+                            <Tooltip label="Sign out">
+                                <LockIcon
+                                    transition="all 0.3s ease-in-out"
+                                    _hover={{ color: 'red' }}
+                                    cursor="pointer"
+                                    color="white"
+                                    boxSize={5}
+                                    onClick={() =>
+                                        signUserOut(
+                                            () => navigate('/Couch_Potatoes/'),
+                                            (err) => console.error(err)
+                                        )
+                                    }
+                                    marginBottom="1.0rem"
+                                />
+                            </Tooltip>
+                        </Flex>
+                    )}
+                </Flex>
             </Flex>
         </nav>
     );

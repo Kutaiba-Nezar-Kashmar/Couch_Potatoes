@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Review } from '../../models/review/review';
 import {
     Box,
@@ -27,18 +27,34 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
         return xs.length / 1000 + 'k';
     };
 
-    const getTotalVotes = (reviewList: Review[]) => {
-        return reviewList.flatMap((review) => review.votes).length;
-    };
-
-    const getAllUpvotes = (reviewList: Review[]) => {
-        return reviewList
+    const getAverageUpvotes = () => {
+        const total = reviews.flatMap((review) => review.votes).length;
+        const upvotes = reviews
             .flatMap((review) => review.votes)
             .filter((review) => review.direction == 'Up').length;
+
+        const averageUpvotes = upvotes / total;
+
+        if (isNaN(averageUpvotes)) {
+            return 0;
+        }
+
+        return averageUpvotes;
     };
 
-    const getAverageUpvotes = () => {
-        return getAllUpvotes(reviews) / getTotalVotes(reviews);
+    const getAverageRating = () => {
+        const avgRating = Number(
+            sliceNumber(
+                reviews.reduce((a, b) => a + b.rating, 0) / reviews.length,
+                1
+            )
+        );
+
+        if (isNaN(avgRating)) {
+            return 0;
+        }
+
+        return avgRating;
     };
 
     return (
@@ -77,11 +93,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {sliceNumber(
-                        reviews.reduce((a, b) => a + b.rating, 0) /
-                            reviews.length,
-                        1
-                    )}
+                    {getAverageRating()}
                 </Heading>
             </Flex>
             <Box height="100px" marginX="6rem">
@@ -101,10 +113,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {sliceNumber(
-                        isNaN(getAverageUpvotes()) ? 0 : getAverageUpvotes(),
-                        1
-                    )}
+                    {getAverageUpvotes()}
                 </Heading>
             </Flex>
         </Flex>
