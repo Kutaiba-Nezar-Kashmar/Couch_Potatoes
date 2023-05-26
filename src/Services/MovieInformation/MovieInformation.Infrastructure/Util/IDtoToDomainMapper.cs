@@ -257,7 +257,9 @@ public class
                 Id = v.Id,
                 Key = v.Key,
                 Name = v.Name,
-                Type = v.Type
+                Type = v.Type,
+                LangLower = v.LangLower,
+                LangUpper = v.LangUpper
             }).ToList(),
             ReleaseDates = from.ReleaseDates.Select(r =>
                 new MovieReleaseDatesDto

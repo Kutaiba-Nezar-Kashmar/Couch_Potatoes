@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
 using MovieInformation.Domain.Models.MovieReleaseDates;
@@ -11,7 +10,6 @@ using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
 using MovieInformation.Infrastructure.ControllerDtos.Movie.ProductionCompanies;
 using MovieInformation.Infrastructure.ControllerDtos.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 using MovieInformation.Infrastructure.TmbdDto.ImageDto;
 using MovieInformation.Infrastructure.TmbdDto.MovieVideoDto;
@@ -74,7 +72,10 @@ public static class MapperInstaller
                             Id = v.Id,
                             Key = v.Key,
                             Name = v.Name,
-                            PublishedAt = v.PublishedAt
+                            PublishedAt = v.PublishedAt,
+                            Type = v.Type,
+                            LangLower = v.LangLower,
+                            LangUpper = v.LangUpper
                         }).ToList()))
                 .ForMember(destination => destination.ReleaseDates,
                     opt => opt.MapFrom(src =>
