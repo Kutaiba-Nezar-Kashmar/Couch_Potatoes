@@ -27,6 +27,7 @@ import { UserCacheKeys, signUserOut } from '../../services/user';
 import { CacheKeys } from '../../services/cache-keys';
 import { useNavigate } from 'react-router';
 import { updateUser, useGetAuthenticatedUser } from '../../services/user';
+import { slowClone } from '../../util/clone';
 export interface ProfileInfoProps {
     theme: Theme;
     user: User | null;
@@ -91,6 +92,12 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
             if (user.id !== authenticatedUser.id) {
                 return;
             }
+            toast({
+                status: 'info',
+                title: 'Saving...',
+                duration: 4000,
+                isClosable: true,
+            });
 
             const updatedUser = await updateUser(
                 authenticatedUser.id,
@@ -103,7 +110,14 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
                 UserCacheKeys.AUTHENTICATED_USER,
             ]);
 
-            setAvatarUri(updatedUser);
+            setAuthenticatedUser(updatedUser);
+            toast({
+                status: 'success',
+                title: 'Profile changes has been saved!',
+                duration: 1000,
+                isClosable: true,
+            });
+            onClose();
         } catch (err) {
             toast({
                 status: 'error',
@@ -158,16 +172,18 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
                 Last seen online:{' '}
                 {safeConvertDateToString(user.lastSignInTimestamp)}
             </Text>
-            <Button
-                transition="all 0.3s ease-in-out"
-                _hover={{ backgroundColor: '#222', color: 'white' }}
-                size="sm"
-                marginTop="1rem"
-                width="100%"
-                onClick={() => onOpen()}
-            >
-                Edit profile info
-            </Button>
+            {user && authenticatedUser && authenticatedUser.id === user.id && (
+                <Button
+                    transition="all 0.3s ease-in-out"
+                    _hover={{ backgroundColor: '#222', color: 'white' }}
+                    size="sm"
+                    marginTop="1rem"
+                    width="100%"
+                    onClick={() => onOpen()}
+                >
+                    Edit profile info
+                </Button>
+            )}
             <Button
                 transition="all 0.3s ease-in-out"
                 _hover={{ backgroundColor: 'red' }}
@@ -184,31 +200,48 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
                 <ModalContent>
                     <ModalHeader>Update profile</ModalHeader>
                     <ModalBody>
-                        <FormControl isInvalid={!displayName}>
+                        <FormControl
+                            isInvalid={!authenticatedUser?.displayName}
+                        >
                             <FormLabel>Display Name</FormLabel>
                             <FormErrorMessage>
                                 Display name must not be empty
                             </FormErrorMessage>
                             <Input
-                                value={displayName ?? ''}
-                                onChange={(e) =>
-                                    setDisplayName(e.currentTarget.value)
-                                }
+                                value={authenticatedUser?.displayName ?? ''}
+                                onChange={(e) => {
+                                    const clone = slowClone(authenticatedUser);
+                                    if (!clone) {
+                                        return;
+                                    }
+                                    clone!.displayName = e.currentTarget.value;
+                                    setAuthenticatedUser(clone);
+                                }}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Avatar Uri</FormLabel>
                             <Input
-                                value={avatarUri ?? ''}
-                                onChange={(e) =>
-                                    setAvatarUri(e.currentTarget.value)
-                                }
+                                value={authenticatedUser?.avatarUri ?? ''}
+                                onChange={(e) => {
+                                    const clone = slowClone(authenticatedUser);
+                                    if (!clone) {
+                                        return;
+                                    }
+                                    clone!.avatarUri = e.currentTarget.value;
+                                    setAuthenticatedUser(clone);
+                                }}
                             />
                         </FormControl>
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="green">Save</Button>
+                        <Button
+                            colorScheme="green"
+                            onClick={() => updateProfile()}
+                        >
+                            Save
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

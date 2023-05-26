@@ -77,6 +77,10 @@ const ReviewComponent: FC<ReviewComponentProps> = ({
     }, [isLoadingUser, review]);
 
     function getUpvoteCount() {
+        if (!review.votes) {
+            return 0;
+        }
+
         const upvotes = review.votes.filter((r) => r.direction == 'Up').length;
         if (isNaN(upvotes)) {
             return 0;
