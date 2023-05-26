@@ -1,13 +1,30 @@
 import React, {FC} from "react";
 import {Box, Button, Card, CardBody, CardHeader, Heading, Link, Stack, StackDivider, Text} from "@chakra-ui/react";
 import Movie from "../../models/movie";
+import {Console} from "inspector";
 
 export interface MovieDetailsRightInformationBoxProps {
     movie: Movie | null;
     themeColor: string;
 }
 
-export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBoxProps> = ({movie, themeColor}) => {
+export const MovieDetailsRightInformationBox: FC<MovieDetailsRightInformationBoxProps> = ({movie, themeColor}) => {
+
+    function getClassification(lang: string) {
+        if (!movie) {
+            return "N/A";
+        }
+        let classifications = movie?.releaseDates.filter(r => r.lang === lang);
+        if (classifications && classifications.length === 0) {
+            return "N/A";
+        }
+        let classification = classifications[0];
+        if (classification.releaseDatesDetails && classification.releaseDatesDetails.length === 0) {
+            return "N/A";
+        }
+        return classification.releaseDatesDetails[0].certification
+    }
+
     return (
         <>
 
@@ -37,10 +54,10 @@ export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBox
                         </Box>
                         <Box>
                             <Heading size='xs' textTransform='uppercase'>
-                                kid friendly
+                                Classification
                             </Heading>
                             <Text pt='2' fontSize='sm'>
-                                {movie?.isForKids ? (movie?.isForKids ? "Yes" : "No") : ("N/A")}
+                                {getClassification("DK") !== "N/A" ? (getClassification("DK")) : (getClassification("US"))}
                             </Text>
                         </Box>
                         <Box>

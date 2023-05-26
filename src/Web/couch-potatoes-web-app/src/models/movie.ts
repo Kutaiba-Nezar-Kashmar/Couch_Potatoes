@@ -4,6 +4,7 @@ import Genre from "./genre";
 import Video from "./Video";
 import Poster from "./Poster";
 import Backdrop from "./Backdrop";
+import { ReleaseDate} from "./release_date";
 
 export default interface Movie {
     id: number;
@@ -28,5 +29,6 @@ export default interface Movie {
     videos: Video[];
     posters: Poster[];
     backdrops: Backdrop[];
+    releaseDates: ReleaseDate[];
 }
 
