@@ -34,8 +34,8 @@ import {
 import MovieCredits from '../models/movie_credits';
 
 import {MovieDetailsHeaderInformationbox} from '../components/movie-details/MovieDetailsHeaderInformationbox';
-import {MovieDetailsRightInformationbox} from '../components/movie-details/MovieDetailsRightInformationbox';
-import {MovieDetailsBottomInformationbox} from '../components/movie-details/MovieDetailsBottomInformationbox';
+import {MovieDetailsRightInformationBox} from '../components/movie-details/MovieDetailsRightInformationBox';
+import {MovieDetailsBottomInformationBox} from '../components/movie-details/MovieDetailsBottomInformationBox';
 import {MovieDetailsCastComponent} from '../components/movie-details/MovieDetailsCastComponent';
 import {MovieDetailsReviewsComponent} from '../components/movie-details/MovieDetailsReviewsComponent';
 import MovieRecommendations from '../models/movie-Recommedations';
@@ -256,7 +256,7 @@ const MovieDetailsPage = () => {
 
                     {/* INFORMATIONBAR RIGHT */}
                     <GridItem rowSpan={6} colSpan={1}>
-                        <MovieDetailsRightInformationbox
+                        <MovieDetailsRightInformationBox
                             movie={movie}
                             themeColor={themeColor}
                         />
@@ -265,7 +265,7 @@ const MovieDetailsPage = () => {
                     {/* INFORMATIONBAR BOTTOM */}
 
                     <GridItem colSpan={5} rowSpan={1}>
-                        <MovieDetailsBottomInformationbox
+                        <MovieDetailsBottomInformationBox
                             movie={movie}
                             movieCredits={movieCredits ?? emptyCreditsObject}
                             themeColor={themeColor}

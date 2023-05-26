@@ -1,19 +1,14 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
     Box,
     Image,
-    VStack,
     StackDivider,
     Text,
     Heading,
-    Grid,
-    Flex,
-    Spacer,
     Stack,
     Card,
     CardBody, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody
 } from "@chakra-ui/react";
-import {getPosterImageUri} from "../../services/images";
 
 interface PersonProperties {
     uri?: string;

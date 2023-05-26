@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import {Box, Grid, GridItem, Heading, HStack, Text, VStack} from "@chakra-ui/react";
 import {sliceNumber} from "../../util/numberutil";
 import {StarIcon} from "@chakra-ui/icons";

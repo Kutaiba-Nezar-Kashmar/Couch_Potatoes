@@ -1,5 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Flex, Heading, StackDivider, Text, VStack} from "@chakra-ui/react";
+import React, {FC} from 'react';
+import {Heading, Text, VStack} from "@chakra-ui/react";
 
 interface PersonBiographyInfo {
     name?: string;
