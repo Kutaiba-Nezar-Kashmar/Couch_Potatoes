@@ -6,7 +6,7 @@ import {
     Card,
     CardBody,
     CardHeader,
-    Heading,
+    Heading, Image,
     Link,
     Stack,
     StackDivider,
@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import MovieCredits from '../../models/movie_credits';
 import {useNavigate} from 'react-router-dom';
+import {getPosterImageUri} from "../../services/images";
 
 
 export interface MovieDetailsCreditsComponentProps {
@@ -86,7 +87,7 @@ export const MovieDetailsBottomInformationBox: FC<
                                         Producer(s)
                                     </Heading>
                                     <Stack>
-                                        {movieCredits && movieCredits?.creditsAsCrew?.filter(c=>c.job==='Producer').length>0 ?( movieCredits &&
+                                        {movieCredits && movieCredits?.creditsAsCrew?.filter(c => c.job === 'Producer').length > 0 ? (movieCredits &&
                                             movieCredits?.creditsAsCrew
                                                 .filter(
                                                     (crew) =>
@@ -110,7 +111,7 @@ export const MovieDetailsBottomInformationBox: FC<
                                                         {' '}
                                                         {crew.name}
                                                     </Link>
-                                                ))):(<Text> N/A</Text>)}
+                                                ))) : (<Text> N/A</Text>)}
 
                                     </Stack>
                                 </Stack>
@@ -133,6 +134,29 @@ export const MovieDetailsBottomInformationBox: FC<
                                         Full list of cast and crew
                                     </Link>
                                 </Text>
+                                <Stack  divider={<StackDivider borderColor="gray.200"/>} direction={"column"}>
+                                    <Heading
+                                        textTransform="uppercase"
+                                        size="sm"
+                                    >
+                                        Production company(s)
+                                    </Heading>
+
+                                    {movie?.productionCompanies.map(pc => (
+                                            <Stack  direction={"row"}>
+                                                <Text color={themeColor}> {pc.name}</Text>
+                                                {pc.logoPath ? (<Image maxHeight={5} src={getPosterImageUri(
+                                                    pc?.logoPath
+                                                )}></Image>):("")}
+
+                                            </Stack>
+
+
+                                        )
+                                    )}
+
+
+                                </Stack>
                             </Stack>
                         </Box>
 
@@ -144,7 +168,7 @@ export const MovieDetailsBottomInformationBox: FC<
                             >
                                 Genres
                             </Heading>
-                            {movie && movie?.genres.length>0 ?( movie &&
+                            {movie && movie?.genres.length > 0 ? (movie &&
                                 movie?.genres.map((genre) => (
                                     <Button
                                         margin={0.5}
@@ -155,7 +179,7 @@ export const MovieDetailsBottomInformationBox: FC<
                                     >
                                         {genre.name}
                                     </Button>
-                                ))):("N/A")}
+                                ))) : ("N/A")}
 
                         </Box>
                     </Stack>

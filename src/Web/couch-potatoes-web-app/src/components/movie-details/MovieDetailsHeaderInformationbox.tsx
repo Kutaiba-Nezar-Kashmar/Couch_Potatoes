@@ -99,7 +99,7 @@ export const MovieDetailsHeaderInformationbox: FC<
 
                         <Box>
                             <Text color={'gray'} fontSize="3xl">
-                                {movie?.releaseDate ? ((movie?.releaseDate.slice(0, 4))) : ("N/A")}
+                                {movie?.releaseDate ? ("("+movie?.releaseDate.slice(0, 4)+")") : ("N/A")}
 
                             </Text>
                         </Box>
@@ -128,7 +128,7 @@ export const MovieDetailsHeaderInformationbox: FC<
 
                     <Box>
                         <Text fontStyle="italic" color={'white'} fontSize="2l">
-                            {movie?.tagLine ? (movie?.tagLine):("N/A")}
+                            {movie?.tagLine ? (movie?.tagLine) : ("N/A")}
                         </Text>
                     </Box>
                 </Stack>
@@ -143,7 +143,7 @@ export const MovieDetailsHeaderInformationbox: FC<
                     </Stack>
 
                     <Text color={'white'} fontSize="1xl" align="end">
-                        Vote#: {movie?.tmdbVoteCount ? (movie?.tmdbVoteCount):("N/A")}
+                        Vote#: {movie?.tmdbVoteCount ? (movie?.tmdbVoteCount) : ("N/A")}
                     </Text>
                 </Box>
             </Stack>

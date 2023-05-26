@@ -3,5 +3,5 @@ export default interface Video {
     key: string;
     publishedAt: string;
     id: number
-    type: String
+    type: string;
 }

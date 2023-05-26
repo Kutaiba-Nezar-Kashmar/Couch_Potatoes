@@ -4,7 +4,7 @@ import PersonDetails from '../models/person/person-details';
 import {
     Flex,
     Grid,
-    GridItem,
+    GridItem, Heading,
     Image,
     Modal,
     ModalBody,
@@ -134,7 +134,13 @@ const PersonDetailsPage = () => {
                             }
                             knownForGenre={personStats?.KnownForGenre}
                         />
-                        <br />
+                        <Heading
+                           marginTop={"20px"}
+                            size="md"
+                            color={"white"}
+                        >
+                           Appeared in:
+                        </Heading>
                         <Swiper
                             navigation={true}
                             modules={[Navigation]}
