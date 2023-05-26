@@ -34,8 +34,6 @@ export interface ProfileInfoProps {
 }
 
 const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
-    const [displayName, setDisplayName] = useState(user?.displayName);
-    const [avatarUri, setAvatarUri] = useState(user?.avatarUri);
     const [authenticatedUser, setAuthenticatedUser] = useState<User | null>(
         null
     );
@@ -84,8 +82,10 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
             return;
         }
 
-        if (!avatarUri) {
-            setAvatarUri(`${process.env['PUBLIC_URL']}/blank-profile.png`);
+        if (!authenticatedUser.avatarUri) {
+            const clone = slowClone(authenticatedUser);
+            clone.avatarUri = `${process.env['PUBLIC_URL']}/blank-profile.png`;
+            setAuthenticatedUser(clone);
         }
 
         try {
@@ -95,14 +95,15 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ user, theme }) => {
             toast({
                 status: 'info',
                 title: 'Saving...',
-                duration: 4000,
+                duration: 120000,
                 isClosable: true,
             });
 
             const updatedUser = await updateUser(
                 authenticatedUser.id,
-                displayName!,
-                avatarUri!
+                authenticatedUser.displayName ??
+                    authenticatedUser.email!.split('@')[0],
+                authenticatedUser.avatarUri!
             );
 
             queryClient.invalidateQueries([
