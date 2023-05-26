@@ -1,6 +1,6 @@
 ﻿using MovieInformation.Infrastructure.ControllerDtos.Images;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
-using MovieInformation.Infrastructure.ResponseDtos;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
 
 namespace MovieInformation.Infrastructure.ControllerDtos.Movie;
@@ -23,10 +23,21 @@ public class MovieControllerDto
     public string TrailerUri { get; set; } = default!;
     public long Budget { get; set; }
     public long Revenue { get; set; }
-    public IReadOnlyCollection<ReadKeywordDto> Keywords { get; set; } = default!;
-    public IReadOnlyCollection<ReadLanguageDto> Languages { get; set; } = default!;
+
+    public IReadOnlyCollection<ReadKeywordDto> Keywords { get; set; } =
+        default!;
+
+    public IReadOnlyCollection<ReadLanguageDto> Languages { get; set; } =
+        default!;
+
     public IReadOnlyCollection<ReadGenreDto> Genres { get; set; } = default!;
     public IReadOnlyCollection<MovieImageDto> Posters { get; set; } = default!;
-    public IReadOnlyCollection<MovieImageDto> Backdrops { get; set; } = default!;
+
+    public IReadOnlyCollection<MovieImageDto> Backdrops { get; set; } =
+        default!;
+
     public IReadOnlyCollection<MovieVideoDto> Videos { get; set; } = default!;
+
+    public IReadOnlyCollection<MovieReleaseDatesDto> ReleaseDates { get; set; } =
+        default!;
 }

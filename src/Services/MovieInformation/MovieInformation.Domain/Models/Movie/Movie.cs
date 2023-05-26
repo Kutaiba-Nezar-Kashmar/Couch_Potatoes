@@ -1,4 +1,5 @@
 ﻿using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
 
 namespace MovieInformation.Domain.Models.Movie;
@@ -30,4 +31,7 @@ public class Movie
     public IReadOnlyCollection<MovieImage> Backdrops { get; set; } = default!;
     public IReadOnlyCollection<MovieImage> Logos { get; set; } = default!;
     public IReadOnlyCollection<MovieVideo> Videos { get; set; } = default!;
+
+    public IReadOnlyCollection<MovieReleaseDate> ReleaseDates { get; set; } =
+        default!;
 }

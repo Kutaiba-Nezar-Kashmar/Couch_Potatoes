@@ -1,9 +1,11 @@
 ﻿using MovieInformation.Domain.Models.Movie;
 using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieReleaseDates;
 using MovieInformation.Domain.Models.MovieVideos;
 using MovieInformation.Domain.Models.Person;
 using MovieInformation.Infrastructure.ControllerDtos.Images;
 using MovieInformation.Infrastructure.ControllerDtos.Movie;
+using MovieInformation.Infrastructure.ControllerDtos.Movie.MovieReleaseDates;
 using MovieInformation.Infrastructure.ControllerDtos.Videos;
 using MovieInformation.Infrastructure.ResponseDtos.MediaResponses;
 using MovieInformation.Infrastructure.ResponseDtos.MovieResponses;
@@ -244,7 +246,20 @@ public class
                 Key = v.Key,
                 Name = v.Name,
                 Type = v.Type
-            }).ToList()
+            }).ToList(),
+            ReleaseDates = from.ReleaseDates.Select(r =>
+                new MovieReleaseDatesDto
+                {
+                    Lang = r.Lang,
+                    ReleaseDatesDetails = r.ReleaseDatesDetails.Select(d =>
+                        new MovieReleaseDateDetailsDto
+                        {
+                            Note = d.Note,
+                            Type = d.Type,
+                            ReleaseDate = d.ReleaseDate,
+                            Certification = d.Certification
+                        }).ToList()
+                }).ToList()
         };
     }
 }
@@ -269,6 +284,33 @@ public class TmdbVideoToDomainMapper : IDtoToDomainMapper<TmdbVideosResponseDto,
                 LangLower = r.LangLower,
                 LangUpper = r.LangUpper,
                 PublishedAt = DateTimeParser.ParseDateTime(r.PublishedAt)
+            }).ToList()
+        };
+    }
+}
+
+public class TmdbMovieReleaseDateToDomainMapper : IDtoToDomainMapper<
+    TmdbMovieReleaseDatesResponseDto, MovieReleaseDateResponse>
+{
+    public MovieReleaseDateResponse Map(TmdbMovieReleaseDatesResponseDto from)
+    {
+        return new MovieReleaseDateResponse
+        {
+            Id = from.Id,
+            Results = from.Results.Select(r => new MovieReleaseDate
+            {
+                Lang = r.Lang,
+                ReleaseDatesDetails = r.ReleaseDatesDetails.Select(d =>
+                    new MovieReleaseDatesDetails
+                    {
+                        Type = d.Type,
+                        Lang = d.Lang,
+                        ReleaseDate =
+                            DateTimeParser.ParseDateTime(d.ReleaseDate),
+                        Certification = d.Certification,
+                        Descriptors = d.Descriptors,
+                        Note = d.Note
+                    }).ToList()
             }).ToList()
         };
     }
