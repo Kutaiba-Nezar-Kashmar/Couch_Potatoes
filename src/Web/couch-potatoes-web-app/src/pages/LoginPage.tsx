@@ -14,6 +14,8 @@ import {
     domainUserFromFirebaseUser,
     getAuthenticatedUser,
 } from '../services/user';
+import BackgroundImageFull from '../components/BackgroundImageFull';
+import { getDarkGrayBackground } from '../util/themeutil';
 
 const LoginPage: FC = () => {
     const navigate = useNavigate();
@@ -62,23 +64,29 @@ const LoginPage: FC = () => {
     }, []);
 
     return (
-        <BasePage>
-            <Flex
-                overflowY="hidden"
-                width="100%"
-                height={`calc(90vh - ${
-                    navBarHeightInRem + pageVPaddingInRem
-                }rem)`}
-                justify="center"
-                alignItems="center"
-                flexDirection="column"
-            >
-                <Heading size={{ base: 'md', lg: 'lg' }}>
-                    Couch Potatoes
-                </Heading>
-                <div id="firebase-auth-container"></div>
-            </Flex>
-        </BasePage>
+        <BackgroundImageFull imageUri={getDarkGrayBackground()}>
+            <BasePage>
+                <Flex
+                    overflowY="hidden"
+                    width="100%"
+                    height={`calc(90vh - ${
+                        navBarHeightInRem + pageVPaddingInRem
+                    }rem)`}
+                    justify="center"
+                    alignItems="center"
+                    flexDirection="column"
+                >
+                    <Heading
+                        size={{ base: 'md', lg: 'lg' }}
+                        marginBottom="1rem"
+                        color="white"
+                    >
+                        Couch Potatoes
+                    </Heading>
+                    <div id="firebase-auth-container"></div>
+                </Flex>
+            </BasePage>
+        </BackgroundImageFull>
     );
 };
 

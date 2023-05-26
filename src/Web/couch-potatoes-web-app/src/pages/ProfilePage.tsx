@@ -41,6 +41,7 @@ import { EventListener } from '../services/event-emitters/event-listener';
 import { Review } from '../models/review/review';
 import ReviewList from '../components/review/ReviewList';
 import { useGetReviewsForUser } from '../services/review';
+import { getDarkGrayBackground } from '../util/themeutil';
 
 const ProfilePage: FC = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -184,9 +185,7 @@ const ProfilePage: FC = () => {
     }
 
     if (!user) {
-        <BackgroundImageFull
-            imageUri={`${process.env['PUBLIC_URL']}/gradient-bg.jpg`}
-        >
+        <BackgroundImageFull imageUri={getDarkGrayBackground()}>
             <BasePage>
                 <Flex flexDir="row" width="100%" height="100%">
                     <Text> User does not exist</Text>
@@ -196,9 +195,7 @@ const ProfilePage: FC = () => {
     }
 
     return (
-        <BackgroundImageFull
-            imageUri={`${process.env['PUBLIC_URL']}/gradient-bg.jpg`}
-        >
+        <BackgroundImageFull imageUri={getDarkGrayBackground()}>
             <BasePage>
                 <Flex direction="row" minHeight="100vh" width="100%" gap={16}>
                     <Box>
