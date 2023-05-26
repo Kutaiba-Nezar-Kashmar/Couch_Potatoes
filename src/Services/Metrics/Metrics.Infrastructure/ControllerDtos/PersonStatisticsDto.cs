@@ -1,4 +1,4 @@
-﻿namespace Metrics.API.Controllers.V1.Dto;
+﻿namespace Metrics.Infrastructure.ControllerDtos;
 
 public class PersonStatisticsDto
 {

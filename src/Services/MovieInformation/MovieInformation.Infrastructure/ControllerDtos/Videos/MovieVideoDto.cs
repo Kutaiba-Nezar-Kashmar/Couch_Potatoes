@@ -7,4 +7,6 @@ public class MovieVideoDto
     public DateTime? PublishedAt { get; set; }
     public string Id { get; set; } = default!;
     public string Type { get; set; } = default!;
+    public string LangLower { get; set; } = default!;
+    public string LangUpper { get; set; } = default!;
 }
