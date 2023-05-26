@@ -4,6 +4,9 @@ using MovieInformation.Application.GetMovie.Exceptions;
 using MovieInformation.Application.GetMovie.Repositories;
 using MovieInformation.Domain.Models;
 using MovieInformation.Domain.Models.Movie;
+using MovieInformation.Domain.Models.MovieImages;
+using MovieInformation.Domain.Models.MovieReleaseDates;
+using MovieInformation.Domain.Models.MovieVideos;
 
 namespace MovieInformation.Application.GetMovie;
 
@@ -39,20 +42,7 @@ public class
         {
             _logger.LogInformation(
                 "Handling get movie with movie request {Request}", request);
-            var getMovieRequest =
-                await _getMovieRepository.GetMovie(request.MovieId);
-            var getMovieKeywords =
-                await _getMovieRepository.GetMovieKeywords(request.MovieId);
-            var getMovieImages =
-                await _getMovieRepository.GetMovieImages(request.MovieId);
-            var getMovieVideos =
-                await _getMovieRepository.GetMovieVideos(request.MovieId);
-            getMovieRequest.Backdrops = getMovieImages.Backdrops;
-            getMovieRequest.Logos = getMovieImages.Logos;
-            getMovieRequest.Posters = getMovieImages.Posters;
-            getMovieRequest.Keywords = getMovieKeywords;
-            getMovieRequest.Videos = getMovieVideos.Results;
-            return getMovieRequest;
+            return await MovieRequest(request);
         }
         catch (Exception e)
         {
@@ -61,5 +51,60 @@ public class
             throw new FailedToGetMovieDetailsException(
                 $"Failed to retrieve movie details with movieId:${request.MovieId}");
         }
+    }
+
+    private async Task<Movie> MovieRequest(GetMovieDetailsRequest request)
+    {
+        var movie =
+            await _getMovieRepository.GetMovie(request.MovieId);
+
+        movie.Backdrops = await MovieBackdrops(request.MovieId);
+        movie.Logos = await MovieLogos(request.MovieId);
+        movie.Posters = await MoviePosters(request.MovieId);
+        movie.Keywords = await MovieKeywords(request.MovieId);
+        movie.Videos = await MovieVideos(request.MovieId);
+        movie.ReleaseDates = await ReleaseDates(request.MovieId);
+        return movie;
+    }
+
+    private async Task<IReadOnlyCollection<Keyword>> MovieKeywords(int movieId)
+    {
+        return await _getMovieRepository.GetMovieKeywords(movieId);
+    }
+
+    private async Task<IReadOnlyCollection<MovieImage>> MoviePosters(
+        int movieId)
+    {
+        var im = await _getMovieRepository.GetMovieImages(movieId);
+        return im.Posters;
+    }
+
+    private async Task<IReadOnlyCollection<MovieImage>> MovieLogos(
+        int movieId)
+    {
+        var im = await _getMovieRepository.GetMovieImages(movieId);
+        return im.Logos;
+    }
+
+    private async Task<IReadOnlyCollection<MovieImage>> MovieBackdrops(
+        int movieId)
+    {
+        var im = await _getMovieRepository.GetMovieImages(movieId);
+        return im.Backdrops;
+    }
+
+    private async Task<IReadOnlyCollection<MovieVideo>> MovieVideos(int movieId)
+    {
+        var getMovieVideos =
+            await _getMovieRepository.GetMovieVideos(movieId);
+        return getMovieVideos.Results;
+    }
+
+    private async Task<IReadOnlyCollection<MovieReleaseDate>> ReleaseDates(
+        int movieId)
+    {
+        var releaseDates =
+            await _getMovieRepository.GetMovieReleaseDates(movieId);
+        return releaseDates.Results;
     }
 }
