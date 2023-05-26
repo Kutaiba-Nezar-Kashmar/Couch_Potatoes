@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import {Box, Grid, GridItem, Heading, HStack, Text, VStack} from "@chakra-ui/react";
 import {sliceNumber} from "../../util/numberutil";
 import {StarIcon} from "@chakra-ui/icons";
@@ -18,8 +18,8 @@ const PersonStatsInformation: FC<Stats> = ({
                                            }) => {
     return (
         <>
-            <Heading color="white" as='h4' size='md'>Stats</Heading>
-            <br/>
+            <Heading marginBottom={"30px"} color="white" as='h4' size='md'>Statistics</Heading>
+
             <Grid templateColumns='repeat(4, 1fr)' gap={6}>
                 <GridItem colSpan={1}>
                     <VStack spacing={2}>
@@ -27,7 +27,7 @@ const PersonStatsInformation: FC<Stats> = ({
                             <Heading color="white" as='h3' size='sm'>Total Number of movies</Heading>
                         </Box>
                         <Box>
-                            <Text color="white">{numberOfMovies}</Text>
+                            {numberOfMovies ? (<Text color="white">{numberOfMovies}</Text>) : (<Text color="white">N/A</Text>)}
                         </Box>
                     </VStack>
                 </GridItem>
@@ -38,7 +38,8 @@ const PersonStatsInformation: FC<Stats> = ({
                         </Box>
                         <HStack spacing={2}>
                             <StarIcon color='yellow'/>
-                            <Text color="white">{sliceNumber(averageMoviesRatingsAsACast ?? 0, 1)}</Text>
+
+                            {averageMoviesRatingsAsACast!==0 ? (<Text color="white">{sliceNumber(averageMoviesRatingsAsACast ?? 0, 1)}</Text>) : (<Text color="white">N/A</Text>)}
                         </HStack>
                     </VStack>
                 </GridItem>
@@ -49,7 +50,7 @@ const PersonStatsInformation: FC<Stats> = ({
                         </Box>
                         <HStack spacing={2}>
                             <StarIcon color='yellow'/>
-                            <Text color="white">{sliceNumber(averageMoviesRatingsAsACrew ?? 0, 1)}</Text>
+                            {averageMoviesRatingsAsACrew ? (<Text color="white">{sliceNumber(averageMoviesRatingsAsACrew ?? 0, 1)}</Text>) : (<Text color="white">N/A</Text>)}
                         </HStack>
                     </VStack>
                 </GridItem>
@@ -59,7 +60,7 @@ const PersonStatsInformation: FC<Stats> = ({
                             <Heading color="white" as='h3' size='sm'>Best know for</Heading>
                         </Box>
                         <Box>
-                            <Text color="white">{knownForGenre}</Text>
+                            {knownForGenre ? (<Text color="white">{knownForGenre}</Text>) : (<Text color="white">N/A</Text>)}
                         </Box>
                     </VStack>
                 </GridItem>

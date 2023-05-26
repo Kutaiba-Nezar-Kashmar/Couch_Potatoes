@@ -1,8 +1,6 @@
 import {Card, CardBody, CardHeader, Flex, Heading, Image, Stack, Text} from "@chakra-ui/react";
 import {getPosterImageUri} from "../../services/images";
 import React, {FC} from "react";
-import MovieCredits from "../../models/movie_credits";
-import Movie from "../../models/movie";
 import MovieRecommendations from "../../models/movie-Recommedations";
 import starIcon from "../../assets/iconstar.png";
 import {sliceNumber} from "../../util/numberutil";

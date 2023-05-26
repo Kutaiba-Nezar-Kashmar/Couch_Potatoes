@@ -1,5 +1,5 @@
 import {
-    Box,
+
     Button,
     Card,
     CardBody,
@@ -19,22 +19,19 @@ import {
     ModalOverlay,
     Stack,
     StackDivider,
-    Text,
     Tooltip,
-    VStack,
     useDisclosure,
     useToast,
 } from '@chakra-ui/react';
-import React, { FC, useEffect, useState } from 'react';
-import MovieCredits from '../../models/movie_credits';
+import React, { FC, useState } from 'react';
 import ReviewList from '../review/ReviewList';
 import { Theme } from '../../models/theme';
 import { Review } from '../../models/review/review';
-import { createReview, useGetReviewsForMovie } from '../../services/review';
-import { PlusSquareIcon } from '@chakra-ui/icons';
+import { createReview } from '../../services/review';
 import StarRatingComponent from 'react-star-rating-component';
 import User from '../../models/user';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {PlusSquareIcon} from "@chakra-ui/icons";
 
 export interface MovieDetailsReviewsComponentProps {
     reviews: Review[];
@@ -135,7 +132,7 @@ export const MovieDetailsReviewsComponent: FC<
                                 starCount={10}
                                 editing={true}
                                 value={rating}
-                                onStarClick={(nextValue, prevValue, name) => {
+                                onStarClick={(nextValue) => {
                                     setRating(nextValue);
                                 }}
                             />

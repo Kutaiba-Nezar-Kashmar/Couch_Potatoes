@@ -153,8 +153,9 @@ const PersonDetailsPage = () => {
                                 >
                                     <PersonMovieCreditsItem
                                         imageUri={
-                                            getPosterImageUri(c.posterPath!) ??
-                                            Background_Temp
+                                            c.posterPath ?(getPosterImageUri(c.posterPath!)):( Background_Temp)
+
+
                                         }
                                         movieTitle={c.title as string}
                                     />
@@ -185,6 +186,7 @@ const PersonDetailsPage = () => {
                                     )
                                     .map((c) => (
                                         <CreditsAsCastDetails
+                                            movieId={c.movieId!}
                                             title={c.title}
                                             releaseDate={
                                                 new Date(c.releaseDate + '')
@@ -205,7 +207,7 @@ const PersonDetailsPage = () => {
                                                     ).getFullYear()
                                             )
                                             .map((c) => (
-                                                <CreditsAsCrewDetails
+                                                <CreditsAsCrewDetails movieId={c.movieId!}
                                                     title={c.title}
                                                     department={c.department}
                                                     job={c.job}
@@ -233,7 +235,7 @@ const PersonDetailsPage = () => {
                                             ).getFullYear()
                                     )
                                     .map((c) => (
-                                        <CreditsAsCastDetails
+                                        <CreditsAsCastDetails movieId={c.movieId!}
                                             title={c.title}
                                             releaseDate={
                                                 new Date(c.releaseDate + '')
@@ -257,7 +259,7 @@ const PersonDetailsPage = () => {
                                             ).getFullYear()
                                     )
                                     .map((c) => (
-                                        <CreditsAsCrewDetails
+                                        <CreditsAsCrewDetails movieId={c.movieId!}
                                             title={c.title}
                                             department={c.department}
                                             job={c.job}
