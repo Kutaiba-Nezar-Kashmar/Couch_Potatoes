@@ -1,8 +1,9 @@
 ﻿using System.Net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Person.API.Controllers.V1.PersonDetails.Dto;
 using Person.Application.FetchPersonDetails;
+using Person.Infrastructure.ApiDtos;
+using Person.Infrastructure.Util.Mappers;
 
 namespace Person.API.Controllers.V1.PersonDetails;
 
@@ -31,23 +32,9 @@ public class PersonDetailsController : ControllerBase
         {
             var details =
                 await _mediator.Send(new PersonDetailsRequest(personId));
-            var dto = new PersonDetailsDto
-            {
-                IsAdult = details.IsAdult,
-                Aliases = details.Aliases,
-                Biography = details.Biography,
-                Birthday = details.Birthday,
-                DeathDay = details.DeathDay,
-                Gender = Enum.GetName(details.Gender)!,
-                Homepage = details.Homepage,
-                KnownForDepartment = details.KnownForDepartment,
-                Name = details.Name,
-                PlaceOfBirth = details.PlaceOfBirth,
-                Popularity = details.Popularity,
-                ProfilePath = details.ProfilePath
-            };
+            var mapper = new DomainToPersonDetailsDtoMapper();
 
-            return Ok(dto);
+            return Ok(mapper.Map(details));
         }
         catch (Exception e)
         {
