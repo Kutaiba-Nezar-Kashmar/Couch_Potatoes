@@ -10,10 +10,9 @@ import {
     Text,
     Stack,
     Image,
-    BoxProps, Flex, StackDivider
+     Flex
 } from "@chakra-ui/react";
 import {SearchIcon} from "@chakra-ui/icons";
-import {useFetchPersonDetailsAndCredits} from "../../services/person-service/person-details-service";
 import {multiSearch} from "../../services/search/search-service";
 import MultiSearchResponse from "../../models/search/multi-search-response";
 import {getPosterImageUri} from "../../services/images";

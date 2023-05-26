@@ -1,5 +1,5 @@
-import React, {useState, useEffect, FC} from 'react';
-import {Grid, GridItem, Heading, HStack, Select, Stack, Text} from "@chakra-ui/react";
+import React, {FC} from 'react';
+import {Grid, GridItem, Heading, HStack, Select} from "@chakra-ui/react";
 
 interface PersonCreditsFilterProperties {
     actingCredits?: number,

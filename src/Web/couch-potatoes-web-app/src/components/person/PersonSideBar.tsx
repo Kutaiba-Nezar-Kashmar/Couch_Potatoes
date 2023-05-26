@@ -1,19 +1,14 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {
     Box,
     Image,
-    VStack,
     StackDivider,
     Text,
     Heading,
-    Grid,
-    Flex,
-    Spacer,
     Stack,
     Card,
     CardBody, Modal, ModalOverlay, ModalContent, ModalCloseButton, ModalBody
 } from "@chakra-ui/react";
-import {getPosterImageUri} from "../../services/images";
 
 interface PersonProperties {
     uri?: string;
@@ -52,32 +47,37 @@ const PersonSideBar: FC<PersonProperties> =
         return (
             <Card backgroundColor="transparent">
                 <CardBody>
-                    <Image src={uri} alt={alt} borderRadius='lg'
-                           onClick={() =>
-                               handleImageClick(uri!
-                               )
-                           }
-                    />
+                    {uri ? (<Image src={uri} alt={alt} borderRadius='lg'
+                                   onClick={() =>
+                                       handleImageClick(uri!
+                                       )
+                                   }
+                    />) : (<Text>N/A</Text>)}
+
                     <Stack divider={<StackDivider/>} spacing='4' paddingTop={4}>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Know For</Heading>
-                            <Text color="white">{known}</Text>
+                            {known ? (<Text color="white">{known}</Text>) : (<Text color="white">N/A</Text>)}
+
                         </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Gender</Heading>
-                            <Text color="white">{gender}</Text>
+                            {gender ? (<Text color="white">{gender}</Text>) : (<Text color="white">N/A</Text>)}
+
                         </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Birthday</Heading>
-                            <Text color="white">{new Date(birthday?? 0).toLocaleDateString()}</Text>
+                            {birthday ? (<Text color="white">{new Date(birthday ?? 0).toLocaleDateString()}</Text>) : (<Text color="white">N/A</Text>)}
+
                         </Box>
                         <Box>
                             <Heading color="white" as='h4' size='md'>Place Of Birth</Heading>
-                            <Text color="white">{placeOfBirth}</Text>
+                            {placeOfBirth ? (<Text color="white">{placeOfBirth}</Text>) : (<Text color="white">N/A</Text>)}
                         </Box>
                         <Box>
                             <Heading as='h4' size='md' color="white">Aliases</Heading>
-                            {aliases?.map(alias => <Text color="white">{alias}</Text>)}
+                            {/*{aliases?.map(alias => <Text color="white">{alias}</Text>)}*/}
+                            {aliases ? (aliases?.map(alias => <Text color="white">{alias}</Text>)) : (<Text color="white">N/A</Text>)}
                         </Box>
                     </Stack>
                 </CardBody>
@@ -86,9 +86,9 @@ const PersonSideBar: FC<PersonProperties> =
                     onClose={handleModalClose}
                     size="6xl"
                 >
-                    <ModalOverlay />
+                    <ModalOverlay/>
                     <ModalContent>
-                        <ModalCloseButton />
+                        <ModalCloseButton/>
                         <ModalBody justifyContent="center">
                             <Image
                                 src={expandedImage}

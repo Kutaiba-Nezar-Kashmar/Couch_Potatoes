@@ -7,7 +7,7 @@ export interface MovieDetailsRightInformationBoxProps {
     themeColor: string;
 }
 
-export const MovieDetailsRightInformationbox: FC<MovieDetailsRightInformationBoxProps> = ({movie, themeColor}) => {
+export const MovieDetailsRightInformationBox: FC<MovieDetailsRightInformationBoxProps> = ({movie, themeColor}) => {
     return (
         <>
 

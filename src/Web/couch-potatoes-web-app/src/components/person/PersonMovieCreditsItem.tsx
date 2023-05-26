@@ -1,6 +1,5 @@
-import React, {useState, useEffect, FC} from 'react';
-import {Box, Card, CardBody, Image, Stack, StackDivider, Text} from "@chakra-ui/react";
-import {getPosterImageUri} from "../../services/images";
+import React, { FC} from 'react';
+import {Box, Card, CardBody, Image, Stack, Text} from "@chakra-ui/react";
 
 interface PersonMovieCreditsProperties {
     imageUri?: string;

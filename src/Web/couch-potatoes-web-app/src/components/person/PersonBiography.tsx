@@ -1,5 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Flex, Heading, StackDivider, Text, VStack} from "@chakra-ui/react";
+import React, {FC} from 'react';
+import {Heading, Text, VStack} from "@chakra-ui/react";
 
 interface PersonBiographyInfo {
     name?: string;
@@ -14,13 +14,13 @@ const PersonBiography: FC<PersonBiographyInfo> =
         return (
             <VStack align="flex-start" spacing={4}>
                 <Heading color="white" as='h3' size='lg'>
-                    {name}
+                    {name ? (<Text color="white">{name}</Text>) : (<Text color="white">N/A</Text>)}
                 </Heading>
                 <Heading color="white" as='h4' size='md'>
                     Biography
                 </Heading>
                 <Text color="white">
-                    {bio}
+                    {bio ? (<Text color="white">{bio}</Text>) : (<Text color="white">N/A</Text>)}
                 </Text>
             </VStack>
         )

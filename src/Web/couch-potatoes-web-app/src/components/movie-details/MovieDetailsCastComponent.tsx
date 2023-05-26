@@ -11,7 +11,6 @@ import {
 import { getPosterImageUri } from '../../services/images';
 import React, { FC } from 'react';
 import MovieCredits from '../../models/movie_credits';
-import Movie from '../../models/movie';
 import { useNavigate } from 'react-router-dom';
 
 export interface MovieDetailsCastComponentProps {
