@@ -58,7 +58,7 @@ const LoginPage: FC = () => {
                             'currentUser',
                             JSON.stringify(currentUser)
                         );
-                        console.log('HERE');
+
                         navigate(AUTHENTICATED_REDIRECT);
                         return true;
                     }
