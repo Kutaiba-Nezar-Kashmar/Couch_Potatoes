@@ -38,10 +38,17 @@ const LoginPage: FC = () => {
                 },
                 {
                     provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                    scopes: [
+                        'https://www.googleapis.com/auth/userinfo.email',
+                        'https://www.googleapis.com/auth/userinfo.profile',
+                        'https://www.googleapis.com/auth/plus.me',
+                    ],
+                    customParameters: {
+                        prompt: 'consent',
+                    },
                     requireDisplayName: true,
-                }
+                },
             ],
-            signInSuccessUrl: AUTHENTICATED_REDIRECT,
             callbacks: {
                 signInSuccessWithAuthResult: (authResult, redirectUrl) => {
                     const res: firebase.auth.UserCredential = authResult;
@@ -51,6 +58,7 @@ const LoginPage: FC = () => {
                             'currentUser',
                             JSON.stringify(currentUser)
                         );
+                        navigate(AUTHENTICATED_REDIRECT);
                         return true;
                     }
 
