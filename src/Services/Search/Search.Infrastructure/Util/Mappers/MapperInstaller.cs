@@ -2,9 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Search.Domain.Models;
 using Search.Infrastructure.ControllerDtos;
-using Search.Infrastructure.TmdbDtos.Movie;
 using Search.Infrastructure.TmdbDtos.MultiSearch;
-using Search.Infrastructure.TmdbDtos.Person;
 
 namespace Search.Infrastructure.Util.Mappers;
 

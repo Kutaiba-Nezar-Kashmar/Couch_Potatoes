@@ -6,7 +6,7 @@ using Search.Domain.Models;
 
 namespace Search.Application.MultiSearch;
 
-public record MultiSearchRequest(string query) : IRequest<MultiSearchResponse>;
+public record MultiSearchRequest(string Query) : IRequest<MultiSearchResponse>;
 
 public class
     MultiSearchHandler : IRequestHandler<MultiSearchRequest,
@@ -35,12 +35,12 @@ public class
         {
             _logger.LogInformation("Handling multi search");
             return await _multiSearchRepository.MultiSearch(
-                request.query);
+                request.Query);
         }
         catch (Exception e)
         {
             _logger.LogCritical(
-                "Failed to performing multi search on {Date} with error: {EMessage} {ex}",
+                "Failed to performing multi search on {Date} with error: {EMessage} {Ex}",
                 DateTimeOffset.UtcNow,
                 e.Message,
                 e);

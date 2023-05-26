@@ -51,7 +51,7 @@ public class SearchController : ControllerBase
         catch (Exception e)
         {
             _logger.LogCritical(
-                "Failed to perform multi search with error: {message}",
+                "Failed to perform multi search with error: {Message}",
                 e.Message);
             return StatusCode((int) HttpStatusCode.InternalServerError,
                 "Failed to perform multi search");
