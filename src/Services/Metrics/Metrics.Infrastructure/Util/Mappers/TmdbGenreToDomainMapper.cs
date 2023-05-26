@@ -1,5 +1,4 @@
 ﻿using Metrics.Domain.Models;
-using Metrics.Infrastructure.Responses;
 using Metrics.Infrastructure.TmdbDtos.GenreDto;
 
 namespace Metrics.Infrastructure.Util.Mappers;
