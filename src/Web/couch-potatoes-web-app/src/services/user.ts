@@ -154,6 +154,10 @@ export async function getUsers(ids: string[]): Promise<User[]> {
     const config = await getConfig();
     const queryParams = ids.map((id) => `ids=${id}`).join('&');
 
+    if (ids.length === 0) {
+        return [];
+    }
+
     const response = await fetch(`${config.baseUrl}/users?${queryParams}`);
 
     if (!response.ok) {

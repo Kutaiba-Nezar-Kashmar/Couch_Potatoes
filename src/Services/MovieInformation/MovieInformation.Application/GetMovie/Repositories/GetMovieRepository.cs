@@ -16,7 +16,8 @@ namespace MovieInformation.Application.GetMovie.Repositories;
 
 public class GetMovieRepository : IGetMovieRepository
 {
-    private readonly string _apiKey = "ee89f342735e902ec9459f6edb50013a";
+    private readonly string _apiKey = 
+        Environment.GetEnvironmentVariable("TMDB_API_KEY");
 
     private readonly HttpClient _httpClient;
     private readonly ILogger<GetMovieRepository> _logger;

@@ -123,7 +123,6 @@ const ReviewComponent: FC<ReviewComponentProps> = ({
                 review.reviewId,
                 direction
             );
-            console.log(vote);
 
             const existingVote = review.votes.find(
                 (v) => v.userId === authenticatedUser?.id

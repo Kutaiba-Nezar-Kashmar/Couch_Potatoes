@@ -1,16 +1,22 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import {Box, Card, CardBody, Heading, HStack, Text, VStack} from "@chakra-ui/react";
+import {useNavigate} from "react-router-dom";
 
 interface CrewDetails {
     title?: string;
     department?: string;
     job?: string;
     releaseDate?: Date;
+    movieId: number
 }
 
-const CreditsAsCrewDetails: FC<CrewDetails> = ({title, department, job, releaseDate}) => {
+const CreditsAsCrewDetails: FC<CrewDetails> = ({title, movieId, department, job, releaseDate}) => {
+    const navigate = useNavigate();
     return (
-        <Card backgroundColor='white'>
+        <Card _hover={{cursor: "pointer"}} onClick={() =>
+            navigate(
+                `/Couch_Potatoes/movie/details/${movieId}`
+            )} backgroundColor='white'>
             <CardBody>
                 <HStack spacing={100}>
                     <Box>
