@@ -28,10 +28,11 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
     };
 
     const getAverageUpvotes = () => {
-        const total = reviews.flatMap((review) => review.votes).length;
-        const upvotes = reviews
-            .flatMap((review) => review.votes)
-            .filter((review) => review.direction == 'Up').length;
+        const total = reviews.flatMap((review) => review.votes)?.length ?? 0;
+        const upvotes =
+            reviews
+                .flatMap((review) => review.votes)
+                .filter((review) => review.direction == 'Up')?.length ?? 0;
 
         const averageUpvotes = upvotes / total;
 

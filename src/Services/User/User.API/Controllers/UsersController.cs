@@ -9,6 +9,8 @@ using User.Application.GetReviewsForUser;
 using User.Application.GetReviewsForUser.Exceptions;
 using User.Application.GetUser;
 using User.Application.RemoveMovieFromFavorites;
+using User.Application.UpdateProfileInfo;
+using User.Application.UpdateProfileInfo.Exceptions;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;
@@ -48,6 +50,36 @@ public class UsersController : ControllerBase
         {
             _logger.LogError(LogEvent.Api, e.InnerException ?? e,
                 $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
+        }
+    }
+
+    [HttpPut("{userId}")]
+    public async Task<ActionResult<ReadUserDto>> UpdateProfileInfo([FromRoute] string userId,
+        [FromBody] UpdateUserProfileInfoDto dto)
+    {
+        try
+        {
+            var updatedUser =
+                await _mediator.Send(new UpdateProfileInfoCommand(userId, dto.displayName, dto.avatarUri));
+            return Ok(_mapper.Map<ReadUserDto>(updatedUser));
+        }
+        catch (Exception e) when (e is UserDoesNotExistException)
+        {
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(GetUser)} in {nameof(UsersController)}: {e}");
+            return NotFound(e.Message);
+        }
+        catch (Exception e) when (e is FailedToUpdateUserProfileInfoException)
+        {
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(UpdateProfileInfo)}");
+            return StatusCode(HttpStatusCode.InternalServerError.Cast<int>(), e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(LogEvent.Api, e.InnerException ?? e,
+                $"Failed to process {nameof(UpdateProfileInfo)} in {nameof(UsersController)}: {e}");
             return StatusCode(HttpStatusCode.InternalServerError.Cast<int>());
         }
     }
