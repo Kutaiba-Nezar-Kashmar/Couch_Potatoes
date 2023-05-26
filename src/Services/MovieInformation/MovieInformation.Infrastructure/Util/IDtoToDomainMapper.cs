@@ -228,13 +228,15 @@ public class
             {
                 Height = p.Height,
                 FilePath = p.FilePath,
-                Width = p.Width
+                Width = p.Width,
+                Lang = p.Lang
             }).ToList(),
             Backdrops = from.Backdrops.Select(b => new MovieImageDto
             {
                 Height = b.Height,
                 FilePath = b.FilePath,
-                Width = b.Width
+                Width = b.Width,
+                Lang = b.Lang
             }).ToList(),
             Languages = from.Languages.Select(l => new ReadLanguageDto
             {

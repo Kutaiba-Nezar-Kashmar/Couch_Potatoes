@@ -64,7 +64,8 @@ public static class MapperInstaller
                         {
                             FilePath = p.FilePath,
                             Height = p.Height,
-                            Width = p.Width
+                            Width = p.Width,
+                            Lang = p.Lang
                         }).ToList()))
                 .ForMember(destination => destination.Videos,
                     opt => opt.MapFrom(src =>
