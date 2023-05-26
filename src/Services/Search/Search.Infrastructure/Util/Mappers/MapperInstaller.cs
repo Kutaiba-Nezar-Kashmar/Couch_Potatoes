@@ -38,7 +38,8 @@ public static class MapperInstaller
                 .ForMember(d => d.MediaType,
                     o => o.MapFrom(s => s.MediaType))
                 .ForMember(d => d.ReleaseDate,
-                    o => o.MapFrom(s => s.ReleaseDate))
+                    o => o.MapFrom(s =>
+                        DateTimeParser.ParseDateTime(s.ReleaseDate)))
                 .ForMember(d => d.GenreIds,
                     o => o.MapFrom(s => s.GenreIds))
                 .ForMember(d => d.Popularity,
@@ -81,6 +82,8 @@ public static class MapperInstaller
                 .ForMember(d => d.Title, o => o.MapFrom(s => s.Title))
                 .ForMember(d => d.PosterPath,
                     o => o.MapFrom(s => s.PosterPath))
+                .ForMember(d => d.ReleaseDate,
+                    o => o.MapFrom(s => s.ReleaseDate))
                 .ForAllMembers(opts =>
                     opts.Condition((src, dest, srcMember) =>
                         srcMember != null));
