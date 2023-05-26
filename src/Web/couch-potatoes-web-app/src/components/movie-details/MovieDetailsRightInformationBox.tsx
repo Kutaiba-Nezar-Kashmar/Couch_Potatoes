@@ -22,6 +22,10 @@ export const MovieDetailsRightInformationBox: FC<MovieDetailsRightInformationBox
         if (classification.releaseDatesDetails && classification.releaseDatesDetails.length === 0) {
             return "N/A";
         }
+        if (classification.releaseDatesDetails[0].certification==="")
+        {
+            return "N/A";
+        }
         return classification.releaseDatesDetails[0].certification
     }
 
