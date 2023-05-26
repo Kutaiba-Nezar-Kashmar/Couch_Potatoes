@@ -14,13 +14,13 @@ const PersonBiography: FC<PersonBiographyInfo> =
         return (
             <VStack align="flex-start" spacing={4}>
                 <Heading color="white" as='h3' size='lg'>
-                    {name}
+                    {name ? (<Text color="white">{name}</Text>) : (<Text color="white">N/A</Text>)}
                 </Heading>
                 <Heading color="white" as='h4' size='md'>
                     Biography
                 </Heading>
                 <Text color="white">
-                    {bio}
+                    {bio ? (<Text color="white">{bio}</Text>) : (<Text color="white">N/A</Text>)}
                 </Text>
             </VStack>
         )
