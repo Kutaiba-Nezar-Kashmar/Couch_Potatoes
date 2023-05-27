@@ -2,6 +2,7 @@ using Google.Apis.Util;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using User.Application.UpdateReviewForMovie.Exceptions;
+using User.Application.UpdateReviewForMovie.Repository;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;
@@ -35,13 +36,13 @@ public class UpdateReviewForMovieHandler : IRequestHandler<UpdateReviewForMovieC
                 throw new UserDoesNotExistException(request.userId);
             }
 
-            var reviews = await _repository.GetReviewsForMovie(request.movieId);
-            if (!reviews.Any())
+            var review = await _repository.GetReviewById(request.reviewId);
+            if (review is null)
             {
                 throw new ReviewDoesNotExistException(request.reviewId, request.movieId);
             }
 
-            var userHasReviewForMovie = reviews.Any(review => review.UserId == request.userId);
+            var userHasReviewForMovie = review.MovieId == request.movieId;
             if (!userHasReviewForMovie)
             {
                 throw new ReviewDoesNotExistException(request.reviewId, request.movieId);

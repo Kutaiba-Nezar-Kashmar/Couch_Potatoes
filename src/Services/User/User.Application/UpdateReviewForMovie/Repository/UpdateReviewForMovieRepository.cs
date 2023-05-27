@@ -3,6 +3,7 @@ using Google.Apis.Logging;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Logging;
 using User.Application.CreateReviewForMovie.Repository;
+using User.Application.UpdateReviewForMovie.Repository;
 using User.Domain;
 using User.Infrastructure;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -21,33 +22,28 @@ public class UpdateReviewForMovieRepository : IUpdateReviewForMovieRepository
         _logger = logger;
     }
 
-    public async Task<IReadOnlyCollection<Review>> GetReviewsForMovie(int movieId)
+
+    public async Task<Review?> GetReviewById(Guid id)
     {
-        var doc = _collectionReference.Document(movieId.ToString());
-        var snapshot = await doc.GetSnapshotAsync();
+        var doc = _collectionReference.Document(id.ToString());
+        var reviewSnapshot = await doc.GetSnapshotAsync();
 
-        if (!snapshot.Exists)
+        var reviewObject = reviewSnapshot.ToDictionary()["Review"];
+
+        var reviewDto = JsonSerializer.Deserialize<FirestoreReviewDto>(JsonSerializer.Serialize(reviewObject,
+            new JsonSerializerOptions {PropertyNameCaseInsensitive = true}));
+
+        return reviewDto switch
         {
-            return new List<Review>();
-        }
-
-        var elements = snapshot.ToDictionary();
-        var reviews = elements["Reviews"];
-
-        if (reviews is null)
-        {
-            return new List<Review>();
-        }
-
-        return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
-                JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
-            .Select(dto => dto.ToDomainReview()).ToList();
+            null => null,
+            _ => reviewDto.ToDomainReview()
+        };
     }
 
     public async Task<Review?> UpdateReview(int movieId, Guid reviewId, int rating, string reviewText,
         DateTime updateTime)
     {
-        var doc = _collectionReference.Document(movieId.ToString());
+        var doc = _collectionReference.Document(reviewId.ToString());
         var snapshot = await doc.GetSnapshotAsync();
         if (!snapshot.Exists)
         {
@@ -56,20 +52,20 @@ public class UpdateReviewForMovieRepository : IUpdateReviewForMovieRepository
 
         try
         {
-            var reviews = await GetReviewsForMovie(movieId);
-            var reviewToUpdate = reviews.First(review => review.ReviewId == reviewId);
+            var reviewToUpdate = await GetReviewById(reviewId);
+            
+            if (reviewToUpdate is null)
+            {
+                return null;
+            }
 
             reviewToUpdate.ReviewText = reviewText;
             reviewToUpdate.Rating = rating;
             reviewToUpdate.LastUpdatedDate = updateTime;
 
-            var updatedReviewsState = reviews
-                .Where(review => review.ReviewId != reviewId) // Filter out outdated state
-                .Concat(new List<Review>() {reviewToUpdate}); // Insert updated state
-
-            doc.SetAsync(new Dictionary<string, object>()
+            await doc.SetAsync(new Dictionary<string, object>
             {
-                {"Reviews", updatedReviewsState.Select(rev => rev.ToFirestoreReview())}
+                {"Review", reviewToUpdate.ToFirestoreReview()}
             });
 
             return reviewToUpdate;
