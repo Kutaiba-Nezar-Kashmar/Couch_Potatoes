@@ -33,9 +33,8 @@ public class DeleteReviewForMovieHandler : IRequestHandler<DeleteReviewForMovieC
                 throw new UserDoesNotExistException(request.userId);
             }
 
-            var reviews = await _repository.GetReviewsForMovie(request.movieId);
 
-            var existingReview = reviews.FirstOrDefault(review => review.ReviewId == request.reviewId);
+            var existingReview = await _repository.GetReviewById(request.reviewId);
             if (existingReview is null)
             {
                 throw new ReviewDoesNotExistException(request.reviewId, request.movieId);
