@@ -2,8 +2,10 @@ using System.Text.Json;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Logging;
 using User.Application.CreateReviewForMovie.Repository;
+using User.Application.GetReviewsForMovie.Exceptions;
 using User.Domain;
 using User.Infrastructure;
+using User.Infrastructure.Exceptions;
 
 namespace User.Application.GetReviewsForUser.Repository;
 
@@ -23,45 +25,25 @@ public class GetReviewsForUserRepository : IGetReviewsForUserRepository
     {
         try
         {
-            var reviews = await GetAllReviews();
-            return reviews.Where(review => review.UserId == userId).ToList();
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(LogEvent.Infrastructure, e, $"Failed to get reviews from Firestore: {e}");
-            throw;
-        }
-    }
+            var movieReviewsQuery = _collectionReference.WhereEqualTo("Review.UserId", userId);
+            var movieReviewsQuerySnapshot = await movieReviewsQuery.GetSnapshotAsync();
 
-    private async Task<IReadOnlyCollection<Review>> GetAllReviews()
-    {
-        try
-        {
-            var allMovieReviewsSnapshot = await _collectionReference.GetSnapshotAsync();
-            return allMovieReviewsSnapshot.Documents
-                .Where(movieSnapshot => movieSnapshot.Exists)
-                .SelectMany(snapshot =>
-                {
-                    var movieDict = snapshot.ToDictionary();
-                    if (movieDict is null)
-                    {
-                        return new List<Review>();
-                    }
+            var reviewObjects = movieReviewsQuerySnapshot.Select(docSnapshot => docSnapshot.ToDictionary()["Review"]);
 
-                    var reviews = movieDict["Reviews"];
-                    if (reviews is null)
-                    {
-                        return new List<Review>();
-                    }
+            var reviewsDtos = JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviewObjects,
+                    new JsonSerializerOptions {PropertyNameCaseInsensitive = true}
+                )
+            );
 
-                    return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
-                            JsonSerializer.Serialize(reviews,
-                                new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))?
-                        .Select(dto => dto.ToDomainReview()).ToList() ?? new List<Review>();
-                })
-                .ToList();
+            if (reviewsDtos is null)
+            {
+                throw new InfrastructureException("Failed to retrieve user's review from Firestore");
+            }
+
+            return reviewsDtos.Select(dto => dto.ToDomainReview()).ToList();
         }
-        catch (Exception e)
+        catch (Exception e) when (e is not InfrastructureException)
         {
             _logger.LogError(LogEvent.Infrastructure, e, $"Failed to get reviews from Firestore: {e}");
             throw;
