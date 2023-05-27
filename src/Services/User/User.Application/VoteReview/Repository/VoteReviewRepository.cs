@@ -3,7 +3,6 @@ using Google.Cloud.Firestore;
 using Microsoft.Extensions.Logging;
 using User.Application.CreateReviewForMovie.Repository;
 using User.Application.GetReviewsForMovie.Exceptions;
-using User.Application.UpvoteReview.Repository;
 using User.Domain;
 using User.Infrastructure;
 

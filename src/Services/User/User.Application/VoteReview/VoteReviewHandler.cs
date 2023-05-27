@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using User.Application.UpvoteReview.Exceptions;
-using User.Application.UpvoteReview.Repository;
+using User.Application.VoteReview.Repository;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;

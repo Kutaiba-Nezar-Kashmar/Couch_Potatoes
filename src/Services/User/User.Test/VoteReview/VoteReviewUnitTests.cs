@@ -1,12 +1,12 @@
 using Microsoft.Extensions.Logging;
 using Moq;
-using User.Application.UpvoteReview;
-using User.Application.UpvoteReview.Repository;
+using User.Application.VoteReview;
+using User.Application.VoteReview.Repository;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;
 
-namespace User.Test;
+namespace User.Test.VoteReview;
 
 [TestFixture]
 public class VoteReviewUnitTests
@@ -22,8 +22,7 @@ public class VoteReviewUnitTests
         var testUserId = "yW3zBelUzeWWO380vu8IiTsgxWq2";
         var handler = CreateHandler(null, (auth) =>
         {
-            CouchPotatoUser nonExistingUser = null;
-            auth.Setup(x => x.GetUserById(testUserId).Result).Returns(nonExistingUser);
+            auth.Setup(x => x.GetUserById(testUserId).Result).Returns((CouchPotatoUser?) null);
         });
         VoteReviewCommand voteReviewCommand = new(testUserId, 1, Guid.NewGuid(), VoteDirection.Up);
 
@@ -39,7 +38,7 @@ public class VoteReviewUnitTests
         var existingUser = TestUtil.CreateGenericUser();
         var movieId = 1;
         var handler = CreateHandler(
-            repository => { repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(new List<Review>()); },
+            repository => { repository.Setup(x => x.GetReviewById(It.IsAny<Guid>())).ReturnsAsync((Review?) null);},
             auth => { auth.Setup(x => x.GetUserById(existingUser.Id)).ReturnsAsync(existingUser); });
         VoteReviewCommand voteReviewCommand = new(existingUser.Id, movieId, Guid.NewGuid(), VoteDirection.Up);
 
@@ -75,19 +74,14 @@ public class VoteReviewUnitTests
             MovieId = 1,
             ReviewId = reviewId,
             Rating = 10,
-            Votes = new List<Vote>()
+            Votes = new List<Vote>
             {
                 existingVote
             }
         };
 
-        var reviews = new List<Review>()
-        {
-            review
-        };
-
         var handler = CreateHandler(
-            (repository) => { repository.Setup(x => x.GetReviewsForMovie(movieId).Result).Returns(reviews); },
+            (repository) => { repository.Setup(x => x.GetReviewById(review.ReviewId)).ReturnsAsync(review); },
             (auth) =>
             {
                 CouchPotatoUser user = new()
@@ -119,10 +113,9 @@ public class VoteReviewUnitTests
         var existingUser2 = TestUtil.CreateGenericUser();
 
         var review = TestUtil.CreateReview(existingUser1.Id, movieId);
-        var reviews = new List<Review>() {review};
 
         var handler = CreateHandler(
-            repository => repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(reviews),
+            repository => repository.Setup(x => x.GetReviewById(review.ReviewId)).ReturnsAsync(review),
             auth =>
             {
                 auth.Setup(x => x.GetUserById(existingUser1.Id)).ReturnsAsync(existingUser1);
@@ -158,10 +151,9 @@ public class VoteReviewUnitTests
         };
 
         var review = TestUtil.CreateReview(existingUser1.Id, movieId, rev => rev.Votes = new List<Vote> {existingVote});
-        var reviews = new List<Review> {review};
 
         var handler = CreateHandler(
-            repository => repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(reviews),
+            repository => repository.Setup(x => x.GetReviewById(review.ReviewId)).ReturnsAsync(review),
             auth =>
             {
                 auth.Setup(x => x.GetUserById(existingUser1.Id)).ReturnsAsync(existingUser1);

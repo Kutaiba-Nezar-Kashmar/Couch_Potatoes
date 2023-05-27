@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using User.Application.UpvoteReview.Repository;
 using User.Application.VoteReview.Repository;
 
 namespace User.Application.UpvoteReview;
