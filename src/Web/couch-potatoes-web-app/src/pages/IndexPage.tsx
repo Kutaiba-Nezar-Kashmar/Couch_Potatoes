@@ -24,6 +24,7 @@ import {getPosterImageUri} from "../services/images";
 import FrontPageMovieInfoBoxComponent from "../components/FrontPageMovieInfoBoxComponent";
 import MovieRecommendations from "../models/movie-Recommedations";
 import {FrontPageCollectionViewComponent} from "../components/FrontPageCollectionViewComponent";
+import moviePoster from '../assets/MoviePosterTemp.png';
 
 
 import {Swiper, SwiperSlide} from "swiper/react";
@@ -43,7 +44,7 @@ const IndexPage = () => {
     const [topRatedMovies, setTopRatedMovies] = useState<MovieRecommendations | null>(null);
     const [NowPlayingMovies, setNowPlayingMovies] = useState<MovieRecommendations | null>(null);
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
-    const Background_Temp = 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+    const Background_Temp =moviePoster;
 
     const {isLoading, isError, data, error} = useFetchAllMovieCollections();
 

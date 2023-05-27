@@ -20,11 +20,12 @@ import BackgroundImageFull from '../components/BackgroundImageFull';
 import { getPosterImageUri } from '../services/images';
 import BasePage from '../components/BasePage';
 import Movie from '../models/movie';
+import moviePoster from '../assets/MoviePosterTemp.png';
 
 const FullCastAndCrewPage = () => {
     const { movieId } = useParams();
     const Background_Temp =
-        'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+        moviePoster;
     const Empty_Profile_Pic =
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 

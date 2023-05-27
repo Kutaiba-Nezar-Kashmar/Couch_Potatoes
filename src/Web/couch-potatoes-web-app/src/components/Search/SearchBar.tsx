@@ -18,6 +18,7 @@ import MultiSearchResponse from "../../models/search/multi-search-response";
 import {getPosterImageUri} from "../../services/images";
 import {useNavigate} from "react-router-dom";
 
+
 const scrollbarStyles = {
     width: "8px",
     backgroundColor: "white",
