@@ -4,7 +4,6 @@ using User.Application.AddMovieToFavorites;
 using User.Application.AddMovieToFavorites.Exceptions;
 using User.Application.AddMovieToFavorites.Repository;
 using User.Application.UpvoteReview;
-using User.Application.UpvoteReview.Repository;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;

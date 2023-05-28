@@ -2,8 +2,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Logging;
+using User.Application.GetReviewsForMovie.Exceptions;
 using User.Domain;
 using User.Infrastructure;
+using User.Infrastructure.Exceptions;
 
 namespace User.Application.CreateReviewForMovie.Repository;
 
@@ -12,7 +14,7 @@ public class CreateReviewForMovieRepository : ICreateReviewForMovieRepository
     private readonly CollectionReference _reference;
     private readonly ILogger _logger;
 
-    public CreateReviewForMovieRepository(ILogger<CreateReviewForMovieRepository>  logger)
+    public CreateReviewForMovieRepository(ILogger<CreateReviewForMovieRepository> logger)
     {
         _reference = Firestore.Get().Collection("Reviews");
         _logger = logger;
@@ -22,15 +24,14 @@ public class CreateReviewForMovieRepository : ICreateReviewForMovieRepository
     {
         try
         {
-            var docRef = _reference.Document(movieId.ToString());
+            var docRef = _reference.Document(review.ReviewId.ToString());
 
-            var reviews = await GetReviewsForMovie(movieId);
-            var updatedReviewsState = reviews.Concat(new[] {review});
-
-            await docRef.SetAsync(new Dictionary<string, object>()
+            var data = new Dictionary<string, object>
             {
-                {"Reviews", updatedReviewsState.Select(rev => rev.ToFirestoreReview())}
-            });
+                {"Review", review.ToFirestoreReview()}
+            };
+
+            await docRef.SetAsync(data);
         }
         catch (Exception e)
         {
@@ -39,33 +40,31 @@ public class CreateReviewForMovieRepository : ICreateReviewForMovieRepository
         }
     }
 
-    public async Task<IReadOnlyCollection<Review>> GetReviewsForMovie(int id)
+    public async Task<IReadOnlyCollection<Review>> GetUsersReviews(string userId)
     {
         try
         {
-            var doc = _reference.Document(id.ToString());
-            var snapshot = await doc.GetSnapshotAsync();
+            var movieReviewsQuery = _reference.WhereEqualTo("Review.UserId", userId);
+            var movieReviewsQuerySnapshot = await movieReviewsQuery.GetSnapshotAsync();
 
-            if (!snapshot.Exists)
+            var reviewObjects = movieReviewsQuerySnapshot.Select(docSnapshot => docSnapshot.ToDictionary()["Review"]);
+
+            var reviewsDtos = JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviewObjects,
+                    new JsonSerializerOptions {PropertyNameCaseInsensitive = true}
+                )
+            );
+
+            if (reviewsDtos is null)
             {
-                return new List<Review>();
+                throw new InfrastructureException("Failed to retrieve user's review from Firestore");
             }
 
-            var elements = snapshot.ToDictionary();
-            var reviews = elements["Reviews"];
-
-            if (reviews is null)
-            {
-                return new List<Review>();
-            }
-
-            return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
-                    JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
-                .Select(dto => dto.ToDomainReview()).ToList();
+            return reviewsDtos.Select(dto => dto.ToDomainReview()).ToList();
         }
-        catch (Exception e)
+        catch (Exception e) when (e is not InfrastructureException)
         {
-            _logger.LogError(LogEvent.Infrastructure, "Failed to store in Firestore", e);
+            _logger.LogError(LogEvent.Infrastructure, e, $"Failed to get reviews from Firestore: {e}");
             throw;
         }
     }

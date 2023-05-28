@@ -9,6 +9,7 @@ using User.Application.DeleteReview;
 using User.Application.GetReviewsForMovie;
 using User.Application.UpdateReviewForMovie;
 using User.Application.UpvoteReview;
+using User.Application.VoteReview;
 using User.Domain;
 using User.Domain.Exceptions;
 using User.Infrastructure;

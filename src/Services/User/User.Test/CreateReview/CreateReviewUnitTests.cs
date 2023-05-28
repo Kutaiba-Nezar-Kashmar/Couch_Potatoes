@@ -79,10 +79,10 @@ public class CreateReviewUnitTests
             Votes = new List<Vote>()
         };
         
-        List<Review> existingReviews = new() { existingReview};
+        List<Review> usersReviews = new() { existingReview};
 
         var handler = CreateHandler(
-            repository => repository.Setup(x => x.GetReviewsForMovie(movieId)).ReturnsAsync(existingReviews),
+            repository => repository.Setup(x => x.GetUsersReviews(existingUser.Id)).ReturnsAsync(usersReviews),
             auth => auth.Setup(x => x.GetUserById(existingUser.Id)).ReturnsAsync(existingUser)
         );
 
