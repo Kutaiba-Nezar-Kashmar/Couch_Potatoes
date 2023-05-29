@@ -51,9 +51,9 @@ public class CreateReviewForMovieHandler : IRequestHandler<CreateReviewForMovieC
 
         try
         {
-            var reviews = await _repository.GetReviewsForMovie(request.movieId);
+            var usersReviews = await _repository.GetUsersReviews(request.userId);
 
-            var userAlreadyHasReviewForMovie = reviews.Any(r => r.UserId == request.userId);
+            var userAlreadyHasReviewForMovie = usersReviews.Any(review => review.MovieId == request.movieId);
             if (userAlreadyHasReviewForMovie)
             {
                 throw new UserHasExistingReviewException(request.userId, request.movieId);

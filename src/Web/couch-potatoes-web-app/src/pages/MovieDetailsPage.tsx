@@ -55,6 +55,7 @@ import {Review} from '../models/review/review';
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
 import PersonMovieCreditsItem from "../components/person/PersonMovieCreditsItem";
+import Video from "../models/Video";
 
 const MovieDetailsPage = () => {
     const {movieId} = useParams();
@@ -116,6 +117,23 @@ const MovieDetailsPage = () => {
         const minutes = num % 60; // Get the remaining minutes
 
         return `${hours}h ${minutes}m`; // Return the formatted string
+    }
+
+    function sortTrailers() {
+        if (!movie) {
+            return []
+        }
+
+        const trailers: Video[] = [];
+        const otherVideos: Video[] = [];
+        movie!.videos.forEach(v => {
+            if (v.type === "Trailer") {
+                trailers.push(v)
+            } else
+                otherVideos.push(v)
+
+        })
+        return trailers.concat(otherVideos)
     }
 
     useEffect(() => {
@@ -202,37 +220,57 @@ const MovieDetailsPage = () => {
                     {/* CAROUSEL */}
                     <GridItem colSpan={5} rowSpan={4}>
                         <Box>
-                            <Carousel
-                                infiniteLoop={true}
-                                autoPlay={true}
-                                interval={3000}
-                                stopOnHover={true}
-                            >
-                                {/*{movie?.videos.filter(v =>v.type==="Trailer").map((video) =>(*/}
-                                {/*    // <Box> hey</Box>*/}
-                                {/*// ))}*/}
-                                {/*TODO: FIIIx*/}
-                                {movie?.posters?.slice(0,10).map((poster) => ( <Box
-                                        _hover={{cursor: 'pointer'}}
-                                        onClick={() =>
-                                            handleImageClick(poster.filePath ? (getPosterImageUri(poster?.filePath!)) : (Background_Temp)
-                                            )
-                                        }
-                                    >
-                                        <img
-                                            style={{
-                                                width: '100%',
-                                                maxHeight: '500px',
-                                                height: 'auto',
-                                                objectFit: 'contain',
-                                            }}
-                                            src={(movie?.backdropUri ? (getPosterImageUri(poster?.filePath!)) : (Background_Temp))}
-                                        />
-                                    </Box>))}
+
+                            {movie &&
+                                <Carousel
+                                    infiniteLoop={true}
+                                  showStatus={false}
+                                    showIndicators={false}
+                                    swipeable={true}
+                                >
+                                    {/*{movie?.videos.filter(v =>v.type==="Trailer").map((video) =>(*/}
+                                    {/*    // <Box> hey</Box>*/}
+                                    {/*// ))}*/}
+                                    {/*TODO: FIIIx*/}
 
 
+                                    {
+                                        sortTrailers().slice(0, 1).map((video) => (
+                                            <Box >
+                                                <Box mx="auto">
+                                                    <AspectRatio width={"100%"} maxHeight={"500px"} ratio={16 / 9}>
+                                                        <iframe
+                                                                src={"https://www.youtube.com/embed/" + video.key}
+                                                                title={video.name}
+                                                                allowFullScreen
+                                                        />
+                                                    </AspectRatio>
+                                                </Box>
+                                            </Box>
+                                        )).concat(movie?.backdrops?.filter(b => b.lang === "en").slice(0, 10).map((backDrop) => (
+                                            <Box
+                                                _hover={{cursor: 'pointer'}}
+                                                onClick={() =>
+                                                    handleImageClick(backDrop.filePath ? (getPosterImageUri(backDrop?.filePath!)) : (Background_Temp)
+                                                    )
+                                                }
+                                            >
+                                                <img
+                                                    style={{
+                                                        width: '100%',
+                                                        maxHeight: '500px',
+                                                        height: 'auto',
+                                                        objectFit: 'contain',
+                                                    }}
+                                                    src={(movie?.backdropUri ? (getPosterImageUri(backDrop?.filePath!)) : (Background_Temp))}
+                                                />
+                                            </Box>)) as any[])
 
-                            </Carousel>
+                                    }
+
+
+                                </Carousel>
+                            }
                             <Modal
                                 isOpen={isOpen}
                                 onClose={handleModalClose}
@@ -295,8 +333,9 @@ const MovieDetailsPage = () => {
                                     <Tab><Text marginX={2}>Videos</Text> <Text
                                         color={"grey"}> {movie?.videos.length}</Text></Tab>
                                     <Tab><Text marginX={2}>Posters</Text> <Text
-                                        color={"grey"}> {movie?.posters.length}</Text></Tab>
-                                    <Tab><Text marginX={2}>Backdrops</Text> <Text color={"grey"}> {movie?.backdrops.length}</Text></Tab>
+                                        color={"grey"}> {movie?.posters.filter(p => p.lang === "en").length}</Text></Tab>
+                                    <Tab><Text marginX={2}>Backdrops</Text> <Text
+                                        color={"grey"}> {movie?.backdrops.filter(b => b.lang === "en").length}</Text></Tab>
                                 </TabList></Stack>
                             <TabPanels>
                                 <TabPanel>
@@ -310,7 +349,7 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movie?.videos?.map((video) => (
+                                        {sortTrailers().map((video) => (
                                             <SwiperSlide>
                                                 <Box mx="auto">
                                                     <AspectRatio ratio={4 / 3}>
@@ -321,6 +360,7 @@ const MovieDetailsPage = () => {
                                                         />
                                                     </AspectRatio>
                                                 </Box>
+                                                <Text color={"grey"}>{video.type}</Text>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>
@@ -336,7 +376,7 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movie?.posters.map((poster) => (
+                                        {movie?.posters.filter(p => p.lang === "en").map((poster) => (
                                             <SwiperSlide
                                                 onClick={() =>
                                                     handleImageClick(
@@ -346,7 +386,8 @@ const MovieDetailsPage = () => {
                                                     )
                                                 }
                                             >
-                                                <Image src={"https://image.tmdb.org/t/p/original/"+(poster.filePath)}/>
+                                                <Image
+                                                    src={"https://image.tmdb.org/t/p/original/" + (poster.filePath)}/>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>
@@ -360,7 +401,7 @@ const MovieDetailsPage = () => {
                                         pagination={{clickable: true}}
                                         spaceBetween={5}
                                     >
-                                        {movie?.backdrops?.map((backdrop) => (
+                                        {movie?.backdrops?.filter(b => b.lang === "en").map((backdrop) => (
                                             <SwiperSlide
                                                 onClick={() =>
                                                     handleImageClick(
@@ -370,7 +411,7 @@ const MovieDetailsPage = () => {
                                                     )
                                                 }
                                             >
-                                                <Image  src={getPosterImageUri(backdrop?.filePath!)}></Image>
+                                                <Image src={getPosterImageUri(backdrop?.filePath!)}></Image>
                                             </SwiperSlide>
                                         ))}
                                     </Swiper>

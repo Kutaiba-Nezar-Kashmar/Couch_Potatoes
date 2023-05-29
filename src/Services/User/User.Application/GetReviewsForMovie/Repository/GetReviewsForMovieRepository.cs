@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Google.Cloud.Firestore;
 using Microsoft.Extensions.Logging;
 using User.Application.CreateReviewForMovie.Repository;
+using User.Application.GetReviewsForMovie.Exceptions;
 using User.Domain;
 using User.Infrastructure;
 
@@ -23,25 +24,23 @@ public class GetReviewsForMovieRepository : IGetReviewsForMovieRepository
     {
         try
         {
-            var doc = _reference.Document(movieId.ToString());
-            var snapshot = await doc.GetSnapshotAsync();
+            var movieReviewsQuery = _reference.WhereEqualTo("Review.MovieId", movieId);
+            var movieReviewsQuerySnapshot = await movieReviewsQuery.GetSnapshotAsync();
 
-            if (!snapshot.Exists)
+            var reviewObjects = movieReviewsQuerySnapshot.Select(docSnapshot => docSnapshot.ToDictionary()["Review"]);
+
+            var reviewsDtos = JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
+                JsonSerializer.Serialize(reviewObjects,
+                    new JsonSerializerOptions {PropertyNameCaseInsensitive = true}
+                )
+            );
+
+            if (reviewsDtos is null)
             {
-                return new List<Review>();
+                throw new FailedToRetrieveReviewsException(movieId);
             }
 
-            var elements = snapshot.ToDictionary();
-            var reviews = elements["Reviews"];
-        
-            if (reviews is null)
-            {
-                return new List<Review>();
-            }
-
-            return JsonSerializer.Deserialize<IEnumerable<FirestoreReviewDto>>(
-                    JsonSerializer.Serialize(reviews, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true}))
-                .Select(dto => dto.ToDomainReview()).ToList();
+            return reviewsDtos.Select(dto => dto.ToDomainReview()).ToList();
         }
         catch (Exception e)
         {

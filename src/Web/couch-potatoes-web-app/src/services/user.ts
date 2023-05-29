@@ -179,3 +179,27 @@ export async function signUserOut(
             onError(err);
         });
 }
+
+export async function updateUser(
+    userId: string,
+    displayName: string,
+    avatarUri: string
+) {
+    const config = await getConfig();
+    const payload = {
+        displayName: displayName,
+        avatarUri: avatarUri,
+    };
+
+    const response = await fetch(`${config.baseUrl}/users/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update');
+    }
+
+    return await response.json();
+}

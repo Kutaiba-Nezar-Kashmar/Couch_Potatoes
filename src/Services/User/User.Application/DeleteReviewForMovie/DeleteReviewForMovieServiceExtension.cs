@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using User.Application.DeleteReview.Repository;
+using User.Application.DeleteReviewForMovie.Repository;
 
 namespace User.Application.DeleteReview;
 

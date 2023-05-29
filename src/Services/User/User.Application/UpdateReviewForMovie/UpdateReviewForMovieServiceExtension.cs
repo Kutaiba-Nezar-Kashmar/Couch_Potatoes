@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using User.Application.UpdateReviewForMovie.Exceptions;
+using User.Application.UpdateReviewForMovie.Repository;
 
 namespace User.Application.UpdateReviewForMovie;
 

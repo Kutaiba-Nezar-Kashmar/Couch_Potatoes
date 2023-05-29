@@ -1,4 +1,5 @@
 export default interface Backdrop
 {
-    filePath:string
+    filePath:string;
+    lang:string;
 }

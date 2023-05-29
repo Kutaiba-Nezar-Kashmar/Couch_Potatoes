@@ -222,7 +222,7 @@ const ProfilePage: FC = () => {
                                 <ReviewList
                                     theme={Theme.DARK}
                                     reviewsProp={reviews}
-                                    title="Your reviews"
+                                    title="User's reviews"
                                 />
                             )}
                         </Box>
