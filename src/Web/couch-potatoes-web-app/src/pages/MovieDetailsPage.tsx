@@ -56,6 +56,7 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper";
 import PersonMovieCreditsItem from "../components/person/PersonMovieCreditsItem";
 import Video from "../models/Video";
+import moviePoster from '../assets/MoviePosterTemp.png';
 
 const MovieDetailsPage = () => {
     const {movieId} = useParams();
@@ -63,8 +64,7 @@ const MovieDetailsPage = () => {
     const [expandedImage, setExpandedImage] = useState('');
     const Empty_profilePic =
         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
-    const Background_Temp =
-        'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+    const Background_Temp=moviePoster;
 
     const handleImageClick = (imageUrl: string) => {
         setExpandedImage(imageUrl);

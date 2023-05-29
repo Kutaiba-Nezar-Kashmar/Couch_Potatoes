@@ -1,6 +1,5 @@
 import { RouteObject } from 'react-router-dom';
 import IndexPage from './pages/IndexPage';
-import TestPage from './pages/TestPage';
 import PersonDetailsPage from './pages/PersonDetailsPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import LoginPage from './pages/LoginPage';

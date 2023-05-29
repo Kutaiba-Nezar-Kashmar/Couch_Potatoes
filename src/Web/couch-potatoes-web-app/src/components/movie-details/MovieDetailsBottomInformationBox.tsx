@@ -145,7 +145,7 @@ export const MovieDetailsBottomInformationBox: FC<
                                     {movie?.productionCompanies.map(pc => (
                                             <Stack  direction={"row"}>
                                                 <Text color={themeColor}> {pc.name}</Text>
-                                                {pc.logoPath ? (<Image maxHeight={5} src={getPosterImageUri(
+                                                {pc.logoPath ? (<Image maxHeight={5} maxWidth={40} src={getPosterImageUri(
                                                     pc?.logoPath
                                                 )}></Image>):("")}
 

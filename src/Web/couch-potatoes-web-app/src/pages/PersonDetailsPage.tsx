@@ -31,11 +31,14 @@ import PersonCreditsFilterBar from '../components/person/PersonCreditsFilterBar'
 import CreditsAsCastDetails from '../components/person/CreditsAsCastDetails';
 import CreditsAsCrewDetails from '../components/person/CreditsAsCrewDetails';
 import PersonStats from '../models/person/person-stats';
+import moviePoster from '../assets/MoviePosterTemp.png';
 import PersonStatsInformation from '../components/person/PersonStatsInformation';
+import {getDarkGrayBackground} from "../util/themeutil";
 
-//TODO: replace the Background_Temp to a proper placeholder.
-const Background_Temp =
-    'https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/02/john-wick-4-paris-poster.jpg';
+
+
+const MoviePosterTemp = moviePoster;
+const Background = getDarkGrayBackground();
 
 const PersonDetailsPage = () => {
     const navigate = useNavigate();
@@ -96,7 +99,7 @@ const PersonDetailsPage = () => {
     }
 
     return (
-        <BackgroundImageFull imageUri={Background_Temp}>
+        <BackgroundImageFull imageUri={Background}>
             <BasePage>
                 <Grid templateColumns="repeat(4, 1fr)" gap={4} paddingTop={5}>
                     <GridItem
@@ -107,7 +110,7 @@ const PersonDetailsPage = () => {
                             uri={
                                 getPosterImageUri(
                                     person?.profilePath as string
-                                ) || Background_Temp
+                                ) || MoviePosterTemp
                             }
                             alt={person?.name || 'temp'}
                             known={person?.knownForDepartment}
@@ -159,7 +162,7 @@ const PersonDetailsPage = () => {
                                 >
                                     <PersonMovieCreditsItem
                                         imageUri={
-                                            c.posterPath ?(getPosterImageUri(c.posterPath!)):( Background_Temp)
+                                            c.posterPath ?(getPosterImageUri(c.posterPath!)):( MoviePosterTemp)
 
 
                                         }
