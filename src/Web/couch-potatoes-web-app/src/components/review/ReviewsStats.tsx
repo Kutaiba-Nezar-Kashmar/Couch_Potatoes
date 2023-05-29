@@ -94,7 +94,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {getAverageRating()}
+                    {sliceNumber(getAverageRating(), 1)}
                 </Heading>
             </Flex>
             <Box height="100px" marginX="6rem">
@@ -114,7 +114,7 @@ const ReviewsStats: FC<ReviewsStatsProp> = ({ theme, reviews }) => {
                     size="xl"
                     textAlign="center"
                 >
-                    {getAverageUpvotes()}
+                    {sliceNumber(getAverageUpvotes(), 1)}
                 </Heading>
             </Flex>
         </Flex>
