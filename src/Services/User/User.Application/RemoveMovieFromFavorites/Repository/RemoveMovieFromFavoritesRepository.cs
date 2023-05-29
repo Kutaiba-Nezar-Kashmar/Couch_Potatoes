@@ -38,7 +38,7 @@ public class RemoveMovieFromFavoritesRepository : IRemoveMovieFromFavoritesRepos
                 .Where(i => i != movieId)
                 .ToList();
 
-            await userRef.SetAsync(userState.ToFirestoreDto());
+            await userRef.UpdateAsync("FavoriteMovies", userState.FavoriteMovies);
         }
         catch (Exception e)
         {
