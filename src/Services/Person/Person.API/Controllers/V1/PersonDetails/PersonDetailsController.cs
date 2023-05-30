@@ -25,8 +25,10 @@ public class PersonDetailsController : ControllerBase
     }
 
     [HttpGet("{personId}")]
-    public async Task<ActionResult<PersonDetailsDto>> GetPersonDetails(
-        [FromRoute] int personId)
+    public async Task<ActionResult<PersonDetailsDto>> GetPersonDetails
+    (
+        [FromRoute] int personId
+    )
     {
         try
         {

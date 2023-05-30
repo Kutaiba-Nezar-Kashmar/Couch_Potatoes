@@ -55,8 +55,10 @@ public class MovieDetailsController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IReadOnlyCollection<MovieControllerDto>>>
-        GetMovies(
-            [FromQuery] IReadOnlyCollection<int> ids)
+        GetMovies
+        (
+            [FromQuery] IReadOnlyCollection<int> ids
+        )
     {
         if (ids == null || !ids.Any())
         {
