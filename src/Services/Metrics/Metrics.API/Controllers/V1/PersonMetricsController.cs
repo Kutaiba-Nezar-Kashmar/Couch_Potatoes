@@ -27,7 +27,10 @@ public class PersonMetricsController : ControllerBase
 
     [HttpGet("{personId}")]
     public async Task<ActionResult<PersonStatisticsDto>>
-        GetPersonMovieStatistics([FromRoute] int personId)
+        GetPersonMovieStatistics
+        (
+            [FromRoute] int personId
+        )
     {
         try
         {

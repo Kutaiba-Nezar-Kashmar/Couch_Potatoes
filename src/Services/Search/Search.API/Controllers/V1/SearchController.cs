@@ -30,8 +30,10 @@ public class SearchController : ControllerBase
     }
 
     [HttpGet("multi")]
-    public async Task<ActionResult<MultiSearchResponseDto>> MultiSearch(
-        [FromQuery] string query)
+    public async Task<ActionResult<MultiSearchResponseDto>> MultiSearch
+    (
+        [FromQuery] string query
+    )
     {
         try
         {
@@ -46,7 +48,6 @@ public class SearchController : ControllerBase
                 await _mediator.Send(new MultiSearchRequest(query));
             var mapper = new MultiSearchToControllerDtoMapper(_mapper);
             return Ok(mapper.Map(result));
-
         }
         catch (Exception e)
         {
