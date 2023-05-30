@@ -21,5 +21,6 @@ RUN chmod +x /bootstrap.sh
 EXPOSE 8000
 EXPOSE 8001
 
-ENTRYPOINT ["/bootstrap.sh"]
+ENTRYPOINT [ "sh" ]
+CMD ["/bootstrap.sh"]
 
