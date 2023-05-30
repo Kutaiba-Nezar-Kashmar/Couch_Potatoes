@@ -34,7 +34,7 @@ public static class Firestore
                              "./service-account-key.json";
         FirebaseApp.Create(new AppOptions()
         {
-            Credential = GoogleCredential.FromFile(serviceAccount),
+            Credential = GoogleCredential.FromJson(Environment.GetEnvironmentVariable(ServiceAccountKeyEnvironmentKey)) ?? GoogleCredential.FromFile(serviceAccount),
         });
     }
 
