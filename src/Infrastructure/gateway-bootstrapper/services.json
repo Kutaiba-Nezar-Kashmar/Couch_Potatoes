@@ -17,8 +17,8 @@
             "name": "person-service",
             "routes": [
                 {
-                    "name": "persons",
-                    "paths": ["/couch-potatoes/api/v1/persons"]
+                    "name": "person",
+                    "paths": ["/couch-potatoes/api/v1/person"]
                 }
             ]
         },
