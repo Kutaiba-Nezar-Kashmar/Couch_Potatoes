@@ -4,7 +4,6 @@ using User.Application;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.InstallMiddlewares();
 builder.Services.InstallMappings();
 builder.Services.InstallUserServiceDependencies();
