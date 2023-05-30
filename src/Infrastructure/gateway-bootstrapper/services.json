@@ -17,8 +17,12 @@
             "name": "person-service",
             "routes": [
                 {
-                    "name": "persons",
-                    "paths": ["/couch-potatoes/api/v1/persons"]
+                    "name": "movie credits",
+                    "paths": ["/couch-potatoes/api/v1/person/movie-credits"]
+                },
+                {
+                    "name": "person details",
+                    "paths": ["/couch-potatoes/api/v1/person/details"]
                 }
             ]
         },
