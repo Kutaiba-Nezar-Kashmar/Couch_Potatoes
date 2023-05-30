@@ -95,7 +95,7 @@ module "movieinformation_service" {
   port          = 80
 }
 
-## User ----------------------------
+# User ----------------------------
 module "user_service" {
   source                       = "./modules/container-service"
   service_name                 = "couch-potatoes-user-service"
