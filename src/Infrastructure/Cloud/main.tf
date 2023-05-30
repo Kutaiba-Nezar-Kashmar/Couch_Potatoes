@@ -4,134 +4,134 @@
 # API GATEWAY ---------------------------------------------------
 ## NOTE: (mibui 2023-05-24) For more info, read /src/Infrastructure/gateway-bootstrapper/README.md
 
-# output "gateway_url" {
-#   value      = google_cloud_run_v2_service.gateway.uri
-#   depends_on = [google_cloud_run_v2_service.gateway]
-# }
-# resource "google_cloud_run_v2_service" "gateway" {
-#   name     = "couch-potatoes-api-gateway"
-#   location = "europe-west1"
-#   ingress  = "INGRESS_TRAFFIC_ALL"
+output "gateway_url" {
+  value      = google_cloud_run_v2_service.gateway.uri
+  depends_on = [google_cloud_run_v2_service.gateway]
+}
+resource "google_cloud_run_v2_service" "gateway" {
+  name     = "couch-potatoes-api-gateway"
+  location = "europe-west1"
+  ingress  = "INGRESS_TRAFFIC_ALL"
 
-#   template {
-#     scaling {
-#       max_instance_count = 1
-#     }
-#     containers {
-#       image = "docker.io/michaelbui293886/couch-potatoes-gateway-bootstrapper"
-#       env {
-#         name  = "GATEWAY_MOVIEINFORMATION_SERVICE"
-#         value = module.movieinformation_service.service_url
-#       }
-#       env {
-#         name  = "GATEWAY_USER_SERVICE"
-#         value = module.user_service.service_url
-#       }
-#       env {
-#         name  = "GATEWAY_PERSON_SERVICE"
-#         value = module.person.service_url
-#       }
-#       env {
-#         name  = "GATEWAY_METRICS_SERVICE"
-#         value = module.metrics_service.service_url
-#       }
-#       env {
-#         name  = "GATEWAY_SEARCH_SERVICE"
-#         value = module.search_service.service_url
-#       }
-#       ports {
-#         container_port = 8000
-#       }
-#     }
-#   }
+  template {
+    scaling {
+      max_instance_count = 1
+    }
+    containers {
+      image = "docker.io/michaelbui293886/couch-potatoes-gateway-bootstrapper"
+      env {
+        name  = "GATEWAY_MOVIEINFORMATION_SERVICE"
+        value = module.movieinformation_service.service_url
+      }
+      env {
+        name  = "GATEWAY_USER_SERVICE"
+        value = module.user_service.service_url
+      }
+      env {
+        name  = "GATEWAY_PERSON_SERVICE"
+        value = module.person_service.service_url
+      }
+      env {
+        name  = "GATEWAY_METRICS_SERVICE"
+        value = module.metrics_service.service_url
+      }
+      env {
+        name  = "GATEWAY_SEARCH_SERVICE"
+        value = module.search_service.service_url
+      }
+      ports {
+        container_port = 8000
+      }
+    }
+  }
 
-# }
+}
 
-# // NOTE: (mibui 2023-05-19) We are using a no auth policy since the API will exposed as public APIs
-# data "google_iam_policy" "no_auth_policy" {
-#   binding {
-#     role = "roles/run.invoker"
-#     members = [
-#       "allUsers"
-#     ]
-#   }
-# }
+// NOTE: (mibui 2023-05-19) We are using a no auth policy since the API will exposed as public APIs
+data "google_iam_policy" "no_auth_policy" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers"
+    ]
+  }
+}
 
-# resource "google_cloud_run_v2_service_iam_policy" "service_iam_policy" {
-#   name     = google_cloud_run_v2_service.gateway.name
-#   project  = google_cloud_run_v2_service.gateway.project
-#   location = google_cloud_run_v2_service.gateway.location
+resource "google_cloud_run_v2_service_iam_policy" "service_iam_policy" {
+  name     = google_cloud_run_v2_service.gateway.name
+  project  = google_cloud_run_v2_service.gateway.project
+  location = google_cloud_run_v2_service.gateway.location
 
-#   policy_data = data.google_iam_policy.no_auth_policy.policy_data
-# }
-
-
-# # END API GATEWAY ---------------------------------------------------------------
-
-# # SERVICES ---------------------------------------------------------------------------
-# variable "TMDB_API_KEY" {
-#   type      = string
-#   sensitive = true
-# }
-
-# variable "GCP_SERVICE_ACCOUNT_KEY_JSON" {
-#   type      = string
-#   sensitive = true
-# }
-
-# variable "docker_username" {
-#   type      = string
-#   sensitive = false
-# }
+  policy_data = data.google_iam_policy.no_auth_policy.policy_data
+}
 
 
-# ## Movieinformation ----------------------------
-# module "movieinformation_service" {
-#   source        = "./modules/container-service"
-#   service_name  = "couch-potatoes-movie-information"
-#   image         = "docker.io/${var.docker_username}/couch-potatoes-movieinformation"
-#   tmdb_api_key  = var.TMDB_API_KEY # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
-#   max_instances = 1
-#   port          = 80
-# }
+# END API GATEWAY ---------------------------------------------------------------
 
-# ## User ----------------------------
-# module "user_service" {
-#   source                       = "./modules/container-service"
-#   service_name                 = "couch-potatoes-user-service"
-#   image                        = "docker.io/${var.docker_username}/couch-potatoes-user"
-#   tmdb_api_key                 = var.TMDB_API_KEY
-#   gcp_service_account_key_json = var.GCP_SERVICE_ACCOUNT_KEY_JSON # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
-#   max_instances                = 1
-#   port                         = 80
-# }
+# SERVICES ---------------------------------------------------------------------------
+variable "TMDB_API_KEY" {
+  type      = string
+  sensitive = true
+}
 
-# ## Person ----------------------------
-# module "person_service" {
-#   source        = "./modules/container-service"
-#   service_name  = "couch-potatoes-person-service"
-#   image         = "docker.io/${var.docker_username}/couch-potatoes-person"
-#   tmdb_api_key  = var.TMDB_API_KEY
-#   max_instances = 1
-#   port          = 80
-# }
+variable "GCP_SERVICE_ACCOUNT_KEY_JSON" {
+  type      = string
+  sensitive = true
+}
 
-# ## Search ----------------------------
-# module "search_service" {
-#   source        = "./modules/container-service"
-#   service_name  = "couch-potatoes-search-service"
-#   image         = "docker.io/${var.docker_username}/couch-potatoes-search"
-#   tmdb_api_key  = var.TMDB_API_KEY
-#   max_instances = 1
-#   port          = 80
-# }
+variable "docker_username" {
+  type      = string
+  sensitive = false
+}
 
-# ## Metrics ----------------------------
-# module "metrics_service" {
-#   source        = "./modules/container-service"
-#   service_name  = "couch-potatoes-metrics-service"
-#   image         = "docker.io/${var.docker_username}/couch-potatoes-metrics"
-#   tmdb_api_key  = var.TMDB_API_KEY
-#   max_instances = 1
-#   port          = 80
-# }
+
+## Movieinformation ----------------------------
+module "movieinformation_service" {
+  source        = "./modules/container-service"
+  service_name  = "couch-potatoes-movie-information"
+  image         = "docker.io/${var.docker_username}/couch-potatoes-sep6-movieinformation-service"
+  tmdb_api_key  = var.TMDB_API_KEY # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
+  max_instances = 1
+  port          = 80
+}
+
+## User ----------------------------
+module "user_service" {
+  source                       = "./modules/container-service"
+  service_name                 = "couch-potatoes-user-service"
+  image                        = "docker.io/${var.docker_username}/couch-potatoes-sep6-user-service"
+  tmdb_api_key                 = var.TMDB_API_KEY
+  gcp_service_account_key_json = var.GCP_SERVICE_ACCOUNT_KEY_JSON # NOTE: (mibui 2023-05-25) Should be passed by environment variable for security reasons
+  max_instances                = 1
+  port                         = 80
+}
+
+## Person ----------------------------
+module "person_service" {
+  source        = "./modules/container-service"
+  service_name  = "couch-potatoes-person-service"
+  image         = "docker.io/${var.docker_username}/couch-potatoes-sep6-person-service"
+  tmdb_api_key  = var.TMDB_API_KEY
+  max_instances = 1
+  port          = 80
+}
+
+## Search ----------------------------
+module "search_service" {
+  source        = "./modules/container-service"
+  service_name  = "couch-potatoes-search-service"
+  image         = "docker.io/${var.docker_username}/couch-potatoes-sep6-search-service"
+  tmdb_api_key  = var.TMDB_API_KEY
+  max_instances = 1
+  port          = 80
+}
+
+## Metrics ----------------------------
+module "metrics_service" {
+  source        = "./modules/container-service"
+  service_name  = "couch-potatoes-metrics-service"
+  image         = "docker.io/${var.docker_username}/couch-potatoes-sep6-metrics-service"
+  tmdb_api_key  = var.TMDB_API_KEY
+  max_instances = 1
+  port          = 80
+}
