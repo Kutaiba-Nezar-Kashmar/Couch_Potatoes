@@ -9,6 +9,7 @@ namespace User.Infrastructure;
 
 public static class Firestore
 {
+    private const string ServiceAccountKeyEnvironmentKey = "GCP_SERVICE_ACCOUNT_KEY_JSON";
     public static FirestoreDb Get()
     {
         RestoreServiceAccountKeyFromEnvironment();
@@ -16,7 +17,8 @@ public static class Firestore
         var pathToServiceAccountKey =
             Environment.GetEnvironmentVariable("GCP_SERVICE_ACCOUNT_KEY") ?? "./service-account-key.json";
 
-        var credentials = GoogleCredential.FromFile(pathToServiceAccountKey);
+        var credentials =
+            GoogleCredential.FromJson(Environment.GetEnvironmentVariable(ServiceAccountKeyEnvironmentKey)) ?? GoogleCredential.FromFile(pathToServiceAccountKey);
 
         return new FirestoreDbBuilder
         {
@@ -40,7 +42,7 @@ public static class Firestore
     {
         // NOTE: (mibui 2023-05-25) We don't want to ship our images with the GCP service account key, since it is sensitive.
         //                          Instead we restore them from environment variable, if possible.
-        var serviceAccountKeyJsonContent = Environment.GetEnvironmentVariable("GCP_SERVICE_ACCOUNT_KEY_JSON");
+        var serviceAccountKeyJsonContent = Environment.GetEnvironmentVariable(ServiceAccountKeyEnvironmentKey);
         if (serviceAccountKeyJsonContent is null || string.IsNullOrEmpty(serviceAccountKeyJsonContent))
         {
             return;
