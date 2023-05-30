@@ -41,6 +41,7 @@ public class MovieCollectionsController : ControllerBase
             var dto = await _mediator.Send(
                 new GetMovieCollectionRequest(skip, numberOfPages,
                     collectionType));
+
             return Ok(_mapper.Map<ReadMovieCollectionDto>(dto));
         }
         catch (Exception e)
