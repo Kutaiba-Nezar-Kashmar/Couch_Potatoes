@@ -1,77 +1,65 @@
 {
-  "services": [
-    {
-      "name": "user-service",
-      "routes": [
+    "services": [
         {
-          "name": "users",
-          "paths": [
-            "/couch-potatoes/api/v1/users"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "person-service",
-      "routes": [
-        {
-          "name": "persons",
-          "paths": [
-            "/couch-potatoes/api/v1/persons"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "movieinformation-service",
-      "routes": [
-        {
-          "name": "movie-collection",
-          "paths": [
-            "/couch-potatoes/api/v1/movie-collection"
-          ]
+            "name": "user-service",
+            "routes": [
+                {
+                    "name": "users",
+                    "paths": ["/couch-potatoes/api/v1/users"]
+                },
+                {
+                    "name": "reviews",
+                    "paths": ["/couch-potatoes/api/v1/reviews"]
+                }
+            ]
         },
         {
-          "name": "movie-credits",
-          "paths": [
-            "/couch-potatoes/api/v1/movie-credits"
-          ]
+            "name": "person-service",
+            "routes": [
+                {
+                    "name": "persons",
+                    "paths": ["/couch-potatoes/api/v1/persons"]
+                }
+            ]
         },
         {
-          "name": "movie-details",
-          "paths": [
-            "/couch-potatoes/api/v1/movie-details"
-          ]
+            "name": "movieinformation-service",
+            "routes": [
+                {
+                    "name": "movie-collection",
+                    "paths": ["/couch-potatoes/api/v1/movie-collection"]
+                },
+                {
+                    "name": "movie-credits",
+                    "paths": ["/couch-potatoes/api/v1/movie-credits"]
+                },
+                {
+                    "name": "movie-details",
+                    "paths": ["/couch-potatoes/api/v1/movie-details"]
+                },
+                {
+                    "name": "movie-recommendations",
+                    "paths": ["/couch-potatoes/api/v1/recommended-movies"]
+                }
+            ]
         },
         {
-          "name": "movie-recommendations",
-          "paths": [
-            "/couch-potatoes/api/v1/recommended-movies"
-          ]
-        }
-      ]
-    },
-    {
-      "name": "metrics-service",
-      "routes": [
+            "name": "metrics-service",
+            "routes": [
+                {
+                    "name": "persons-metrics",
+                    "paths": ["/couch-potatoes/api/v1/person/metrics"]
+                }
+            ]
+        },
         {
-          "name": "persons-metrics",
-          "paths": [
-            "/couch-potatoes/api/v1/person/metrics"
-          ]
+            "name": "search-service",
+            "routes": [
+                {
+                    "name": "search",
+                    "paths": ["/couch-potatoes/api/v1/search/multi"]
+                }
+            ]
         }
-      ]
-    },
-    {
-      "name": "search-service",
-      "routes": [
-        {
-          "name": "search",
-          "paths": [
-            "/couch-potatoes/api/v1/search/multi"
-          ]
-        }
-      ]
-    }
-  ]
+    ]
 }
