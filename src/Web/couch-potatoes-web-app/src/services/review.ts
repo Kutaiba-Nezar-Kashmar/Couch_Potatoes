@@ -28,6 +28,7 @@ export function useGetReviewsForMovie(movieId: number) {
         queryFn: async () => {
             return await getReviewsForMovie(movieId);
         },
+        cacheTime: 0,
     });
 }
 
@@ -41,6 +42,7 @@ export function useGetReviewsForUser(userId?: string) {
 
             return await getReviewsForUser(userId);
         },
+        cacheTime: 0,
     });
 }
 
