@@ -105,13 +105,15 @@ public class CalculatePersonStatistics : ICalculatePersonStatistics
                 }
             }
 
-            if (count.Any())
+            if (!count.Any()) return 0;
+            var max = new KeyValuePair<int, int>(0, 0);
+            
+            foreach (var key in count.Where(key => key.Value > max.Value))
             {
-                return count
-                    .FirstOrDefault().Key;
+                max = key;
             }
 
-            return 0;
+            return max.Key;
         }
         catch (Exception e)
         {
