@@ -17,6 +17,7 @@ export function useGetAuthenticatedUser() {
         queryFn: async () => {
             return await getAuthenticatedUser();
         },
+        cacheTime: 0,
     });
 }
 
@@ -26,28 +27,6 @@ export async function getAuthenticatedUser(): Promise<User | null> {
     if (currentUser) {
         const user = domainUserFromFirebaseUser(currentUser);
         user.favoriteMovies = await getUserFavoriteMovieIds(user.id);
-        return user;
-    }
-
-    const userJsonFromLocalStorage = localStorage.getItem('currentUser');
-    // NOTE: (mibui 2023-05-19) we check for the string 'undefined' instead of actual undefined
-    //                          since that is the behaviour of localStorage::getItem
-    if (userJsonFromLocalStorage && userJsonFromLocalStorage !== 'undefined') {
-        const user: User = JSON.parse(userJsonFromLocalStorage);
-        if (
-            user.createdTimestamp &&
-            typeof user.createdTimestamp === 'string'
-        ) {
-            user.createdTimestamp = new Date(user.createdTimestamp);
-        }
-
-        if (
-            user.lastSignInTimestamp &&
-            typeof user.lastSignInTimestamp === 'string'
-        ) {
-            user.createdTimestamp = new Date(user.lastSignInTimestamp);
-        }
-
         return user;
     }
 
