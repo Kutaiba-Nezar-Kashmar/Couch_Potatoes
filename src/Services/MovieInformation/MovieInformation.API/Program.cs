@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.InstallControllers();
 builder.Services.InstallMiddlewareServices();
 
+
 // Register HTTP client here: 
 builder.Services.AddHttpClient("HTTP_CLIENT")
     .ConfigureHttpClient((_, client) =>

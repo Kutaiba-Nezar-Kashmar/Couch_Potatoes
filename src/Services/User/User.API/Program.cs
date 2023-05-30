@@ -9,6 +9,7 @@ builder.Services.InstallMiddlewares();
 builder.Services.InstallMappings();
 builder.Services.InstallUserServiceDependencies();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

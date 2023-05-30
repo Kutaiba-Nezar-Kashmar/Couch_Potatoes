@@ -14,6 +14,7 @@ public class PersonMetricsController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ILogger<PersonMetricsController> _logger;
 
+
     public PersonMetricsController
     (
         IMediator mediator,
