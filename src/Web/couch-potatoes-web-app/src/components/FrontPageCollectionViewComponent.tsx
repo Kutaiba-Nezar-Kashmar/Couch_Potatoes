@@ -81,7 +81,7 @@ export const FrontPageCollectionViewComponent: FC<
                                     alt={'poster of movie ' + movie.title}
                                     borderRadius="lg"
                                     filter="brightness(0.9)"
-                                    _hover={{ filter: 'brightness(1.1)' }}
+                                    _hover={{ filter: 'brightness(1.1)',cursor: "pointer" }}
                                 />
                             </Tooltip>
                         </SwiperSlide>
