@@ -49,8 +49,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
       - name: Build image
         run: docker build -t "$DOCKERHUB_USERNAME"/couch-potatoes-sep6-person-service:latest .
+        working-directory: src/Services/Person
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
