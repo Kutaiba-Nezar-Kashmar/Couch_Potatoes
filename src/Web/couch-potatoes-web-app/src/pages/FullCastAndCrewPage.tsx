@@ -21,6 +21,7 @@ import { getPosterImageUri } from '../services/images';
 import BasePage from '../components/BasePage';
 import Movie from '../models/movie';
 import moviePoster from '../assets/MoviePosterTemp.png';
+import {getDarkGrayBackground} from "../util/themeutil";
 
 const FullCastAndCrewPage = () => {
     const { movieId } = useParams();
@@ -72,7 +73,7 @@ const FullCastAndCrewPage = () => {
     }
 
     return (
-        <BackgroundImageFull imageUri={Background_Temp}>
+        <BackgroundImageFull imageUri={getDarkGrayBackground()}>
             <BasePage>
                 <Grid
                     autoFlow={'dense'}
