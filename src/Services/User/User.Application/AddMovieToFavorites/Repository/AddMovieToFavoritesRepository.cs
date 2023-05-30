@@ -34,7 +34,7 @@ public class AddMovieToFavoritesRepository : IAddMovieToFavoritesRepository
             }
 
             userState.FavoriteMovies.Add(movieId);
-            await userRef.SetAsync(userState.ToFirestoreDto());
+            await userRef.UpdateAsync("FavoriteMovies", userState.FavoriteMovies);
         }
         catch (Exception e)
         {

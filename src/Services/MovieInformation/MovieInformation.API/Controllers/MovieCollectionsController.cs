@@ -29,7 +29,7 @@ public class MovieCollectionsController : ControllerBase
     }
 
     [HttpGet("{collectionType}")]
-    public async Task<ActionResult<ReadMovieCollectionDto>> GetPopularMovies
+    public async Task<ActionResult<ReadMovieCollectionDto>> GetMovieCollection
     (
         [FromRoute] string collectionType,
         [FromQuery] int skip,
